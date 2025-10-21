@@ -1,0 +1,39 @@
+/* src/components/Dashboard/DashboardLayout.css */
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+.sidebar {
+  width: 220px;
+  background-color: #282a36;
+  color: #fff;
+  padding: 20px;
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+  cursor: pointer;
+}
+
+.dashboard-main {
+  flex: 1;
+  padding: 40px;
+  background-color: #f4f4f4;
+}
+
+.dashboard-main h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
