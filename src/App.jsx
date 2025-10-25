@@ -1,23 +1,24 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import AuthForm from "./components/Auth/AuthForm";
-import DashboardLayout from "./components/Dashboard/DashboardLayout";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useAuth } from './Context/AuthContext';
+import AdminDashboard from './Pages/AdminDashboard';
+import UserManagement from './Pages/admin/UserManagement';
 
-const App = () => {
-  return (
-    <Router>
-      <Routes>
-        {/* Default route goes to login/signup */}
-        <Route path="/" element={<AuthForm />} />
-        
-        {/* Dashboard route */}
-        <Route path="/dashboard" element={<DashboardLayout />} />
-
-        {/* Catch-all redirects back to login */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </Router>
-  );
+const AdminRoute = ({ children }) => {
+  const { user } = useAuth();
+  console.log('User in AdminRoute:', user); // Debug to check user value
+  return user?.role === 'admin' ? children : <Navigate to="/unauthorized" />;
 };
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+        <Route path="/admin/users" element={<AdminRoute><UserManagement /></AdminRoute>} />
+        <Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} /> 
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
 export default App;
