@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './Context/AuthContext';
 import AdminDashboard from './Pages/AdminDashboard';
 import UserManagement from './Pages/admin/UserManagement';
+import LandingPage from './Pages/LandingPage';
 
 const AdminRoute = ({ children }) => {
   const { user } = useAuth();
@@ -13,6 +14,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path='/' element={<LandingPage />}/>
         <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
         <Route path="/admin/users" element={<AdminRoute><UserManagement /></AdminRoute>} />
         <Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} /> 
