@@ -25,7 +25,7 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen w-full bg-gray-100">
       <Navbar />
       <div className="container mx-auto p-6">
         <h1 className="text-3xl font-bold text-teal-700 mb-6">Admin Dashboard</h1>
