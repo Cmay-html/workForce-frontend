@@ -1,9 +1,9 @@
-// src/Pages/Dashboard.jsx
+// src/pages/client/Dashboard.jsx
 import React from 'react';
-import { useAuth } from '../Context/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
-import DashboardLayout from '../components/Dashboard/DashboardLayout';
-import Card from '../components/UI/Card';
+import DashboardLayout from '../../components/shared/dashboard/DashboardLayout';
+import Card from '../../components/shared/ui/Card';
 
 const Dashboard = () => {
   const { isAuthenticated, user, loading } = useAuth();

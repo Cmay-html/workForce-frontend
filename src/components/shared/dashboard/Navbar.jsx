@@ -1,7 +1,7 @@
-// src/components/Dashboard/Navbar.jsx
+// src/components/shared/dashboard/Navbar.jsx
 import React from 'react';
-import { useAuth } from '../../Context/AuthContext';
-import Button from '../UI/Button';
+import { useAuth } from '../../../hooks/useAuth';
+import Button from '../ui/Button';
 
 const Navbar = () => {
   const { user, logout } = useAuth();

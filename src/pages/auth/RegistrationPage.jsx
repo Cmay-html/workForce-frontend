@@ -1,8 +1,8 @@
-// src/Pages/RegistrationPage.jsx
+// src/pages/auth/RegistrationPage.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../Context/AuthContext';
-import AuthForm from '../components/Auth/AuthForm';
+import { useAuth } from '../../hooks/useAuth';
+import AuthForm from '../../components/shared/auth/AuthForm';
 
 const RegistrationPage = () => {
   const { login } = useAuth();

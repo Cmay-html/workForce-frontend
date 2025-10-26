@@ -1,13 +1,12 @@
-// src/App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider } from './Context/AuthContext';
-import { useAuth } from './Context/AuthContext';
-import LoginPage from './Pages/LoginPage';
-import RegistrationPage from './Pages/RegistrationPage';
-import Dashboard from './Pages/Dashboard';
-import AuthForm from './components/Auth/AuthForm';
-import DashboardLayout from './components/Dashboard/DashboardLayout';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import { useAuth } from './hooks/useAuth';
+import LoginPage from './pages/auth/LoginPage';
+import RegistrationPage from './pages/auth/RegistrationPage';
+import Dashboard from './pages/client/Dashboard';
+import AuthForm from './components/shared/auth/AuthForm';
+import DashboardLayout from './components/shared/dashboard/DashboardLayout';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -34,9 +33,8 @@ const PublicRoute = ({ children }) => {
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <div className="min-h-screen bg-gray-50">
-          <Routes>
+      <div className="min-h-screen bg-gray-50">
+        <Routes>
             {/* Auth routes - only accessible when logged out */}
             <Route path="/login" element={
               <PublicRoute>
@@ -75,7 +73,6 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
-      </Router>
     </AuthProvider>
   );
 }

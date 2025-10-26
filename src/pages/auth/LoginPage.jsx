@@ -1,8 +1,7 @@
-"// src/Pages/LoginPage.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../Context/AuthContext';
-import AuthForm from '../components/Auth/AuthForm';
+import { useAuth } from '../../hooks/useAuth';
+import AuthForm from '../../components/shared/auth/AuthForm';
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -47,4 +46,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;"
+export default LoginPage;

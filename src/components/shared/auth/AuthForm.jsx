@@ -1,7 +1,7 @@
-// src/components/Auth/AuthForm.jsx
+// src/components/shared/auth/AuthForm.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../Context/AuthContext';
+import { useAuth } from '../../../hooks/useAuth';
 import './AuthForm.css';
 
 // Simple SVG icons as components
