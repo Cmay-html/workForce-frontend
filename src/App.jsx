@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
   Routes,
   Route,
   Navigate,
@@ -68,9 +67,8 @@ const RootRedirect = () => {
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <div className="min-h-screen bg-gray-50">
-          <Routes>
+      <div className="min-h-screen bg-gray-50">
+        <Routes>
             {/* Auth routes - only accessible when logged out */}
             <Route
               path="/login"
@@ -118,11 +116,29 @@ function App() {
             />
 
             {/* Client Routes */}
-            <Route path="/client/dashboard" element={<ClientDashboardPage />} />
-            <Route path="/client/projects" element={<ClientProjectsPage />} />
+            <Route
+              path="/client/dashboard"
+              element={
+                <ProtectedRoute>
+                  <ClientDashboardPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/client/projects"
+              element={
+                <ProtectedRoute>
+                  <ClientProjectsPage />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/client/milestones/:projectId"
-              element={<ProjectMilestonesPage />}
+              element={
+                <ProtectedRoute>
+                  <ProjectMilestonesPage />
+                </ProtectedRoute>
+              }
             />
 
             {/* Smart root redirect */}
@@ -132,8 +148,7 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
   );
 }
 

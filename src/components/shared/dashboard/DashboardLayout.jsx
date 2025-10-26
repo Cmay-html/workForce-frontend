@@ -1,46 +1,220 @@
 // src/components/shared/dashboard/DashboardLayout.jsx
 import React from "react";
-import { useAuth } from '../../../hooks/useAuth';
+import { useAuth } from "../../../hooks/useAuth";
+import { Link, useLocation } from "react-router-dom";
 import Navbar from './Navbar';
 
 const DashboardLayout = ({ children }) => {
-  const { user } = useAuth();
-  const clientName = user?.firstName + ' ' + user?.lastName || "User";
+  const { user, logout } = useAuth();
+  const location = useLocation();
+  const clientName = user?.firstName + " " + user?.lastName || "User";
+
+  const navItems = [
+    {
+      path: "/client/dashboard",
+      label: "Dashboard",
+      description: "Project overview",
+    },
+    {
+      path: "/client/projects",
+      label: "Projects",
+      description: "Manage projects",
+    },
+    {
+      path: "/client/milestones",
+      label: "Milestones",
+      description: "Review work",
+    },
+    {
+      path: "/client/reviews",
+      label: "Reviews",
+      description: "Rate freelancers",
+    },
+    {
+      path: "/client/profile",
+      label: "Profile",
+      description: "Account settings",
+    },
+  ];
+
+  const handleLogout = () => {
+    logout();
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex">
+    <div className="dashboard-container">
       {/* Sidebar */}
-      <aside className="w-80 bg-white/5 backdrop-blur-xl border-r border-white/10 p-8">
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-white to-cyan-100 bg-clip-text text-transparent">
-            Client Dashboard
-          </h2>
+      <div className="sidebar">
+        <div className="sidebar-header">
+          <div className="logo">
+            <div className="logo-icon">K</div>
+            Kaziflow
+          </div>
+          <div
+            style={{
+              marginTop: "12px",
+              padding: "12px",
+              background: "var(--secondary-white)",
+              borderRadius: "var(--radius-sm)",
+              border: "1px solid var(--border-light)",
+            }}
+          >
+            <p
+              style={{
+                fontSize: "14px",
+                fontWeight: "600",
+                color: "var(--text-primary)",
+                marginBottom: "4px",
+              }}
+            >
+              {clientName}
+            </p>
+            <p
+              style={{
+                fontSize: "12px",
+                color: "var(--text-secondary)",
+              }}
+            >
+              Client Account
+            </p>
+          </div>
         </div>
-        
-        <nav>
-          <ul className="space-y-3">
-            {[
-              { icon: "📊", label: "Overview" },
-              { icon: "👤", label: "Profile" },
-              { icon: "💼", label: "Projects" },
-              { icon: "⚙️", label: "Settings" },
-              { icon: "🚪", label: "Logout" }
-            ].map((item, index) => (
-              <li key={item.label}>
-                <button className="w-full text-left text-slate-300 hover:text-white hover:bg-white/10 px-4 py-3 rounded-xl transition-all duration-300 border border-transparent hover:border-white/20 flex items-center space-x-3 group hover:translate-x-2">
-                  <span className="text-lg">{item.icon}</span>
-                  <span className="font-medium">{item.label}</span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 p-8">
-        {children}
-      </main>
+        <ul className="nav-menu">
+          {navItems.map((item) => (
+            <li key={item.path} className="nav-item">
+              <Link
+                to={item.path}
+                className={`nav-link ${
+                  location.pathname === item.path ? "active" : ""
+                }`}
+              >
+                <span className="nav-icon" style={{ fontWeight: "600" }}>
+                  {item.label.charAt(0)}
+                </span>
+                <div>
+                  <div style={{ fontWeight: "500" }}>{item.label}</div>
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      color: "var(--text-light)",
+                      marginTop: "2px",
+                    }}
+                  >
+                    {item.description}
+                  </div>
+                </div>
+              </Link>
+            </li>
+          ))}
+
+          {/* Logout Button */}
+          <li className="nav-item" style={{ marginTop: "auto" }}>
+            <button
+              onClick={handleLogout}
+              className="nav-link"
+              style={{
+                background: "none",
+                border: "none",
+                width: "100%",
+                textAlign: "left",
+                cursor: "pointer",
+              }}
+            >
+              <span className="nav-icon" style={{ fontWeight: "600" }}>
+                L
+              </span>
+              <div>
+                <div style={{ fontWeight: "500" }}>Logout</div>
+                <div
+                  style={{
+                    fontSize: "12px",
+                    color: "var(--text-light)",
+                    marginTop: "2px",
+                  }}
+                >
+                  Sign out of account
+                </div>
+              </div>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      {/* Main Content Area */}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          flex: 1,
+          minHeight: "100vh",
+        }}
+      >
+        {/* Top Bar */}
+        <div className="top-bar">
+          <div className="search-bar">
+            <span style={{ color: "var(--text-light)" }}>Search</span>
+            <input
+              type="text"
+              placeholder="Search projects, milestones..."
+              style={{
+                border: "none",
+                background: "none",
+                outline: "none",
+                marginLeft: "8px",
+                width: "100%",
+                fontSize: "14px",
+                color: "var(--text-primary)",
+              }}
+            />
+          </div>
+
+          <div className="user-menu">
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+              }}
+            >
+              <div style={{ textAlign: "right" }}>
+                <div
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    color: "var(--text-primary)",
+                  }}
+                >
+                  {clientName}
+                </div>
+                <div
+                  style={{
+                    fontSize: "12px",
+                    color: "var(--text-secondary)",
+                  }}
+                >
+                  Client
+                </div>
+              </div>
+              <div className="user-avatar">
+                {user?.firstName?.charAt(0)}
+                {user?.lastName?.charAt(0)}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Page Content */}
+        <main
+          style={{
+            flex: 1,
+            background: "var(--secondary-white)",
+            overflow: "auto",
+          }}
+        >
+          {children}
+        </main>
+      </div>
     </div>
   );
 };
