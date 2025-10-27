@@ -5,9 +5,9 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
 
-const FreelancerRegistrationForm = () => {
+const FreelancerProfileForm = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { user } = useAuth();
   const [avatar, setAvatar] = useState(null);
 
   const skills = [
@@ -67,35 +67,38 @@ const FreelancerRegistrationForm = () => {
     { value: "expert", label: "Expert (5+ years)" },
   ];
 
+  // Pre-fill with current user data
   const formik = useFormik({
     initialValues: {
       // Personal Info
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
+      firstName: user?.firstName || "",
+      lastName: user?.lastName || "",
+      email: user?.email || "",
+      phone: user?.phone || "",
 
       // Professional Info
-      title: "",
-      bio: "",
-      experienceLevel: "",
-      skills: [],
-      categories: [],
+      title: user?.title || "",
+      bio:
+        user?.bio ||
+        "Experienced developer with 5+ years in web development. Specialized in React and Node.js with a track record of delivering high-quality projects on time.",
+      experienceLevel: user?.experienceLevel || "intermediate",
+      skills: user?.skills || ["React", "Node.js", "JavaScript"],
+      categories: user?.categories || ["Web Development"],
 
       // Portfolio
-      portfolioUrl: "",
-      githubUrl: "",
-      linkedinUrl: "",
-      behanceUrl: "",
+      portfolioUrl: user?.portfolioUrl || "https://johndoeportfolio.com",
+      githubUrl: user?.githubUrl || "https://github.com/johndoe",
+      linkedinUrl: user?.linkedinUrl || "https://linkedin.com/in/johndoe",
+      behanceUrl: user?.behanceUrl || "",
 
       // Location
-      country: "",
-      city: "",
-      timezone: "",
+      country: user?.country || "United States",
+      city: user?.city || "New York",
+      timezone: user?.timezone || "EST",
 
-      // Agreement
-      termsAccepted: false,
-      availableForWork: true,
+      // Availability
+      availableForWork: user?.availableForWork ?? true,
+      responseTime: user?.responseTime || "24 hours",
     },
     validationSchema: Yup.object({
       firstName: Yup.string().required("First name is required"),
@@ -115,29 +118,16 @@ const FreelancerRegistrationForm = () => {
       categories: Yup.array()
         .min(1, "Select at least one category")
         .required("Categories are required"),
-      termsAccepted: Yup.boolean().oneOf(
-        [true],
-        "You must accept the terms and conditions"
-      ),
     }),
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        console.log("Freelancer registration:", values);
+        console.log("Updating freelancer profile:", values);
+        // API call would go here
+        await new Promise((resolve) => setTimeout(resolve, 1500));
 
-        // API call to register freelancer
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-
-        // Simulate login with freelancer role
-        login({
-          ...values,
-          role: "freelancer",
-          id: Date.now().toString(),
-        });
-
-        setStatus({ success: "Freelancer profile created successfully!" });
-        setTimeout(() => navigate("/freelancer/projects"), 1500);
+        setStatus({ success: "Profile updated successfully!" });
       } catch (error) {
-        setStatus({ error: "Registration failed. Please try again." });
+        setStatus({ error: "Failed to update profile. Please try again." });
       } finally {
         setSubmitting(false);
       }
@@ -170,10 +160,10 @@ const FreelancerRegistrationForm = () => {
               color: "var(--text-primary)",
             }}
           >
-            Become a Freelancer
+            Freelancer Profile
           </h1>
           <p style={{ color: "var(--text-secondary)", marginTop: "8px" }}>
-            Create your freelancer profile to start getting projects
+            Manage your professional profile and portfolio
           </p>
         </div>
       </div>
@@ -232,7 +222,8 @@ const FreelancerRegistrationForm = () => {
                 boxShadow: "var(--shadow-sm)",
               }}
             >
-              {!avatar && "FU"}
+              {!avatar &&
+                (user?.firstName?.[0] || "F") + (user?.lastName?.[0] || "L")}
 
               <input
                 type="file"
@@ -250,7 +241,7 @@ const FreelancerRegistrationForm = () => {
               />
             </div>
             <div style={{ fontSize: "14px", color: "var(--text-light)" }}>
-              Click to upload profile picture (Optional)
+              Click to upload profile picture
             </div>
           </div>
 
@@ -280,7 +271,6 @@ const FreelancerRegistrationForm = () => {
                   type="text"
                   name="firstName"
                   className="form-input"
-                  placeholder="John"
                   value={formik.values.firstName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -304,7 +294,6 @@ const FreelancerRegistrationForm = () => {
                   type="text"
                   name="lastName"
                   className="form-input"
-                  placeholder="Doe"
                   value={formik.values.lastName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -336,7 +325,6 @@ const FreelancerRegistrationForm = () => {
                   type="email"
                   name="email"
                   className="form-input"
-                  placeholder="john.doe@example.com"
                   value={formik.values.email}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -360,7 +348,6 @@ const FreelancerRegistrationForm = () => {
                   type="tel"
                   name="phone"
                   className="form-input"
-                  placeholder="+1 (555) 123-4567"
                   value={formik.values.phone}
                   onChange={formik.handleChange}
                 />
@@ -386,7 +373,7 @@ const FreelancerRegistrationForm = () => {
                 type="text"
                 name="title"
                 className="form-input"
-                placeholder="e.g., Senior React Developer, UI/UX Designer"
+                placeholder="e.g., Senior React Developer"
                 value={formik.values.title}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -410,7 +397,7 @@ const FreelancerRegistrationForm = () => {
                 name="bio"
                 className="form-input"
                 rows="5"
-                placeholder="Describe your experience, skills, expertise, and what you can offer to clients. Include your background, achievements, and what makes you unique..."
+                placeholder="Describe your experience, skills, expertise, and what you can offer to clients..."
                 value={formik.values.bio}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -438,8 +425,6 @@ const FreelancerRegistrationForm = () => {
                 }}
               >
                 {formik.values.bio.length}/1000 characters
-                {formik.values.bio.length < 100 &&
-                  " (Minimum 100 characters required)"}
               </div>
             </div>
 
@@ -488,15 +473,6 @@ const FreelancerRegistrationForm = () => {
 
             <div style={{ marginBottom: "24px" }}>
               <label className="form-label">Skills *</label>
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "var(--text-light)",
-                  marginBottom: "12px",
-                }}
-              >
-                Select the skills you specialize in (choose at least one)
-              </p>
               <div
                 style={{
                   display: "grid",
@@ -564,15 +540,6 @@ const FreelancerRegistrationForm = () => {
 
             <div>
               <label className="form-label">Categories *</label>
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "var(--text-light)",
-                  marginBottom: "12px",
-                }}
-              >
-                Select the categories you work in (choose at least one)
-              </p>
               <div
                 style={{
                   display: "grid",
@@ -653,16 +620,6 @@ const FreelancerRegistrationForm = () => {
             >
               Portfolio & Links
             </h2>
-            <p
-              style={{
-                fontSize: "14px",
-                color: "var(--text-light)",
-                marginBottom: "16px",
-              }}
-            >
-              Add links to your portfolio and professional profiles (optional
-              but recommended)
-            </p>
 
             <div
               style={{
@@ -731,7 +688,7 @@ const FreelancerRegistrationForm = () => {
             </div>
           </div>
 
-          {/* Location */}
+          {/* Location & Availability */}
           <div style={{ marginBottom: "32px" }}>
             <h2
               style={{
@@ -757,7 +714,6 @@ const FreelancerRegistrationForm = () => {
                   type="text"
                   name="country"
                   className="form-input"
-                  placeholder="United States"
                   value={formik.values.country}
                   onChange={formik.handleChange}
                 />
@@ -769,11 +725,25 @@ const FreelancerRegistrationForm = () => {
                   type="text"
                   name="city"
                   className="form-input"
-                  placeholder="New York"
                   value={formik.values.city}
                   onChange={formik.handleChange}
                 />
               </div>
+            </div>
+
+            <div style={{ marginBottom: "20px" }}>
+              <label className="form-label">Average Response Time</label>
+              <select
+                name="responseTime"
+                className="form-input"
+                value={formik.values.responseTime}
+                onChange={formik.handleChange}
+              >
+                <option value="2 hours">Within 2 hours</option>
+                <option value="6 hours">Within 6 hours</option>
+                <option value="24 hours">Within 24 hours</option>
+                <option value="48 hours">Within 48 hours</option>
+              </select>
             </div>
 
             <label
@@ -830,57 +800,12 @@ const FreelancerRegistrationForm = () => {
                   lineHeight: "1.5",
                 }}
               >
-                All payments on our platform are milestone-based. You'll agree
-                on project milestones with clients, and payments are released
-                when each milestone is completed and approved. This ensures fair
-                payment for delivered work and protects both freelancers and
-                clients.
+                All payments are milestone-based. You'll agree on project
+                milestones with clients, and payments are released when each
+                milestone is completed and approved. This ensures fair payment
+                for delivered work.
               </p>
             </div>
-          </div>
-
-          {/* Terms Agreement */}
-          <div style={{ marginBottom: "32px" }}>
-            <label
-              style={{
-                display: "flex",
-                alignItems: "flex-start",
-                gap: "12px",
-                cursor: "pointer",
-              }}
-            >
-              <input
-                type="checkbox"
-                name="termsAccepted"
-                checked={formik.values.termsAccepted}
-                onChange={formik.handleChange}
-                style={{ marginTop: "4px" }}
-              />
-              <div>
-                <div style={{ fontWeight: "500" }}>
-                  I agree to the Freelancer Terms of Service and Privacy Policy
-                  *
-                </div>
-                <div
-                  style={{
-                    fontSize: "14px",
-                    color: "var(--text-light)",
-                    marginTop: "4px",
-                  }}
-                >
-                  By creating a freelancer account, you agree to our platform
-                  rules, community guidelines, and milestone-based payment
-                  terms.
-                </div>
-              </div>
-            </label>
-            {formik.touched.termsAccepted && formik.errors.termsAccepted && (
-              <div
-                style={{ color: "#dc2626", fontSize: "14px", marginTop: "8px" }}
-              >
-                {formik.errors.termsAccepted}
-              </div>
-            )}
           </div>
 
           {/* Submit Buttons */}
@@ -895,7 +820,7 @@ const FreelancerRegistrationForm = () => {
           >
             <button
               type="button"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/freelancer/dashboard")}
               style={{
                 background: "var(--secondary-white)",
                 color: "var(--text-primary)",
@@ -915,9 +840,7 @@ const FreelancerRegistrationForm = () => {
               style={{ padding: "12px 32px", margin: 0 }}
               disabled={formik.isSubmitting}
             >
-              {formik.isSubmitting
-                ? "Creating Profile..."
-                : "Create Freelancer Profile"}
+              {formik.isSubmitting ? "Updating..." : "Update Profile"}
             </button>
           </div>
         </form>
@@ -926,4 +849,4 @@ const FreelancerRegistrationForm = () => {
   );
 };
 
-export default FreelancerRegistrationForm;
+export default FreelancerProfileForm;
