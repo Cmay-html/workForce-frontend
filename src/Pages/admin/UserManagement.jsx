@@ -1,68 +1,56 @@
-import React, { useEffect, useState } from 'react';
-import adminApi from '../../services/adminApi';
-import Navbar from '../../components/Navbar.jsx';
+// src/Pages/admin/UserManagement.jsx
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useAuth } from '../../Context/AuthContext';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
-  const [page, setPage] = useState(1);
+  const [error, setError] = useState('');
+  const { user } = useAuth();
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    adminApi.getUsers(page).then(response => setUsers(response.data.users));
-  }, [page]);
+    fetchUsers();
+  }, []);
 
-  const handleDelete = (id) => {
-    if (window.confirm('Delete user?')) {
-      adminApi.deleteUser(id).then(() => {
-        setUsers(users.filter(user => user.id !== id));
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/admin/users?page=1&per_page=10', {
+        headers: { Authorization: `Bearer ${token}` },
       });
+      setUsers(response.data.items);
+    } catch (err) {
+      setError('Failed to fetch users');
+      console.error(err);
+    }
+  };
+
+  const deleteUser = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      fetchUsers();
+    } catch (err) {
+      setError('Failed to delete user');
+      console.error(err);
     }
   };
 
   return (
-    <div className="p-6">
-      <Navbar />
-      <h1 className="text-2xl font-bold mb-4">User Management</h1>
-      <table className="w-full border-collapse border mb-6">
-        <thead>
-          <tr>
-            <th className="border p-2">Email</th>
-            <th className="border p-2">Role</th>
-            <th className="border p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map(user => (
-            <tr key={user.id}>
-              <td className="border p-2">{user.email}</td>
-              <td className="border p-2">{user.role}</td>
-              <td className="border p-2">
-                <button
-                  onClick={() => handleDelete(user.id)}
-                  className="bg-red-500 text-white px-2 py-1 rounded"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      {/* Simple pagination (for demo) */}
-      <div>
-        <button
-          onClick={() => setPage(prev => Math.max(prev - 1, 1))}
-          className="bg-gray-300 px-2 py-1 mr-2 rounded"
-          disabled={page === 1}
-        >
-          Previous
-        </button>
-        <button
-          onClick={() => setPage(prev => prev + 1)}
-          className="bg-gray-300 px-2 py-1 rounded"
-        >
-          Next
-        </button>
-      </div>
+    <div style={{ padding: '20px' }}>
+      <h2>User Management</h2>
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>
+            {user.email} (Role: {user.role})
+            <button onClick={() => deleteUser(user.id)} style={{ marginLeft: '10px', padding: '5px' }}>
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
