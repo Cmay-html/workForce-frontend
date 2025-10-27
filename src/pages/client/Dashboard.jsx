@@ -2,47 +2,170 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
+import { clientService } from '../../services/api/clientService';
 
 const ClientDashboard = () => {
   const navigate = useNavigate();
   const { isAuthenticated, user, loading } = useAuth();
   const [projects, setProjects] = useState([]);
   const [loadingProjects, setLoadingProjects] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredProjects, setFilteredProjects] = useState([]);
 
   useEffect(() => {
-    // Mock projects data
-    setProjects([
-      {
-        id: 1,
-        title: 'Website Development',
-        status: 'in_progress',
-        freelancer: 'John Doe',
-        budget: 2500,
-        description: 'Modern responsive website with React and Node.js',
-        deadline: '2024-01-15',
-        milestones: [
-          { id: 1, title: 'Design Phase', status: 'completed', amount: 500 },
-          { id: 2, title: 'Development Phase', status: 'in_progress', amount: 1500 },
-          { id: 3, title: 'Testing & Launch', status: 'pending', amount: 500 }
-        ]
-      },
-      {
-        id: 2,
-        title: 'Mobile App UI Design',
-        status: 'open',
-        freelancer: null,
-        budget: 1200,
-        description: 'iOS and Android app UI/UX design',
-        deadline: '2024-02-01',
-        milestones: [
-          { id: 4, title: 'Wireframes', status: 'pending', amount: 400 },
-          { id: 5, title: 'UI Design', status: 'pending', amount: 600 },
-          { id: 6, title: 'Prototype', status: 'pending', amount: 200 }
-        ]
+    // Skip API call and go directly to localStorage/mock data to avoid HTML response errors
+    const loadProjects = () => {
+      try {
+        // Check for user-created projects in localStorage first
+        const userProjects = JSON.parse(localStorage.getItem('userProjects') || '[]');
+        if (userProjects.length > 0) {
+          setProjects(userProjects);
+        } else {
+          // Fallback to mock data if no user projects
+          setProjects([
+            {
+              id: 1,
+              title: 'E-commerce Website',
+              status: 'in_progress',
+              freelancer: 'John Doe',
+              budget: 3500,
+              description: 'Full-stack e-commerce platform with payment integration',
+              deadline: '2024-02-15',
+              milestones: [
+                { id: 1, title: 'Planning & Design', status: 'completed', amount: 800 },
+                { id: 2, title: 'Frontend Development', status: 'in_progress', amount: 1500 },
+                { id: 3, title: 'Backend & Payment', status: 'pending', amount: 1000 },
+                { id: 4, title: 'Testing & Deployment', status: 'pending', amount: 200 }
+              ]
+            },
+            {
+              id: 2,
+              title: 'Mobile App Development',
+              status: 'open',
+              freelancer: null,
+              budget: 2800,
+              description: 'Cross-platform mobile app for task management',
+              deadline: '2024-03-01',
+              milestones: [
+                { id: 5, title: 'UI/UX Design', status: 'pending', amount: 600 },
+                { id: 6, title: 'iOS Development', status: 'pending', amount: 1200 },
+                { id: 7, title: 'Android Development', status: 'pending', amount: 800 },
+                { id: 8, title: 'Testing & Launch', status: 'pending', amount: 200 }
+              ]
+            },
+            {
+              id: 3,
+              title: 'Data Analytics Dashboard',
+              status: 'completed',
+              freelancer: 'Jane Smith',
+              budget: 1800,
+              description: 'Interactive dashboard for business analytics',
+              deadline: '2024-01-20',
+              milestones: [
+                { id: 9, title: 'Data Analysis', status: 'completed', amount: 500 },
+                { id: 10, title: 'Dashboard Design', status: 'completed', amount: 600 },
+                { id: 11, title: 'Implementation', status: 'completed', amount: 600 },
+                { id: 12, title: 'Final Review', status: 'completed', amount: 100 }
+              ]
+            }
+          ]);
+        }
+      } catch (error) {
+        console.error('Error loading projects:', error);
+        // Final fallback to mock data
+        setProjects([
+          {
+            id: 1,
+            title: 'E-commerce Website',
+            status: 'in_progress',
+            freelancer: 'John Doe',
+            budget: 3500,
+            description: 'Full-stack e-commerce platform with payment integration',
+            deadline: '2024-02-15',
+            milestones: [
+              { id: 1, title: 'Planning & Design', status: 'completed', amount: 800 },
+              { id: 2, title: 'Frontend Development', status: 'in_progress', amount: 1500 },
+              { id: 3, title: 'Backend & Payment', status: 'pending', amount: 1000 },
+              { id: 4, title: 'Testing & Deployment', status: 'pending', amount: 200 }
+            ]
+          },
+          {
+            id: 2,
+            title: 'Mobile App Development',
+            status: 'open',
+            freelancer: null,
+            budget: 2800,
+            description: 'Cross-platform mobile app for task management',
+            deadline: '2024-03-01',
+            milestones: [
+              { id: 5, title: 'UI/UX Design', status: 'pending', amount: 600 },
+              { id: 6, title: 'iOS Development', status: 'pending', amount: 1200 },
+              { id: 7, title: 'Android Development', status: 'pending', amount: 800 },
+              { id: 8, title: 'Testing & Launch', status: 'pending', amount: 200 }
+            ]
+          },
+          {
+            id: 3,
+            title: 'Data Analytics Dashboard',
+            status: 'completed',
+            freelancer: 'Jane Smith',
+            budget: 1800,
+            description: 'Interactive dashboard for business analytics',
+            deadline: '2024-01-20',
+            milestones: [
+              { id: 9, title: 'Data Analysis', status: 'completed', amount: 500 },
+              { id: 10, title: 'Dashboard Design', status: 'completed', amount: 600 },
+              { id: 11, title: 'Implementation', status: 'completed', amount: 600 },
+              { id: 12, title: 'Final Review', status: 'completed', amount: 100 }
+            ]
+          }
+        ]);
+      } finally {
+        setLoadingProjects(false);
       }
-    ]);
-    setLoadingProjects(false);
+    };
+
+    loadProjects();
   }, []);
+
+  // Force refresh when navigating back to dashboard
+  useEffect(() => {
+    const refreshProjects = () => {
+      try {
+        // Check for user-created projects in localStorage
+        const userProjects = JSON.parse(localStorage.getItem('userProjects') || '[]');
+        if (userProjects.length > 0) {
+          setProjects(userProjects);
+        }
+        // If no user projects, keep existing mock data
+      } catch (error) {
+        console.error('Error refreshing projects:', error);
+      }
+    };
+
+    const handleFocus = () => {
+      // Refresh projects when user returns to dashboard tab
+      refreshProjects();
+    };
+
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, []);
+
+  // Update filtered projects when projects or search query changes
+  useEffect(() => {
+    // Always show all projects, but filter if there's a search query
+    if (searchQuery.trim() === '') {
+      setFilteredProjects(projects);
+    } else {
+      const filtered = projects.filter(project =>
+        project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (project.freelancer && project.freelancer.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+      setFilteredProjects(filtered);
+    }
+  }, [projects, searchQuery]);
 
   if (loading || loadingProjects) {
     return (
@@ -189,9 +312,23 @@ const ClientDashboard = () => {
               <input
                 type="text"
                 placeholder="Search projects, milestones..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
+            <button
+              onClick={() => {
+                // The search is already reactive, but we can add a search button for explicit search
+                console.log('Searching for:', searchQuery);
+              }}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center gap-2"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              Search
+            </button>
           </div>
 
           <div className="flex items-center gap-4">
@@ -225,32 +362,32 @@ const ClientDashboard = () => {
               {/* Stats Cards */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                 <div className="bg-white border border-gray-200 overflow-hidden rounded-lg p-5 shadow-sm">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0">
-                      <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold">{projects.length}</span>
-                      </div>
-                    </div>
-                    <div className="ml-5 w-0 flex-1">
-                      <dl>
-                        <dt className="text-sm font-medium text-gray-500 truncate">Total Projects</dt>
-                        <dd className="text-lg font-medium text-gray-900">{projects.length}</dd>
-                      </dl>
-                    </div>
-                  </div>
-                </div>
+                   <div className="flex items-center">
+                     <div className="flex-shrink-0">
+                       <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                         <span className="text-white font-bold">{filteredProjects.length}</span>
+                       </div>
+                     </div>
+                     <div className="ml-5 w-0 flex-1">
+                       <dl>
+                         <dt className="text-sm font-medium text-gray-500 truncate">Total Projects</dt>
+                         <dd className="text-lg font-medium text-gray-900">{filteredProjects.length}</dd>
+                       </dl>
+                     </div>
+                   </div>
+                 </div>
 
                 <div className="bg-white border border-gray-200 overflow-hidden rounded-lg p-5 shadow-sm">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
                       <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold">{projects.filter(p => p.status === 'completed').length}</span>
+                        <span className="text-white font-bold">{filteredProjects.filter(p => p.status === 'completed').length}</span>
                       </div>
                     </div>
                     <div className="ml-5 w-0 flex-1">
                       <dl>
                         <dt className="text-sm font-medium text-gray-500 truncate">Completed</dt>
-                        <dd className="text-lg font-medium text-gray-900">{projects.filter(p => p.status === 'completed').length}</dd>
+                        <dd className="text-lg font-medium text-gray-900">{filteredProjects.filter(p => p.status === 'completed').length}</dd>
                       </dl>
                     </div>
                   </div>
@@ -260,13 +397,13 @@ const ClientDashboard = () => {
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
                       <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold">{projects.filter(p => p.status === 'in_progress').length}</span>
+                        <span className="text-white font-bold">{filteredProjects.filter(p => p.status === 'in_progress').length}</span>
                       </div>
                     </div>
                     <div className="ml-5 w-0 flex-1">
                       <dl>
                         <dt className="text-sm font-medium text-gray-500 truncate">In Progress</dt>
-                        <dd className="text-lg font-medium text-gray-900">{projects.filter(p => p.status === 'in_progress').length}</dd>
+                        <dd className="text-lg font-medium text-gray-900">{filteredProjects.filter(p => p.status === 'in_progress').length}</dd>
                       </dl>
                     </div>
                   </div>
@@ -276,13 +413,13 @@ const ClientDashboard = () => {
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
                       <div className="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center">
-                        <span className="text-white font-bold">${projects.reduce((sum, p) => sum + p.budget, 0)}</span>
+                        <span className="text-white font-bold">${filteredProjects.reduce((sum, p) => sum + p.budget, 0)}</span>
                       </div>
                     </div>
                     <div className="ml-5 w-0 flex-1">
                       <dl>
                         <dt className="text-sm font-medium text-gray-500 truncate">Total Budget</dt>
-                        <dd className="text-lg font-medium text-gray-900">${projects.reduce((sum, p) => sum + p.budget, 0)}</dd>
+                        <dd className="text-lg font-medium text-gray-900">${filteredProjects.reduce((sum, p) => sum + p.budget, 0)}</dd>
                       </dl>
                     </div>
                   </div>
@@ -304,7 +441,7 @@ const ClientDashboard = () => {
                   </button>
                 </div>
 
-                {projects.length === 0 ? (
+                {filteredProjects.length === 0 ? (
                   <div className="text-center py-12">
                     <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
@@ -322,7 +459,7 @@ const ClientDashboard = () => {
                   </div>
                 ) : (
                   <ul className="divide-y divide-gray-200">
-                    {projects.map((project) => (
+                    {filteredProjects.map((project) => (
                       <li key={project.id} className="px-4 py-6 sm:px-6">
                         <div className="flex items-center justify-between">
                           <div className="flex-1">

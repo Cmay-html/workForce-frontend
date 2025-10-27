@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
       if (storedUser) {
         setUser(JSON.parse(storedUser));
       } else {
-        setUser({ email: 'user@example.com', firstName: 'John', lastName: 'Doe' });
+        setUser({ email: 'client@example.com', firstName: 'John', lastName: 'Doe' });
       }
       if (storedRole) {
         setRole(storedRole);

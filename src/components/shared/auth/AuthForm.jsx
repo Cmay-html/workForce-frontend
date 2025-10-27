@@ -116,16 +116,16 @@ const AuthForm = () => {
         // Login logic
         login({
           email: formData.email,
-          firstName: 'User', // In real app, this would come from backend
-          lastName: 'Demo'
-        });
+          firstName: 'John', // In real app, this would come from backend
+          lastName: 'Doe'
+        }, 'client');
       } else {
         // Signup logic
         login({
           email: formData.email,
           firstName: formData.firstName,
           lastName: formData.lastName
-        });
+        }, 'client');
       }
       
       navigate('/dashboard');

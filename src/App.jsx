@@ -18,12 +18,14 @@ import ProjectEditForm from "./components/client/Projects/ProjectEditForm";
 import ClientProfileForm from "./components/client/Profile/ClientProfileForm";
 import ClientSettingsForm from "./components/client/Settings/ClientSettingsForm";
 import CreateProjectPage from "./pages/client/Projects/create";
+import ProjectDetailsPage from "./pages/client/Projects/[projectId]";
 import CreateReviewPage from "./pages/client/reviews/create";
 import ChatPage from "./pages/shared/ChatPage";
 import FreelancerProjectList from "./components/freelancer/Projects/ProjectList";
 import ProjectProposalForm from "./components/freelancer/Projects/ProjectProposalForm";
 import ProjectProposals from "./components/client/Projects/ProjectProposals";
 import MilestonesOverviewPage from "./components/client/Milestones/index";
+import FreelancersList from "./components/client/FreelancersList";
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -181,6 +183,14 @@ function App() {
               }
             />
             <Route
+              path="/client/projects/:projectId"
+              element={
+                <ClientRoute>
+                  <ProjectDetailsPage />
+                </ClientRoute>
+              }
+            />
+            <Route
               path="/client/projects/:projectId/edit"
               element={
                 <ClientRoute>
@@ -268,6 +278,16 @@ function App() {
                 <FreelancerRoute>
                   <ProjectProposalForm />
                 </FreelancerRoute>
+              }
+            />
+
+            {/* Freelancers Browse Route */}
+            <Route
+              path="/freelancers"
+              element={
+                <ClientRoute>
+                  <FreelancersList />
+                </ClientRoute>
               }
             />
 

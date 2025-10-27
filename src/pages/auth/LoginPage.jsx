@@ -16,7 +16,7 @@ const LoginPage = () => {
         email: formData.email,
         firstName: 'John',
         lastName: 'Doe'
-      });
+      }, 'client');
       setLoading(false);
       navigate('/dashboard');
     }, 1000);
