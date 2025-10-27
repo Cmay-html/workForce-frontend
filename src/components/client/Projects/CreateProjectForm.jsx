@@ -36,6 +36,7 @@ const CreateProjectForm = () => {
         </label>
         <input
           type="text"
+          id="project-title"
           name="title"
           value={formData.title}
           onChange={handleChange}
@@ -49,6 +50,7 @@ const CreateProjectForm = () => {
           Description
         </label>
         <textarea
+          id="project-description"
           name="description"
           value={formData.description}
           onChange={handleChange}
@@ -64,6 +66,7 @@ const CreateProjectForm = () => {
         </label>
         <input
           type="number"
+          id="project-budget"
           name="budget"
           value={formData.budget}
           onChange={handleChange}
@@ -78,6 +81,7 @@ const CreateProjectForm = () => {
         </label>
         <input
           type="date"
+          id="project-deadline"
           name="deadline"
           value={formData.deadline}
           onChange={handleChange}
