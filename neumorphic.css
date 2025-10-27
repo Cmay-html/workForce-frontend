@@ -1,0 +1,147 @@
+.neumorphic {
+  background: #e0e5ec;
+  border-radius: 20px;
+  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #ffffff;
+}
+
+.neumorphic-inset {
+  background: #e0e5ec;
+  border-radius: 20px;
+  box-shadow: inset 10px 10px 20px #a3b1c6, inset -10px -10px 20px #ffffff;
+}
+
+.neumorphic-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 300px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #ffffff;
+  background: #e0e5ec;
+  border-radius: 20px;
+}
+
+.neumorphic-input {
+  width: 100%;
+  margin: 10px 0;
+  padding: 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #ffffff;
+  background: #e0e5ec;
+}
+
+.neumorphic-button {
+  margin-top: 15px;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 20px;
+  background: #e0e5ec;
+  font-size: 16px;
+  box-shadow: 10px 10px 20px #a3b1c6, -10px -10px 20px #ffffff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.neumorphic-button:active {
+  box-shadow: inset 10px 10px 20px #a3b1c6, inset -10px -10px 20px #ffffff;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+  width: 200px;
+  border-radius: 10px;
+  -webkit-box-reflect: below 2.5px linear-gradient(transparent, transparent, rgba(3, 3, 3, 0.2));
+  border: 3px ridge #a5b1c2;
+  margin: 5px;
+}
+
+.card {
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+
+.container:hover > :not(:hover) {
+  opacity: 0.3;
+}
+
+.card:hover {
+  transform: scale(1.1);
+  filter: grayscale(0%);
+}
+
+.neumorphic-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 15px 15px 30px #a3b1c6, -15px -15px 30px #ffffff;
+}
+
+.neumorphic-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 8px 8px 16px #a3b1c6, -8px -8px 16px #ffffff;
+}
+
+.neumorphic-button:active {
+  transform: translateY(0);
+  box-shadow: inset 8px 8px 16px #a3b1c6, inset -8px -8px 16px #ffffff;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.float-animation {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* 3D Enhancements */
+.neumorphic-3d {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.neumorphic-card-3d {
+  transform: rotateX(0deg) rotateY(0deg);
+  transition: transform 0.3s ease;
+}
+
+.neumorphic-card-3d:hover {
+  transform: rotateX(10deg) rotateY(10deg) translateZ(20px);
+  box-shadow: 20px 20px 40px #a3b1c6, -20px -20px 40px #ffffff;
+}
+
+.neumorphic-button-3d {
+  transform: translateZ(0);
+  transition: transform 0.2s ease;
+}
+
+.neumorphic-button-3d:hover {
+  transform: translateZ(10px) scale(1.05);
+}
+
+.neumorphic-button-3d:active {
+  transform: translateZ(5px) scale(0.95);
+}
+
+@keyframes rotate3d {
+  0% { transform: rotateX(0deg) rotateY(0deg); }
+  25% { transform: rotateX(5deg) rotateY(5deg); }
+  50% { transform: rotateX(0deg) rotateY(10deg); }
+  75% { transform: rotateX(-5deg) rotateY(5deg); }
+  100% { transform: rotateX(0deg) rotateY(0deg); }
+}
+
+.rotate-3d-animation {
+  animation: rotate3d 4s ease-in-out infinite;
+}
