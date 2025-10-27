@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
       if (storedRole) {
         setRole(storedRole);
       } else {
-        setRole('client'); // Default role
+        setRole('freelancer'); // Default role for new users
       }
       setIsAuthenticated(true);
     } else {

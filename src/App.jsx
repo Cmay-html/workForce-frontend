@@ -23,6 +23,12 @@ import CreateReviewPage from "./pages/client/reviews/create";
 import ChatPage from "./pages/shared/ChatPage";
 import FreelancerProjectList from "./components/freelancer/Projects/ProjectList";
 import ProjectProposalForm from "./components/freelancer/Projects/ProjectProposalForm";
+import FreelancerDashboard from "./pages/freelancer/Dashboard";
+import FreelancerProposals from "./pages/freelancer/Proposals";
+import ActiveProjects from "./pages/freelancer/ActiveProjects";
+import MilestoneSubmission from "./pages/freelancer/MilestoneSubmission";
+import PaymentTracking from "./pages/freelancer/PaymentTracking";
+import ProfilePortfolio from "./pages/freelancer/ProfilePortfolio";
 import ProjectProposals from "./components/client/Projects/ProjectProposals";
 import MilestonesOverviewPage from "./components/client/Milestones/index";
 import FreelancersList from "./components/client/FreelancersList";
@@ -265,6 +271,22 @@ function App() {
 
             {/* Freelancer Routes */}
             <Route
+              path="/freelancer/dashboard"
+              element={
+                <FreelancerRoute>
+                  <FreelancerDashboard />
+                </FreelancerRoute>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <FreelancerRoute>
+                  <FreelancerDashboard />
+                </FreelancerRoute>
+              }
+            />
+            <Route
               path="/freelancer/projects"
               element={
                 <FreelancerRoute>
@@ -277,6 +299,60 @@ function App() {
               element={
                 <FreelancerRoute>
                   <ProjectProposalForm />
+                </FreelancerRoute>
+              }
+            />
+            <Route
+              path="/freelancer/proposals"
+              element={
+                <FreelancerRoute>
+                  <FreelancerProposals />
+                </FreelancerRoute>
+              }
+            />
+            <Route
+              path="/freelancer/active-projects"
+              element={
+                <FreelancerRoute>
+                  <ActiveProjects />
+                </FreelancerRoute>
+              }
+            />
+            <Route
+              path="/freelancer/projects/:projectId/milestones"
+              element={
+                <FreelancerRoute>
+                  <MilestoneSubmission />
+                </FreelancerRoute>
+              }
+            />
+            <Route
+              path="/freelancer/time-tracking"
+              element={
+                <FreelancerRoute>
+                  <div className="max-w-6xl mx-auto py-8">
+                    <h1 className="text-3xl font-bold text-gray-800">Time Tracking</h1>
+                    <p className="text-gray-600 mt-2">Track your work hours and manage time entries</p>
+                    <div className="bg-white rounded-lg shadow-md p-8 mt-6 text-center">
+                      <p className="text-gray-500">Time tracking feature coming soon...</p>
+                    </div>
+                  </div>
+                </FreelancerRoute>
+              }
+            />
+            <Route
+              path="/freelancer/payments"
+              element={
+                <FreelancerRoute>
+                  <PaymentTracking />
+                </FreelancerRoute>
+              }
+            />
+            <Route
+              path="/freelancer/profile"
+              element={
+                <FreelancerRoute>
+                  <ProfilePortfolio />
                 </FreelancerRoute>
               }
             />
