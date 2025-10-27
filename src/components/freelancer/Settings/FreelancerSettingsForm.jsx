@@ -35,7 +35,7 @@ const FreelancerSettingsForm = () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         setStatus({ success: "Settings updated successfully!" });
-      } catch (error) {
+      } catch {
         setStatus({ error: "Failed to update settings. Please try again." });
       } finally {
         setSubmitting(false);

@@ -128,15 +128,15 @@ const FreelancerRegistrationForm = () => {
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
         // Simulate login with freelancer role
-        login({
+        login(values, null, {
           ...values,
           role: "freelancer",
           id: Date.now().toString(),
-        });
+        }, "freelancer");
 
         setStatus({ success: "Freelancer profile created successfully!" });
         setTimeout(() => navigate("/freelancer/projects"), 1500);
-      } catch (error) {
+      } catch {
         setStatus({ error: "Registration failed. Please try again." });
       } finally {
         setSubmitting(false);

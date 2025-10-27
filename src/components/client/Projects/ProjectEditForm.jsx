@@ -8,6 +8,7 @@ const ProjectEditForm = () => {
   const navigate = useNavigate();
   const { projectId } = useParams();
   const [loading, setLoading] = useState(true);
+  const isCreateMode = !projectId; // If no projectId, we're in create mode
 
   const categories = [
     "Web Development",
@@ -39,15 +40,28 @@ const ProjectEditForm = () => {
   // Mock project data - would come from API
   useEffect(() => {
     const fetchProject = async () => {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      if (!isCreateMode) {
+        // Only fetch if editing existing project
+        // Simulate API call
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      }
       setLoading(false);
     };
     fetchProject();
-  }, [projectId]);
+  }, [projectId, isCreateMode]);
 
   const formik = useFormik({
-    initialValues: {
+    initialValues: isCreateMode ? {
+      title: "",
+      description: "",
+      category: "",
+      budget: "",
+      deadline: "",
+      duration: "",
+      experienceLevel: "",
+      skills: [],
+      status: "accepting_proposals",
+    } : {
       title: "E-commerce Website Development",
       description:
         "Build a modern e-commerce platform with React and Node.js. Need responsive design and payment integration. Looking for an experienced developer who can deliver high-quality code.",
@@ -83,14 +97,20 @@ const ProjectEditForm = () => {
     }),
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        console.log("Updating project:", values);
-        // API call would go here
+        if (isCreateMode) {
+          console.log("Creating project:", values);
+          // API call to create project would go here
+          setStatus({ success: "Project created successfully!" });
+          setTimeout(() => navigate("/client/projects"), 1500);
+        } else {
+          console.log("Updating project:", values);
+          // API call to update project would go here
+          setStatus({ success: "Project updated successfully!" });
+          setTimeout(() => navigate("/client/projects"), 1500);
+        }
         await new Promise((resolve) => setTimeout(resolve, 1500));
-
-        setStatus({ success: "Project updated successfully!" });
-        setTimeout(() => navigate("/client/projects"), 1500);
-      } catch (error) {
-        setStatus({ error: "Failed to update project. Please try again." });
+      } catch {
+        setStatus({ error: `Failed to ${isCreateMode ? 'create' : 'update'} project. Please try again.` });
       } finally {
         setSubmitting(false);
       }
@@ -115,22 +135,23 @@ const ProjectEditForm = () => {
   }
 
   return (
-    <div className="main-content">
-      <div className="top-bar">
-        <div>
-          <h1
-            style={{
-              fontSize: "24px",
-              fontWeight: "700",
-              color: "var(--text-primary)",
-            }}
-          >
-            Edit Project
-          </h1>
-          <p style={{ color: "var(--text-secondary)", marginTop: "8px" }}>
-            Update your project details and requirements
-          </p>
-        </div>
+    <div className="main-content" style={{ minWidth: '1024px' }}>
+      <div className="mb-6">
+        <button
+          onClick={() => navigate(isCreateMode ? '/dashboard' : '/client/projects')}
+          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors duration-200"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back to {isCreateMode ? 'Dashboard' : 'Projects'}
+        </button>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          {isCreateMode ? 'Create New Project' : 'Edit Project'}
+        </h1>
+        <p className="text-gray-600">
+          {isCreateMode ? 'Fill in the details below to create a new project' : 'Update your project details and requirements'}
+        </p>
       </div>
 
       <div className="chart-card">
@@ -164,88 +185,73 @@ const ProjectEditForm = () => {
           </div>
         )}
 
-        <form onSubmit={formik.handleSubmit}>
-          {/* Project Status */}
-          <div style={{ marginBottom: "24px" }}>
-            <label className="form-label">Project Status</label>
-            <div style={{ display: "flex", gap: "20px", marginTop: "8px" }}>
-              <label
-                style={{ display: "flex", alignItems: "center", gap: "8px" }}
-              >
-                <input
-                  type="radio"
-                  name="status"
-                  value="accepting_proposals"
-                  checked={formik.values.status === "accepting_proposals"}
-                  onChange={formik.handleChange}
-                />
-                Accepting Proposals
-              </label>
-              <label
-                style={{ display: "flex", alignItems: "center", gap: "8px" }}
-              >
-                <input
-                  type="radio"
-                  name="status"
-                  value="paused"
-                  checked={formik.values.status === "paused"}
-                  onChange={formik.handleChange}
-                />
-                Paused
-              </label>
-              <label
-                style={{ display: "flex", alignItems: "center", gap: "8px" }}
-              >
-                <input
-                  type="radio"
-                  name="status"
-                  value="closed"
-                  checked={formik.values.status === "closed"}
-                  onChange={formik.handleChange}
-                />
-                Closed
-              </label>
-            </div>
-          </div>
-
-          {/* Project Title & Category */}
-          <div style={{ marginBottom: "24px" }}>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "20px",
-              }}
-            >
+        <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
+          <form onSubmit={formik.handleSubmit} className="space-y-6">
+            {/* Project Status - Only show when editing */}
+            {!isCreateMode && (
               <div>
-                <label className="form-label">Project Title *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-3">Project Status</label>
+                <div className="flex gap-6">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="status"
+                      value="accepting_proposals"
+                      checked={formik.values.status === "accepting_proposals"}
+                      onChange={formik.handleChange}
+                      className="text-blue-600 focus:ring-blue-500"
+                    />
+                    <span className="text-sm text-gray-700">Accepting Proposals</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="status"
+                      value="paused"
+                      checked={formik.values.status === "paused"}
+                      onChange={formik.handleChange}
+                      className="text-blue-600 focus:ring-blue-500"
+                    />
+                    <span className="text-sm text-gray-700">Paused</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="status"
+                      value="closed"
+                      checked={formik.values.status === "closed"}
+                      onChange={formik.handleChange}
+                      className="text-blue-600 focus:ring-blue-500"
+                    />
+                    <span className="text-sm text-gray-700">Closed</span>
+                  </label>
+                </div>
+              </div>
+            )}
+
+            {/* Project Title & Category */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Project Title *</label>
                 <input
                   type="text"
                   name="title"
-                  className="form-input"
-                  placeholder="E-commerce Website Development"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter project title"
                   value={formik.values.title}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.title && formik.errors.title && (
-                  <div
-                    style={{
-                      color: "#dc2626",
-                      fontSize: "14px",
-                      marginTop: "4px",
-                    }}
-                  >
-                    {formik.errors.title}
-                  </div>
+                  <p className="mt-1 text-sm text-red-600">{formik.errors.title}</p>
                 )}
               </div>
 
               <div>
-                <label className="form-label">Category *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
                 <select
                   name="category"
-                  className="form-input"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   value={formik.values.category}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -258,102 +264,66 @@ const ProjectEditForm = () => {
                   ))}
                 </select>
                 {formik.touched.category && formik.errors.category && (
-                  <div
-                    style={{
-                      color: "#dc2626",
-                      fontSize: "14px",
-                      marginTop: "4px",
-                    }}
-                  >
-                    {formik.errors.category}
-                  </div>
+                  <p className="mt-1 text-sm text-red-600">{formik.errors.category}</p>
                 )}
               </div>
             </div>
-          </div>
 
-          {/* Project Description */}
-          <div style={{ marginBottom: "24px" }}>
-            <label className="form-label">Project Description *</label>
-            <textarea
-              name="description"
-              className="form-input"
-              rows="6"
-              placeholder="Describe your project in detail..."
-              value={formik.values.description}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            {formik.touched.description && formik.errors.description && (
-              <div
-                style={{ color: "#dc2626", fontSize: "14px", marginTop: "4px" }}
-              >
-                {formik.errors.description}
-              </div>
-            )}
-          </div>
+            {/* Project Description */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Project Description *</label>
+              <textarea
+                name="description"
+                rows="6"
+                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical"
+                placeholder="Describe your project in detail..."
+                value={formik.values.description}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.touched.description && formik.errors.description && (
+                <p className="mt-1 text-sm text-red-600">{formik.errors.description}</p>
+              )}
+            </div>
 
-          {/* Budget, Deadline & Duration */}
-          <div style={{ marginBottom: "24px" }}>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr",
-                gap: "20px",
-              }}
-            >
+            {/* Budget, Deadline & Duration */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <label className="form-label">Budget ($) *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Budget ($) *</label>
                 <input
                   type="number"
                   name="budget"
-                  className="form-input"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="5000"
                   value={formik.values.budget}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.budget && formik.errors.budget && (
-                  <div
-                    style={{
-                      color: "#dc2626",
-                      fontSize: "14px",
-                      marginTop: "4px",
-                    }}
-                  >
-                    {formik.errors.budget}
-                  </div>
+                  <p className="mt-1 text-sm text-red-600">{formik.errors.budget}</p>
                 )}
               </div>
 
               <div>
-                <label className="form-label">Deadline *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Deadline *</label>
                 <input
                   type="date"
                   name="deadline"
-                  className="form-input"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   value={formik.values.deadline}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.deadline && formik.errors.deadline && (
-                  <div
-                    style={{
-                      color: "#dc2626",
-                      fontSize: "14px",
-                      marginTop: "4px",
-                    }}
-                  >
-                    {formik.errors.deadline}
-                  </div>
+                  <p className="mt-1 text-sm text-red-600">{formik.errors.deadline}</p>
                 )}
               </div>
 
               <div>
-                <label className="form-label">Duration *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Duration *</label>
                 <select
                   name="duration"
-                  className="form-input"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   value={formik.values.duration}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -366,174 +336,112 @@ const ProjectEditForm = () => {
                   ))}
                 </select>
                 {formik.touched.duration && formik.errors.duration && (
-                  <div
-                    style={{
-                      color: "#dc2626",
-                      fontSize: "14px",
-                      marginTop: "4px",
-                    }}
-                  >
-                    {formik.errors.duration}
-                  </div>
+                  <p className="mt-1 text-sm text-red-600">{formik.errors.duration}</p>
                 )}
               </div>
             </div>
-          </div>
 
-          {/* Experience Level */}
-          <div style={{ marginBottom: "24px" }}>
-            <label className="form-label">Required Experience Level *</label>
-            <div style={{ display: "flex", gap: "20px", marginTop: "8px" }}>
-              {experienceLevels.map((level) => (
-                <label
-                  key={level}
-                  style={{ display: "flex", alignItems: "center", gap: "8px" }}
-                >
-                  <input
-                    type="radio"
-                    name="experienceLevel"
-                    value={level}
-                    checked={formik.values.experienceLevel === level}
-                    onChange={formik.handleChange}
-                  />
-                  {level}
-                </label>
-              ))}
-            </div>
-            {formik.touched.experienceLevel &&
-              formik.errors.experienceLevel && (
-                <div
-                  style={{
-                    color: "#dc2626",
-                    fontSize: "14px",
-                    marginTop: "4px",
-                  }}
-                >
-                  {formik.errors.experienceLevel}
-                </div>
+            {/* Experience Level */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">Required Experience Level *</label>
+              <div className="flex gap-6">
+                {experienceLevels.map((level) => (
+                  <label key={level} className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="experienceLevel"
+                      value={level}
+                      checked={formik.values.experienceLevel === level}
+                      onChange={formik.handleChange}
+                      className="text-blue-600 focus:ring-blue-500"
+                    />
+                    <span className="text-sm text-gray-700">{level}</span>
+                  </label>
+                ))}
+              </div>
+              {formik.touched.experienceLevel && formik.errors.experienceLevel && (
+                <p className="mt-1 text-sm text-red-600">{formik.errors.experienceLevel}</p>
               )}
-          </div>
+            </div>
 
-          {/* Required Skills */}
-          <div style={{ marginBottom: "32px" }}>
-            <label className="form-label">Required Skills</label>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-                gap: "12px",
-                marginTop: "12px",
-              }}
-            >
-              {skills.map((skill) => (
-                <label
-                  key={skill}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    padding: "8px 12px",
-                    background: formik.values.skills.includes(skill)
-                      ? "var(--secondary-white)"
-                      : "transparent",
-                    border: `1px solid ${
+            {/* Required Skills */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">Required Skills</label>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {skills.map((skill) => (
+                  <label
+                    key={skill}
+                    className={`flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition-colors ${
                       formik.values.skills.includes(skill)
-                        ? "var(--accent-blue)"
-                        : "var(--border-light)"
-                    }`,
-                    borderRadius: "var(--radius-sm)",
-                    cursor: "pointer",
-                  }}
+                        ? 'border-blue-500 bg-blue-50 text-blue-700'
+                        : 'border-gray-300 hover:border-gray-400'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={formik.values.skills.includes(skill)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          formik.setFieldValue("skills", [
+                            ...formik.values.skills,
+                            skill,
+                          ]);
+                        } else {
+                          formik.setFieldValue(
+                            "skills",
+                            formik.values.skills.filter((s) => s !== skill)
+                          );
+                        }
+                      }}
+                      className="hidden"
+                    />
+                    <span className="text-sm">{skill}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Submit Buttons */}
+            <div className="flex justify-between items-center pt-6 border-t border-gray-200">
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => navigate(isCreateMode ? '/dashboard' : '/client/projects')}
+                  className="px-6 py-3 border border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-50 transition-colors duration-200"
                 >
-                  <input
-                    type="checkbox"
-                    checked={formik.values.skills.includes(skill)}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        formik.setFieldValue("skills", [
-                          ...formik.values.skills,
-                          skill,
-                        ]);
-                      } else {
-                        formik.setFieldValue(
-                          "skills",
-                          formik.values.skills.filter((s) => s !== skill)
-                        );
+                  Cancel
+                </button>
+                {!isCreateMode && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          "Are you sure you want to delete this project? This action cannot be undone."
+                        )
+                      ) {
+                        // Delete project logic
+                        console.log("Deleting project:", projectId);
+                        navigate("/client/projects");
                       }
                     }}
-                    style={{ display: "none" }}
-                  />
-                  {skill}
-                </label>
-              ))}
-            </div>
-          </div>
+                    className="px-6 py-3 border border-red-300 rounded-md text-red-700 font-medium hover:bg-red-50 transition-colors duration-200"
+                  >
+                    Delete Project
+                  </button>
+                )}
+              </div>
 
-          {/* Submit Buttons */}
-          <div
-            style={{
-              display: "flex",
-              gap: "12px",
-              justifyContent: "space-between",
-              paddingTop: "24px",
-              borderTop: "1px solid var(--border-light)",
-            }}
-          >
-            <div style={{ display: "flex", gap: "12px" }}>
               <button
-                type="button"
-                onClick={() => navigate("/client/projects")}
-                style={{
-                  background: "var(--secondary-white)",
-                  color: "var(--text-primary)",
-                  border: "1px solid var(--border-light)",
-                  borderRadius: "var(--radius-sm)",
-                  padding: "12px 24px",
-                  fontSize: "16px",
-                  fontWeight: "500",
-                  cursor: "pointer",
-                }}
+                type="submit"
+                className="px-8 py-3 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                disabled={formik.isSubmitting}
               >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  if (
-                    window.confirm(
-                      "Are you sure you want to delete this project? This action cannot be undone."
-                    )
-                  ) {
-                    // Delete project logic
-                    console.log("Deleting project:", projectId);
-                    navigate("/client/projects");
-                  }
-                }}
-                style={{
-                  background: "#fef2f2",
-                  color: "#dc2626",
-                  border: "1px solid #fecaca",
-                  borderRadius: "var(--radius-sm)",
-                  padding: "12px 24px",
-                  fontSize: "16px",
-                  fontWeight: "500",
-                  cursor: "pointer",
-                }}
-              >
-                Delete Project
+                {formik.isSubmitting ? (isCreateMode ? "Creating..." : "Updating...") : (isCreateMode ? "Create Project" : "Update Project")}
               </button>
             </div>
-
-            <button
-              type="submit"
-              className="login-btn"
-              style={{ padding: "12px 32px", margin: 0 }}
-              disabled={formik.isSubmitting}
-            >
-              {formik.isSubmitting ? "Updating..." : "Update Project"}
-            </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );

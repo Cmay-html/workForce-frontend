@@ -58,7 +58,7 @@ const ReviewForm = () => {
         // API call would go here
         setStatus({ success: "Review submitted successfully!" });
         setTimeout(() => navigate("/client/reviews"), 1500);
-      } catch (error) {
+      } catch {
         setStatus({ error: "Failed to submit review. Please try again." });
       } finally {
         setSubmitting(false);

@@ -1,7 +1,9 @@
-// src/contexts/AuthContext.jsx
-import React, { createContext, useState, useContext, useEffect } from 'react';
 
-export const AuthContext = createContext();
+import React, { createContext, useState, useEffect } from 'react';
+
+const AuthContext = createContext();
+
+export { AuthContext };
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -28,6 +30,11 @@ export const AuthProvider = ({ children }) => {
         setRole('client'); // Default role
       }
       setIsAuthenticated(true);
+    } else {
+      // Clear any stale data if no token
+      setUser(null);
+      setRole(null);
+      setIsAuthenticated(false);
     }
     setLoading(false);
   }, []);

@@ -53,7 +53,7 @@ const ClientSettingsForm = () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         setStatus({ success: "Settings updated successfully!" });
-      } catch (error) {
+      } catch {
         setStatus({ error: "Failed to update settings. Please try again." });
       } finally {
         setSubmitting(false);
@@ -434,22 +434,21 @@ const ClientSettingsForm = () => {
   };
 
   return (
-    <div className="main-content">
-      <div className="top-bar">
-        <div>
-          <h1
-            style={{
-              fontSize: "24px",
-              fontWeight: "700",
-              color: "var(--text-primary)",
-            }}
-          >
-            Client Settings
-          </h1>
-          <p style={{ color: "var(--text-secondary)", marginTop: "8px" }}>
-            Manage your account preferences and security
-          </p>
-        </div>
+    <div className="main-content" style={{ minWidth: '1024px' }}>
+      <div className="mb-6">
+        <button
+          onClick={() => navigate('/dashboard')}
+          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors duration-200"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back to Dashboard
+        </button>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          Client Settings
+        </h1>
+        <p className="text-gray-600">Manage your account preferences and security</p>
       </div>
 
       <div style={{ display: "flex", gap: "24px" }}>
@@ -457,18 +456,19 @@ const ClientSettingsForm = () => {
         <div
           style={{
             width: "250px",
-            background: "var(--primary-white)",
-            borderRadius: "var(--radius-md)",
-            border: "1px solid var(--border-light)",
+            background: "#ffffff",
+            borderRadius: "12px",
+            border: "1px solid #e5e7eb",
             padding: "20px",
+            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
           }}
         >
           <nav>
             <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
               {[
-                { id: "security", label: "Security", icon: "🔒" },
-                { id: "privacy", label: "Privacy", icon: "👁️" },
-                { id: "notifications", label: "Notifications", icon: "🔔" },
+                { id: "security", label: "Security" },
+                { id: "privacy", label: "Privacy" },
+                { id: "notifications", label: "Notifications" },
               ].map((tab) => (
                 <li key={tab.id} style={{ marginBottom: "8px" }}>
                   <button
@@ -479,23 +479,23 @@ const ClientSettingsForm = () => {
                       padding: "12px 16px",
                       background:
                         activeTab === tab.id
-                          ? "var(--secondary-white)"
+                          ? "#f3f4f6"
                           : "transparent",
                       border: "none",
-                      borderRadius: "var(--radius-sm)",
+                      borderRadius: "8px",
                       cursor: "pointer",
                       fontSize: "14px",
                       fontWeight: activeTab === tab.id ? "600" : "400",
                       color:
                         activeTab === tab.id
-                          ? "var(--accent-blue)"
-                          : "var(--text-primary)",
+                          ? "#3b82f6"
+                          : "#1f2937",
                       display: "flex",
                       alignItems: "center",
                       gap: "12px",
+                      transition: "all 0.2s ease",
                     }}
                   >
-                    <span>{tab.icon}</span>
                     {tab.label}
                   </button>
                 </li>
@@ -552,7 +552,7 @@ const ClientSettingsForm = () => {
               >
                 <button
                   type="button"
-                  onClick={() => navigate("/client/dashboard")}
+                  onClick={() => window.location.href = '/dashboard'}
                   style={{
                     background: "var(--secondary-white)",
                     color: "var(--text-primary)",

@@ -107,7 +107,7 @@ const ProjectForm = () => {
 
         setStatus({ success: "Project created successfully!" });
         setTimeout(() => navigate("/client/projects"), 1500);
-      } catch (error) {
+      } catch {
         setStatus({ error: "Failed to create project. Please try again." });
       } finally {
         setSubmitting(false);

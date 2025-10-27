@@ -1,32 +1,33 @@
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const QuickActions = () => {
+  const navigate = useNavigate();
+
   const actions = [
     {
       title: "Create Project",
       description: "Start a new project",
-      link: "/client/projects/create",
-      gradient:
-        "linear-gradient(135deg, var(--accent-blue), var(--accent-purple))",
+      action: () => navigate("/client/projects/create"),
+      gradient: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
     },
     {
-      title: "Review Milestones",
-      description: "Approve pending work",
-      link: "/client/milestones",
+      title: "Add Milestone",
+      description: "Create project milestones",
+      action: () => navigate("/client/milestones"),
       gradient: "linear-gradient(135deg, #00d4aa, #0099ff)",
     },
     {
       title: "Manage Projects",
       description: "View all your projects",
-      link: "/client/projects",
+      action: () => navigate("/client/projects"),
       gradient: "linear-gradient(135deg, #8b5cf6, #06b6d4)",
     },
     {
       title: "Leave Review",
       description: "Review freelancers",
-      link: "/client/reviews/create",
+      action: () => navigate("/client/reviews/create"),
       gradient: "linear-gradient(135deg, #ff6b6b, #ffa726)",
     },
   ];
@@ -34,7 +35,34 @@ const QuickActions = () => {
   return (
     <div className="quick-actions" style={{ marginBottom: "24px" }}>
       {actions.map((action, index) => (
-        <Link key={index} to={action.link} className="action-btn">
+        <button
+          key={index}
+          onClick={action.action}
+          className="action-btn"
+          style={{
+            background: "#ffffff",
+            border: "2px solid #e5e7eb",
+            borderRadius: "12px",
+            padding: "20px",
+            textAlign: "center",
+            cursor: "pointer",
+            transition: "all 0.2s ease",
+            textDecoration: "none",
+            color: "#1f2937",
+            boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+            width: "100%",
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.borderColor = "#3b82f6";
+            e.target.style.transform = "translateY(-2px)";
+            e.target.style.boxShadow = "0 4px 12px rgba(59, 130, 246, 0.15)";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.borderColor = "#e5e7eb";
+            e.target.style.transform = "translateY(0)";
+            e.target.style.boxShadow = "0 1px 3px 0 rgba(0, 0, 0, 0.1)";
+          }}
+        >
           <div
             className="action-icon"
             style={{
@@ -43,6 +71,7 @@ const QuickActions = () => {
               WebkitTextFillColor: "transparent",
               fontSize: "24px",
               fontWeight: "bold",
+              marginBottom: "8px",
             }}
           >
             {action.title.split(" ")[0]}
@@ -52,7 +81,7 @@ const QuickActions = () => {
               fontSize: "16px",
               fontWeight: "600",
               marginBottom: "8px",
-              color: "var(--text-primary)",
+              color: "#1f2937",
             }}
           >
             {action.title}
@@ -60,13 +89,13 @@ const QuickActions = () => {
           <p
             style={{
               fontSize: "14px",
-              color: "var(--text-secondary)",
+              color: "#6b7280",
               lineHeight: "1.4",
             }}
           >
             {action.description}
           </p>
-        </Link>
+        </button>
       ))}
     </div>
   );

@@ -12,10 +12,29 @@ const CreateProjectForm = () => {
     requirements: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Project created:", formData);
-    // Here you would typically make an API call to create the project
+    try {
+      console.log("Project created:", formData);
+      // Here you would typically make an API call to create the project
+      // For now, we'll simulate success
+      alert("Project created successfully!");
+      // Reset form
+      setFormData({
+        title: "",
+        description: "",
+        category: "",
+        budget: "",
+        deadline: "",
+        skills: [],
+        requirements: "",
+      });
+      // Navigate back to dashboard to see the new project
+      window.location.href = '/dashboard';
+    } catch (error) {
+      console.error("Error creating project:", error);
+      alert("Failed to create project. Please try again.");
+    }
   };
 
   const handleChange = (e) => {

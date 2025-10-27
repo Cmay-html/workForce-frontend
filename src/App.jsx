@@ -8,7 +8,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { useAuth } from "./hooks/useAuth";
 import LoginPage from "./pages/auth/LoginPage";
 import RegistrationPage from "./pages/auth/RegistrationPage";
-import Dashboard from "./pages/client/Dashboard";
+import ClientDashboard from "./pages/client/Dashboard";
 import AuthForm from "./components/shared/auth/AuthForm";
 import DashboardLayout from "./components/shared/dashboard/DashboardLayout";
 import ClientDashboardPage from "./pages/client/Dashboard";
@@ -19,6 +19,7 @@ import ClientProfileForm from "./components/client/Profile/ClientProfileForm";
 import ClientSettingsForm from "./components/client/Settings/ClientSettingsForm";
 import CreateProjectPage from "./pages/client/Projects/create";
 import CreateReviewPage from "./pages/client/reviews/create";
+import ChatPage from "./pages/shared/ChatPage";
 import FreelancerProjectList from "./components/freelancer/Projects/ProjectList";
 import ProjectProposalForm from "./components/freelancer/Projects/ProjectProposalForm";
 import ProjectProposals from "./components/client/Projects/ProjectProposals";
@@ -114,7 +115,7 @@ const RootRedirect = () => {
 function App() {
   return (
     <AuthProvider>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-white" style={{ minWidth: '1024px' }}>
         <Routes>
             {/* Auth routes - only accessible when logged out */}
             <Route
@@ -144,25 +145,7 @@ function App() {
               }
             />
 
-            {/* Protected dashboard routes */}
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/dashboard-layout"
-              element={
-                <ProtectedRoute>
-                  <DashboardLayout />
-                </ProtectedRoute>
-              }
-            />
-
-            {/* Client Routes */}
+            {/* Client Dashboard - Main dashboard route */}
             <Route
               path="/client/dashboard"
               element={
@@ -171,6 +154,16 @@ function App() {
                 </ClientRoute>
               }
             />
+            <Route
+              path="/dashboard"
+              element={
+                <ClientRoute>
+                  <ClientDashboardPage />
+                </ClientRoute>
+              }
+            />
+
+            {/* Project Management Routes */}
             <Route
               path="/client/projects"
               element={
@@ -203,6 +196,8 @@ function App() {
                 </ClientRoute>
               }
             />
+
+            {/* Milestone Management Routes */}
             <Route
               path="/client/milestones"
               element={
@@ -219,6 +214,8 @@ function App() {
                 </ClientRoute>
               }
             />
+
+            {/* Review Management Routes */}
             <Route
               path="/client/reviews/create"
               element={
@@ -227,6 +224,8 @@ function App() {
                 </ClientRoute>
               }
             />
+
+            {/* Profile & Settings Routes */}
             <Route
               path="/client/profile"
               element={
@@ -240,6 +239,16 @@ function App() {
               element={
                 <ClientRoute>
                   <ClientSettingsForm />
+                </ClientRoute>
+              }
+            />
+
+            {/* Project Collaboration Routes */}
+            <Route
+              path="/projects/:projectId/chat"
+              element={
+                <ClientRoute>
+                  <ChatPage />
                 </ClientRoute>
               }
             />

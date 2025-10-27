@@ -44,7 +44,7 @@ const MilestoneSubmissionForm = () => {
 
         setStatus({ success: "Milestone submitted successfully!" });
         setTimeout(() => navigate(`/freelancer/projects/${projectId}`), 1500);
-      } catch (error) {
+      } catch {
         setStatus({ error: "Failed to submit milestone. Please try again." });
       } finally {
         setSubmitting(false);
@@ -95,22 +95,21 @@ const MilestoneSubmissionForm = () => {
   };
 
   return (
-    <div className="main-content">
-      <div className="top-bar">
-        <div>
-          <h1
-            style={{
-              fontSize: "24px",
-              fontWeight: "700",
-              color: "var(--text-primary)",
-            }}
-          >
-            Submit Milestone
-          </h1>
-          <p style={{ color: "var(--text-secondary)", marginTop: "8px" }}>
-            Submit your work for: {milestone.title}
-          </p>
-        </div>
+    <div className="main-content" style={{ minWidth: '1024px' }}>
+      <div className="mb-6">
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors duration-200"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back to Project
+        </button>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          Submit Milestone
+        </h1>
+        <p className="text-gray-600">Submit your work for: {milestone.title}</p>
       </div>
 
       <div className="chart-card">
@@ -145,126 +144,77 @@ const MilestoneSubmissionForm = () => {
         )}
 
         {/* Milestone Information */}
-        <div
-          style={{
-            background: "var(--secondary-white)",
-            padding: "20px",
-            borderRadius: "var(--radius-sm)",
-            marginBottom: "24px",
-            border: "1px solid var(--border-light)",
-          }}
-        >
-          <h3
-            style={{
-              fontSize: "18px",
-              fontWeight: "600",
-              marginBottom: "12px",
-            }}
-          >
+        <div className="bg-white border border-gray-200 rounded-lg p-6 mb-6 shadow-sm">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">
             Milestone Details
           </h3>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-              gap: "16px",
-            }}
-          >
-            <div>
-              <div style={{ fontSize: "12px", color: "var(--text-light)" }}>
-                Amount
-              </div>
-              <div
-                style={{
-                  fontSize: "18px",
-                  fontWeight: "700",
-                  color: "var(--accent-blue)",
-                }}
-              >
-                ${milestone.amount}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+              <div className="text-sm font-medium text-gray-500 mb-1">Amount</div>
+              <div className="text-xl font-bold text-blue-600">
+                ${milestone.amount.toLocaleString()}
               </div>
             </div>
-            <div>
-              <div style={{ fontSize: "12px", color: "var(--text-light)" }}>
-                Due Date
-              </div>
-              <div style={{ fontSize: "14px", fontWeight: "500" }}>
-                {milestone.dueDate}
+            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+              <div className="text-sm font-medium text-gray-500 mb-1">Due Date</div>
+              <div className="text-base font-medium text-gray-900">
+                {new Date(milestone.dueDate).toLocaleDateString()}
               </div>
             </div>
-            <div>
-              <div style={{ fontSize: "12px", color: "var(--text-light)" }}>
-                Status
-              </div>
-              <div
-                style={{
-                  fontSize: "12px",
-                  fontWeight: "500",
-                  background: "#fef3c7",
-                  color: "#92400e",
-                  padding: "4px 8px",
-                  borderRadius: "12px",
-                  display: "inline-block",
-                }}
-              >
+            <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+              <div className="text-sm font-medium text-gray-500 mb-1">Status</div>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
                 Awaiting Submission
-              </div>
+              </span>
             </div>
           </div>
 
-          <div style={{ marginTop: "16px" }}>
-            <div
-              style={{
-                fontSize: "14px",
-                fontWeight: "600",
-                marginBottom: "8px",
-              }}
-            >
+          <div className="mt-4">
+            <div className="text-sm font-semibold text-gray-700 mb-2">
               Required Deliverables:
             </div>
-            <ul
-              style={{
-                fontSize: "14px",
-                color: "var(--text-secondary)",
-                paddingLeft: "20px",
-              }}
-            >
+            <ul className="text-sm text-gray-600 space-y-1">
               {milestone.deliverables.map((deliverable, index) => (
-                <li key={index}>{deliverable}</li>
+                <li key={index} className="flex items-center">
+                  <svg className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                  {deliverable}
+                </li>
               ))}
             </ul>
           </div>
         </div>
 
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={formik.handleSubmit} className="space-y-6">
           {/* Work Description */}
-          <div style={{ marginBottom: "24px" }}>
-            <label className="form-label">Work Description *</label>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Work Description *
+            </label>
             <textarea
               name="description"
-              className="form-input"
               rows="6"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical"
               placeholder="Describe the work you've completed for this milestone. Include details about what was delivered, any challenges faced, and how you addressed them..."
               value={formik.values.description}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
             />
             {formik.touched.description && formik.errors.description && (
-              <div
-                style={{ color: "#dc2626", fontSize: "14px", marginTop: "4px" }}
-              >
-                {formik.errors.description}
-              </div>
+              <p className="mt-1 text-sm text-red-600">{formik.errors.description}</p>
             )}
           </div>
 
           {/* Additional Notes */}
-          <div style={{ marginBottom: "24px" }}>
-            <label className="form-label">Additional Notes (Optional)</label>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Additional Notes (Optional)
+            </label>
             <textarea
               name="notes"
-              className="form-input"
               rows="4"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical"
               placeholder="Any additional information for the client, questions, or next steps..."
               value={formik.values.notes}
               onChange={formik.handleChange}
@@ -272,105 +222,58 @@ const MilestoneSubmissionForm = () => {
           </div>
 
           {/* File Upload */}
-          <div style={{ marginBottom: "32px" }}>
-            <label className="form-label">Deliverable Files</label>
-            <p
-              style={{
-                fontSize: "14px",
-                color: "var(--text-light)",
-                marginBottom: "16px",
-              }}
-            >
-              Upload all files related to this milestone delivery. Max 50MB per
-              file.
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Deliverable Files
+            </label>
+            <p className="text-sm text-gray-500 mb-4">
+              Upload all files related to this milestone delivery. Max 50MB per file.
             </p>
 
             <div
-              style={{
-                border: "2px dashed var(--border-light)",
-                borderRadius: "var(--radius-sm)",
-                padding: "40px 20px",
-                textAlign: "center",
-                marginBottom: "20px",
-                background: "var(--secondary-white)",
-                cursor: "pointer",
-              }}
+              className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition-colors duration-200"
               onClick={() => document.getElementById("file-upload").click()}
             >
               <input
                 type="file"
                 multiple
                 onChange={handleFileUpload}
-                style={{ display: "none" }}
+                className="hidden"
                 id="file-upload"
                 accept="image/*,application/pdf,application/zip,video/*,.doc,.docx,.xls,.xlsx"
               />
-              <div style={{ fontSize: "48px", marginBottom: "16px" }}>📁</div>
-              <div
-                style={{
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  color: "var(--text-primary)",
-                  marginBottom: "8px",
-                }}
-              >
+              <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <div className="text-lg font-medium text-gray-900 mb-1">
                 Click to upload files or drag and drop
               </div>
-              <div style={{ fontSize: "14px", color: "var(--text-light)" }}>
+              <p className="text-sm text-gray-500">
                 Supports images, PDFs, documents, and zip files
-              </div>
+              </p>
             </div>
 
             {/* File List */}
             {files.length > 0 && (
-              <div>
-                <h4
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    marginBottom: "12px",
-                  }}
-                >
+              <div className="mt-4">
+                <h4 className="text-lg font-semibold text-gray-900 mb-3">
                   Files to Upload ({files.length})
                 </h4>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "8px",
-                  }}
-                >
+                <div className="space-y-2">
                   {files.map((file, index) => (
                     <div
                       key={index}
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "12px 16px",
-                        background: "var(--primary-white)",
-                        borderRadius: "var(--radius-sm)",
-                        border: "1px solid var(--border-light)",
-                      }}
+                      className="flex justify-between items-center p-3 bg-gray-50 border border-gray-200 rounded-lg"
                     >
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "12px",
-                        }}
-                      >
-                        <span style={{ fontSize: "20px" }}>📄</span>
+                      <div className="flex items-center space-x-3">
+                        <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
+                        </svg>
                         <div>
-                          <div style={{ fontSize: "14px", fontWeight: "500" }}>
+                          <div className="text-sm font-medium text-gray-900 truncate max-w-xs">
                             {file.name}
                           </div>
-                          <div
-                            style={{
-                              fontSize: "12px",
-                              color: "var(--text-light)",
-                            }}
-                          >
+                          <div className="text-xs text-gray-500">
                             {formatFileSize(file.size)}
                           </div>
                         </div>
@@ -378,15 +281,7 @@ const MilestoneSubmissionForm = () => {
                       <button
                         type="button"
                         onClick={() => removeFile(index)}
-                        style={{
-                          background: "none",
-                          border: "none",
-                          color: "#dc2626",
-                          cursor: "pointer",
-                          fontSize: "14px",
-                          padding: "6px 12px",
-                          borderRadius: "var(--radius-sm)",
-                        }}
+                        className="text-red-600 hover:text-red-800 text-sm font-medium hover:bg-red-50 px-2 py-1 rounded transition-colors duration-200"
                       >
                         Remove
                       </button>
@@ -398,35 +293,17 @@ const MilestoneSubmissionForm = () => {
           </div>
 
           {/* Submit Buttons */}
-          <div
-            style={{
-              display: "flex",
-              gap: "12px",
-              justifyContent: "flex-end",
-              paddingTop: "24px",
-              borderTop: "1px solid var(--border-light)",
-            }}
-          >
+          <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
             <button
               type="button"
               onClick={() => navigate(-1)}
-              style={{
-                background: "var(--secondary-white)",
-                color: "var(--text-primary)",
-                border: "1px solid var(--border-light)",
-                borderRadius: "var(--radius-sm)",
-                padding: "12px 24px",
-                fontSize: "16px",
-                fontWeight: "500",
-                cursor: "pointer",
-              }}
+              className="px-6 py-3 border border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-50 transition-colors duration-200"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="login-btn"
-              style={{ padding: "12px 32px", margin: 0 }}
+              className="px-8 py-3 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
               disabled={formik.isSubmitting}
             >
               {formik.isSubmitting ? "Submitting..." : "Submit Milestone"}

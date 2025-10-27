@@ -1,20 +1,53 @@
-// src/pages/client/Dashboard.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
-import DashboardLayout from '../../components/shared/dashboard/DashboardLayout';
-import Card from '../../components/shared/ui/Card';
 
-const Dashboard = () => {
+const ClientDashboard = () => {
+  const navigate = useNavigate();
   const { isAuthenticated, user, loading } = useAuth();
+  const [projects, setProjects] = useState([]);
+  const [loadingProjects, setLoadingProjects] = useState(true);
 
-  if (loading) {
+  useEffect(() => {
+    // Mock projects data
+    setProjects([
+      {
+        id: 1,
+        title: 'Website Development',
+        status: 'in_progress',
+        freelancer: 'John Doe',
+        budget: 2500,
+        description: 'Modern responsive website with React and Node.js',
+        deadline: '2024-01-15',
+        milestones: [
+          { id: 1, title: 'Design Phase', status: 'completed', amount: 500 },
+          { id: 2, title: 'Development Phase', status: 'in_progress', amount: 1500 },
+          { id: 3, title: 'Testing & Launch', status: 'pending', amount: 500 }
+        ]
+      },
+      {
+        id: 2,
+        title: 'Mobile App UI Design',
+        status: 'open',
+        freelancer: null,
+        budget: 1200,
+        description: 'iOS and Android app UI/UX design',
+        deadline: '2024-02-01',
+        milestones: [
+          { id: 4, title: 'Wireframes', status: 'pending', amount: 400 },
+          { id: 5, title: 'UI Design', status: 'pending', amount: 600 },
+          { id: 6, title: 'Prototype', status: 'pending', amount: 200 }
+        ]
+      }
+    ]);
+    setLoadingProjects(false);
+  }, []);
+
+  if (loading || loadingProjects) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading...</p>
-        </div>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
       </div>
     );
   }
@@ -23,79 +56,435 @@ const Dashboard = () => {
     return <Navigate to="/login" replace />;
   }
 
+  const handleCreateProject = () => {
+    navigate('/client/projects/create');
+  };
+
+  const handleViewDetails = (projectId) => {
+    navigate(`/client/projects/${projectId}`);
+  };
+
+  const handleChat = (projectId) => {
+    navigate(`/client/projects/${projectId}/chat`);
+  };
+
+  const handleLogout = () => {
+    // Clear authentication and navigate to login
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    localStorage.removeItem('role');
+    window.location.href = '/login';
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'completed':
+        return 'bg-green-100 text-green-800';
+      case 'in_progress':
+        return 'bg-blue-100 text-blue-800';
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'open':
+        return 'bg-gray-100 text-gray-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
+    }
+  };
+
   return (
-    <DashboardLayout>
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Dashboard
-          </h1>
-          <p className="text-gray-600">
-            Welcome back, {user?.firstName}! Here's your overview.
-          </p>
+    <div className="flex h-screen bg-gray-50" style={{ minWidth: '1024px' }}>
+      {/* Sidebar */}
+      <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
+        <div className="p-6 border-b border-gray-200">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
+              K
+            </div>
+            <span className="text-xl font-bold text-gray-900">Kaziflow</span>
+          </div>
+          <div className="bg-gray-50 rounded-lg p-3">
+            <p className="text-sm font-semibold text-gray-900 mb-1">
+              {user?.firstName} {user?.lastName}
+            </p>
+            <p className="text-xs text-gray-500">
+              Client Account
+            </p>
+          </div>
         </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          <Card>
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">
-              Team Overview
-            </h3>
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Total Freelancers</span>
-                <span className="font-semibold">24</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Active Projects</span>
-                <span className="font-semibold">12</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Pending Tasks</span>
-                <span className="font-semibold">8</span>
-              </div>
-            </div>
-          </Card>
-          
-          <Card>
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">
-              Quick Actions
-            </h3>
-            <div className="space-y-3">
-              <button className="w-full text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                Add New Freelancer
+
+        <nav className="flex-1 px-4 py-6">
+          <ul className="space-y-2">
+            <li>
+              <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left bg-blue-50 text-blue-700 border-r-2 border-blue-700">
+                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">D</span>
+                <div className="flex-1">
+                  <div className="font-medium">Dashboard</div>
+                  <div className="text-xs text-gray-500 mt-0.5">Project overview</div>
+                </div>
               </button>
-              <button className="w-full text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                Create Project
+            </li>
+            <li>
+              <button
+                onClick={() => navigate('/client/projects')}
+                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+              >
+                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">P</span>
+                <div className="flex-1">
+                  <div className="font-medium">Projects</div>
+                  <div className="text-xs text-gray-500 mt-0.5">Manage projects</div>
+                </div>
               </button>
-              <button className="w-full text-left p-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                Schedule Meeting
+            </li>
+            <li>
+              <button
+                onClick={() => navigate('/client/milestones')}
+                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+              >
+                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">M</span>
+                <div className="flex-1">
+                  <div className="font-medium">Milestones</div>
+                  <div className="text-xs text-gray-500 mt-0.5">Review work</div>
+                </div>
               </button>
-            </div>
-          </Card>
-          
-          <Card>
-            <h3 className="text-lg font-semibold text-gray-900 mb-3">
-              Recent Activity
-            </h3>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                <span className="text-sm text-gray-600">New team member added</span>
+            </li>
+            <li>
+              <button
+                onClick={() => navigate('/client/profile')}
+                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+              >
+                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">P</span>
+                <div className="flex-1">
+                  <div className="font-medium">Profile</div>
+                  <div className="text-xs text-gray-500 mt-0.5">Account settings</div>
+                </div>
+              </button>
+            </li>
+          </ul>
+
+          {/* Logout Button */}
+          <div className="mt-auto pt-6 border-t border-gray-200">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-colors"
+            >
+              <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">L</span>
+              <div className="flex-1 text-left">
+                <div className="font-medium">Logout</div>
+                <div className="text-xs text-gray-500 mt-0.5">Sign out of account</div>
               </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                <span className="text-sm text-gray-600">Project "Q4 Planning" completed</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-                <span className="text-sm text-gray-600">3 tasks due tomorrow</span>
-              </div>
-            </div>
-          </Card>
-        </div>
+            </button>
+          </div>
+        </nav>
       </div>
-    </DashboardLayout>
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col min-h-screen">
+        {/* Top Bar */}
+        <div className="bg-white border-b border-gray-200 px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div className="flex items-center gap-4 flex-1 max-w-md">
+            <div className="relative flex-1">
+              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search projects, milestones..."
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <div className="text-right hidden sm:block">
+              <div className="text-sm font-semibold text-gray-900">
+                {user?.firstName} {user?.lastName}
+              </div>
+              <div className="text-xs text-gray-500">
+                Client
+              </div>
+            </div>
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
+              {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
+            </div>
+          </div>
+        </div>
+
+        {/* Page Content */}
+        <main className="flex-1 bg-gray-50 overflow-auto">
+          <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <div className="px-4 py-6 sm:px-0">
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                  Dashboard
+                </h1>
+                <p className="text-gray-600">
+                  Welcome back, {user?.firstName}! Here's your overview.
+                </p>
+              </div>
+
+              {/* Stats Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div className="bg-white border border-gray-200 overflow-hidden rounded-lg p-5 shadow-sm">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0">
+                      <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold">{projects.length}</span>
+                      </div>
+                    </div>
+                    <div className="ml-5 w-0 flex-1">
+                      <dl>
+                        <dt className="text-sm font-medium text-gray-500 truncate">Total Projects</dt>
+                        <dd className="text-lg font-medium text-gray-900">{projects.length}</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white border border-gray-200 overflow-hidden rounded-lg p-5 shadow-sm">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0">
+                      <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold">{projects.filter(p => p.status === 'completed').length}</span>
+                      </div>
+                    </div>
+                    <div className="ml-5 w-0 flex-1">
+                      <dl>
+                        <dt className="text-sm font-medium text-gray-500 truncate">Completed</dt>
+                        <dd className="text-lg font-medium text-gray-900">{projects.filter(p => p.status === 'completed').length}</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white border border-gray-200 overflow-hidden rounded-lg p-5 shadow-sm">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0">
+                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold">{projects.filter(p => p.status === 'in_progress').length}</span>
+                      </div>
+                    </div>
+                    <div className="ml-5 w-0 flex-1">
+                      <dl>
+                        <dt className="text-sm font-medium text-gray-500 truncate">In Progress</dt>
+                        <dd className="text-lg font-medium text-gray-900">{projects.filter(p => p.status === 'in_progress').length}</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white border border-gray-200 overflow-hidden rounded-lg p-5 shadow-sm">
+                  <div className="flex items-center">
+                    <div className="flex-shrink-0">
+                      <div className="w-8 h-8 bg-yellow-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold">${projects.reduce((sum, p) => sum + p.budget, 0)}</span>
+                      </div>
+                    </div>
+                    <div className="ml-5 w-0 flex-1">
+                      <dl>
+                        <dt className="text-sm font-medium text-gray-500 truncate">Total Budget</dt>
+                        <dd className="text-lg font-medium text-gray-900">${projects.reduce((sum, p) => sum + p.budget, 0)}</dd>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Projects Section */}
+              <div className="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200">
+                <div className="px-4 py-5 sm:px-6 flex justify-between items-center border-b border-gray-200">
+                  <div>
+                    <h3 className="text-lg leading-6 font-medium text-gray-900">My Projects</h3>
+                    <p className="mt-1 max-w-2xl text-sm text-gray-500">Manage and track your project progress</p>
+                  </div>
+                  <button
+                    onClick={handleCreateProject}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+                  >
+                    + New Project
+                  </button>
+                </div>
+
+                {projects.length === 0 ? (
+                  <div className="text-center py-12">
+                    <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                    </svg>
+                    <h3 className="mt-2 text-sm font-medium text-gray-900">No projects</h3>
+                    <p className="mt-1 text-sm text-gray-500">Get started by creating a new project.</p>
+                    <div className="mt-6">
+                      <button
+                        onClick={handleCreateProject}
+                        className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      >
+                        Create Project
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <ul className="divide-y divide-gray-200">
+                    {projects.map((project) => (
+                      <li key={project.id} className="px-4 py-6 sm:px-6">
+                        <div className="flex items-center justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between">
+                              <h4 className="text-lg font-medium text-blue-600 truncate">
+                                {project.title}
+                              </h4>
+                              <div className="ml-2 flex-shrink-0 flex">
+                                <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(project.status)}`}>
+                                  {project.status.replace('_', ' ')}
+                                </span>
+                              </div>
+                            </div>
+                            <div className="mt-2 sm:flex sm:justify-between">
+                              <div className="sm:flex">
+                                <p className="flex items-center text-sm text-gray-500">
+                                  <span className="font-medium">Budget:</span>
+                                  <span className="ml-1">${project.budget}</span>
+                                </p>
+                                {project.freelancer && (
+                                  <p className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6">
+                                    <span className="font-medium">Freelancer:</span>
+                                    <span className="ml-1">{project.freelancer}</span>
+                                  </p>
+                                )}
+                              </div>
+                              <div className="mt-2 flex items-center text-sm text-gray-500 sm:mt-0">
+                                <p className="font-medium">Deadline:</p>
+                                <p className="ml-1">{project.deadline}</p>
+                              </div>
+                            </div>
+                            <p className="mt-2 text-sm text-gray-600">{project.description}</p>
+
+                            {/* Milestones */}
+                            <div className="mt-4">
+                              <h5 className="text-sm font-medium text-gray-900 mb-2">Milestones</h5>
+                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                                {project.milestones.map((milestone) => (
+                                  <div key={milestone.id} className="flex items-center justify-between p-2 bg-gray-50 rounded border">
+                                    <span className="text-sm text-gray-700">{milestone.title}</span>
+                                    <div className="flex items-center space-x-2">
+                                      <span className="text-sm font-medium">${milestone.amount}</span>
+                                      <span className={`px-2 py-1 text-xs rounded-full ${getStatusColor(milestone.status)}`}>
+                                        {milestone.status}
+                                      </span>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="mt-4 flex space-x-3">
+                          <button
+                            onClick={() => handleViewDetails(project.id)}
+                            className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                          >
+                            View Details
+                          </button>
+                          <button
+                            onClick={() => handleChat(project.id)}
+                            className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                          >
+                            Chat
+                          </button>
+                          {project.status === 'open' && (
+                            <button
+                              onClick={() => navigate(`/client/projects/${project.id}/edit`)}
+                              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            >
+                              Edit Project
+                            </button>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+
+              {/* Quick Actions */}
+              <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-white overflow-hidden shadow rounded-lg border border-gray-200">
+                  <div className="p-6">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0">
+                        <svg className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                      </div>
+                      <div className="ml-5 w-0 flex-1">
+                        <h3 className="text-lg font-medium text-gray-900">Create Project</h3>
+                        <p className="text-sm text-gray-500">Post a new project and find freelancers</p>
+                      </div>
+                    </div>
+                    <div className="mt-4">
+                      <button
+                        onClick={handleCreateProject}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+                      >
+                        Get Started
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white overflow-hidden shadow rounded-lg border border-gray-200">
+                  <div className="p-6">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0">
+                        <svg className="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div className="ml-5 w-0 flex-1">
+                        <h3 className="text-lg font-medium text-gray-900">Browse Freelancers</h3>
+                        <p className="text-sm text-gray-500">Find and hire talented freelancers</p>
+                      </div>
+                    </div>
+                    <div className="mt-4">
+                      <button
+                        onClick={() => navigate('/freelancers')}
+                        className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+                      >
+                        Browse Now
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white overflow-hidden shadow rounded-lg border border-gray-200">
+                  <div className="p-6">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0">
+                        <svg className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                        </svg>
+                      </div>
+                      <div className="ml-5 w-0 flex-1">
+                        <h3 className="text-lg font-medium text-gray-900">Messages</h3>
+                        <p className="text-sm text-gray-500">Communicate with your freelancers</p>
+                      </div>
+                    </div>
+                    <div className="mt-4">
+                      <button
+                        onClick={() => navigate('/messages')}
+                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+                      >
+                        View Messages
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
   );
 };
 
-export default Dashboard;
+export default ClientDashboard;

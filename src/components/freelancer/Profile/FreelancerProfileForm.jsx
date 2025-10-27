@@ -126,7 +126,7 @@ const FreelancerProfileForm = () => {
         await new Promise((resolve) => setTimeout(resolve, 1500));
 
         setStatus({ success: "Profile updated successfully!" });
-      } catch (error) {
+      } catch {
         setStatus({ error: "Failed to update profile. Please try again." });
       } finally {
         setSubmitting(false);
