@@ -29,18 +29,19 @@ import ActiveProjects from "./pages/freelancer/ActiveProjects";
 import MilestoneSubmission from "./pages/freelancer/MilestoneSubmission";
 import PaymentTracking from "./pages/freelancer/PaymentTracking";
 import ProfilePortfolio from "./pages/freelancer/ProfilePortfolio";
+import FreelancerLayout from "./components/layouts/FreelancerLayout";
 import ProjectProposals from "./components/client/Projects/ProjectProposals";
 import MilestonesOverviewPage from "./components/client/Milestones/index";
 import FreelancersList from "./components/client/FreelancersList";
 
-// Protected Route component
+// Protected Route component (requires authentication)
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Loading...
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
     );
   }
@@ -55,16 +56,21 @@ const ClientRoute = ({ children }) => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Loading...
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
     );
   }
 
-  return isAuthenticated && isClient ? (
-    children
-  ) : (
-    <Navigate to="/login" replace />
-  );
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!isClient) {
+    // Redirect to appropriate dashboard based on role
+    return <Navigate to="/freelancer/dashboard" replace />;
+  }
+
+  return children;
 };
 
 // Freelancer Route component (requires freelancer role)
@@ -74,50 +80,62 @@ const FreelancerRoute = ({ children }) => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Loading...
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
     );
   }
 
-  return isAuthenticated && isFreelancer ? (
-    children
-  ) : (
-    <Navigate to="/login" replace />
-  );
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!isFreelancer) {
+    // Redirect to appropriate dashboard based on role
+    return <Navigate to="/client/dashboard" replace />;
+  }
+
+  return children;
 };
 
 // Public Route component (redirect to dashboard if already authenticated)
 const PublicRoute = ({ children }) => {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, user, loading } = useAuth();
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Loading...
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
     );
   }
 
-  return !isAuthenticated ? children : <Navigate to="/dashboard" replace />;
+  if (isAuthenticated) {
+    // Redirect to appropriate dashboard based on role
+    const redirectPath = user?.role === 'client' ? '/client/dashboard' : '/freelancer/dashboard';
+    return <Navigate to={redirectPath} replace />;
+  }
+
+  return children;
 };
 
-// Component to handle root redirect based on auth status
+// Smart root redirect based on auth status and role
 const RootRedirect = () => {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, user, loading } = useAuth();
 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Loading...
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
       </div>
     );
   }
 
-  return isAuthenticated ? (
-    <Navigate to="/dashboard" replace />
-  ) : (
-    <Navigate to="/login" replace />
-  );
+  if (isAuthenticated) {
+    const redirectPath = user?.role === 'client' ? '/client/dashboard' : '/freelancer/dashboard';
+    return <Navigate to={redirectPath} replace />;
+  }
+
+  return <Navigate to="/login" replace />;
 };
 
 function App() {
@@ -269,93 +287,86 @@ function App() {
               }
             />
 
-            {/* Freelancer Routes */}
+            {/* Freelancer Routes with Nested Layout */}
             <Route
-              path="/freelancer/dashboard"
+              path="/freelancer"
               element={
                 <FreelancerRoute>
-                  <FreelancerDashboard />
+                  <FreelancerLayout />
                 </FreelancerRoute>
               }
-            />
+            >
+              <Route
+                path="dashboard"
+                element={<FreelancerDashboard />}
+              />
+              <Route
+                path="projects"
+                element={<FreelancerProjectList />}
+              />
+              <Route
+                path="projects/:projectId/propose"
+                element={<ProjectProposalForm />}
+              />
+              <Route
+                path="proposals"
+                element={<FreelancerProposals />}
+              />
+              <Route
+                path="active-projects"
+                element={<ActiveProjects />}
+              />
+              <Route
+                path="projects/:projectId/milestones"
+                element={<MilestoneSubmission />}
+              />
+              <Route
+                path="payments"
+                element={<PaymentTracking />}
+              />
+              <Route
+                path="profile"
+                element={<ProfilePortfolio />}
+              />
+              <Route
+                path="time-tracking"
+                element={
+                  <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                    <div className="px-4 py-6 sm:px-0">
+                      <div className="mb-8">
+                        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                          Time Tracking
+                        </h1>
+                        <p className="text-gray-600">
+                          Track your work hours and manage time entries.
+                        </p>
+                      </div>
+                      <div className="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200">
+                        <div className="px-4 py-5 sm:px-6 text-center">
+                          <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <h3 className="mt-2 text-sm font-medium text-gray-900">Time Tracking</h3>
+                          <p className="mt-1 text-sm text-gray-500">Time tracking feature coming soon...</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                }
+              />
+            </Route>
+
+            {/* Freelancer Dashboard - Alternative route */}
             <Route
               path="/dashboard"
               element={
                 <FreelancerRoute>
-                  <FreelancerDashboard />
+                  <FreelancerLayout />
                 </FreelancerRoute>
               }
-            />
-            <Route
-              path="/freelancer/projects"
-              element={
-                <FreelancerRoute>
-                  <FreelancerProjectList />
-                </FreelancerRoute>
-              }
-            />
-            <Route
-              path="/freelancer/projects/:projectId/propose"
-              element={
-                <FreelancerRoute>
-                  <ProjectProposalForm />
-                </FreelancerRoute>
-              }
-            />
-            <Route
-              path="/freelancer/proposals"
-              element={
-                <FreelancerRoute>
-                  <FreelancerProposals />
-                </FreelancerRoute>
-              }
-            />
-            <Route
-              path="/freelancer/active-projects"
-              element={
-                <FreelancerRoute>
-                  <ActiveProjects />
-                </FreelancerRoute>
-              }
-            />
-            <Route
-              path="/freelancer/projects/:projectId/milestones"
-              element={
-                <FreelancerRoute>
-                  <MilestoneSubmission />
-                </FreelancerRoute>
-              }
-            />
-            <Route
-              path="/freelancer/time-tracking"
-              element={
-                <FreelancerRoute>
-                  <div className="max-w-6xl mx-auto py-8">
-                    <h1 className="text-3xl font-bold text-gray-800">Time Tracking</h1>
-                    <p className="text-gray-600 mt-2">Track your work hours and manage time entries</p>
-                    <div className="bg-white rounded-lg shadow-md p-8 mt-6 text-center">
-                      <p className="text-gray-500">Time tracking feature coming soon...</p>
-                    </div>
-                  </div>
-                </FreelancerRoute>
-              }
-            />
-            <Route
-              path="/freelancer/payments"
-              element={
-                <FreelancerRoute>
-                  <PaymentTracking />
-                </FreelancerRoute>
-              }
-            />
-            <Route
-              path="/freelancer/profile"
-              element={
-                <FreelancerRoute>
-                  <ProfilePortfolio />
-                </FreelancerRoute>
-              }
-            />
+            >
+              <Route index element={<FreelancerDashboard />} />
+            </Route>
 
             {/* Freelancers Browse Route */}
             <Route

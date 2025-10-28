@@ -1,81 +1,77 @@
 
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
-const AuthContext = createContext();
-
-export { AuthContext };
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [role, setRole] = useState(null); // Add role state for multi-role support
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  // Check for existing auth on app load
   useEffect(() => {
+    // Check for existing authentication token on app load
     const token = localStorage.getItem('authToken');
-    if (token) {
-      // In a real app, you'd validate the token with your backend
-      // For now, we'll try to get user data from localStorage or use defaults
-      const storedUser = localStorage.getItem('user');
-      const storedRole = localStorage.getItem('role');
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
-      } else {
-        setUser({ email: 'client@example.com', firstName: 'John', lastName: 'Doe' });
+    const userData = localStorage.getItem('userData');
+
+    if (token && userData) {
+      try {
+        const parsedUser = JSON.parse(userData);
+        setUser(parsedUser);
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userData');
       }
-      if (storedRole) {
-        setRole(storedRole);
-      } else {
-        setRole('freelancer'); // Default role for new users
-      }
-      setIsAuthenticated(true);
-    } else {
-      // Clear any stale data if no token
-      setUser(null);
-      setRole(null);
-      setIsAuthenticated(false);
     }
     setLoading(false);
   }, []);
 
-  const login = (email, password, userData = null, userRole = 'client') => {
-    // Support both signature styles:
-    // login(email, password) OR login(userData)
-    let userInfo;
+  const login = async (email, password) => {
+    try {
+      setLoading(true);
 
-    if (userData) {
-      // If userData is provided, use it (compatible with first version)
-      userInfo = userData;
-    } else {
-      // If email/password are provided (compatible with second version)
-      userInfo = { email, firstName: '', lastName: '' };
+      // Mock authentication for development
+      // In production, replace with actual API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Mock user data based on email
+      const mockUser = {
+        id: Date.now().toString(),
+        email: email,
+        firstName: email.includes('client') ? 'John' : 'Jane',
+        lastName: email.includes('client') ? 'Doe' : 'Smith',
+        role: email.includes('client') ? 'client' : 'freelancer'
+      };
+
+      // Store mock token and user data
+      localStorage.setItem('authToken', 'mock-jwt-token-' + Date.now());
+      localStorage.setItem('userData', JSON.stringify(mockUser));
+
+      setUser(mockUser);
+      return { success: true, user: mockUser };
+
+    } catch (error) {
+      console.error('Login error:', error);
+      return { success: false, error: error.message };
+    } finally {
+      setLoading(false);
     }
-
-    setUser(userInfo);
-    setRole(userRole);
-    setIsAuthenticated(true);
-    localStorage.setItem('authToken', 'dummy-token');
-    localStorage.setItem('user', JSON.stringify(userInfo));
-    localStorage.setItem('role', userRole);
   };
 
   const logout = () => {
-    setUser(null);
-    setRole(null);
-    setIsAuthenticated(false);
     localStorage.removeItem('authToken');
-    localStorage.removeItem('user');
-    localStorage.removeItem('role');
+    localStorage.removeItem('userData');
+    setUser(null);
   };
 
   const value = {
     user,
-    role,
-    isAuthenticated,
-    loading,
     login,
-    logout
+    logout,
+    loading,
+    isAuthenticated: !!user,
+    isClient: user?.role === 'client',
+    isFreelancer: user?.role === 'freelancer',
+    isAdmin: user?.role === 'admin'
   };
 
   return (
@@ -83,4 +79,12 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 };
