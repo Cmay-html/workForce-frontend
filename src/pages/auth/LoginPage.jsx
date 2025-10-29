@@ -7,19 +7,25 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "", confirm: "", role: "" });
   const cardRef = useRef(null);
   const [cardHeight, setCardHeight] = useState("auto");
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   // Adjust card height dynamically
   useEffect(() => {
-    if (cardRef.current) {
-      setCardHeight(cardRef.current.scrollHeight + 32);
+    if (cardRef.current && !isTransitioning) {
+      const height = cardRef.current.scrollHeight + 2;
+      setCardHeight(`${height}px`);
     }
-  }, [isLogin, form]);
+  }, [isLogin, form, isTransitioning]);
 
   const handleToggle = () => {
+    setIsTransitioning(true);
     setAnimating(true);
     setTimeout(() => {
       setIsLogin((prev) => !prev);
-      setAnimating(false);
+      setTimeout(() => {
+        setAnimating(false);
+        setIsTransitioning(false);
+      }, 50);
     }, 300);
   };
 
@@ -66,10 +72,10 @@ export default function LoginPage() {
             ref={cardRef}
             style={{
               ...styles.formCard,
-              height: cardHeight,
+              height: isTransitioning ? "auto" : cardHeight,
               transform: animating ? "scale(0.95)" : "scale(1)",
               opacity: animating ? 0.7 : 1,
-              transition: "all 0.35s ease",
+              transition: isTransitioning ? "none" : "all 0.35s ease",
             }}
           >
             {/* Header */}
@@ -119,13 +125,7 @@ export default function LoginPage() {
                     />
                   </div>
 
-                  <div
-                    style={{
-                      ...styles.inputGroup,
-                      opacity: !isLogin ? 1 : 0,
-                      transition: "opacity 0.35s ease",
-                    }}
-                  >
+                  <div style={styles.inputGroup}>
                     <select
                       name="role"
                       value={form.role}
@@ -180,6 +180,9 @@ const styles = {
     justifyContent: "center",
     fontFamily: "'Inter', sans-serif",
     overflow: "hidden",
+    position: "fixed",
+    top: 0,
+    left: 0,
   },
   background: {
     position: "relative",
