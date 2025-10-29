@@ -1,58 +1,79 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
+  const [animating, setAnimating] = useState(false);
+
+  const handleToggle = () => {
+    setAnimating(true);
+    setTimeout(() => {
+      setIsLogin((prev) => !prev);
+      setAnimating(false);
+    }, 300);
+  };
 
   return (
-    <div style={styles.page}>
-      {/* Left side - Form */}
-      <div style={styles.leftSection}>
-        <div style={styles.card}>
-          <h1 style={styles.logo}>Kazi Flow</h1>
-          <p style={styles.subtitle}>
-            {isLogin ? 'Welcome back! Please log in to continue.' : 'Create your Kazi Flow account'}
-          </p>
+    <div style={styles.container}>
+      <div style={styles.background}>
+        <div style={styles.overlay}></div>
+        <div style={styles.content}>
+          {/* Dynamic animation */}
+          <div
+            style={{
+              ...styles.formCard,
+              transform: animating ? "scale(0.95)" : "scale(1)",
+              opacity: animating ? 0.7 : 1,
+            }}
+          >
+            <div style={styles.header}>
+              <h1 style={styles.title}>Kazi Flow</h1>
+              <p style={styles.description}>
+                {isLogin ? "Sign in to your account" : "Create a new account"}
+              </p>
+            </div>
 
-          <form style={styles.form}>
-            <input type="email" placeholder="Email address" style={styles.input} />
-            <input type="password" placeholder="Password" style={styles.input} />
+            {/* FORM */}
+            <form style={styles.form}>
+              <div style={styles.inputGroup}>
+                <input
+                  type="email"
+                  placeholder="Email"
+                  style={styles.input}
+                />
+              </div>
+              <div style={styles.inputGroup}>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  style={styles.input}
+                />
+              </div>
 
-            {!isLogin && (
-              <input type="password" placeholder="Confirm Password" style={styles.input} />
-            )}
+              {!isLogin && (
+                <div style={styles.inputGroup}>
+                  <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    style={styles.input}
+                  />
+                </div>
+              )}
 
-            <button type="submit" style={styles.button}>
-              {isLogin ? 'Login' : 'Sign Up'}
-            </button>
-          </form>
+              <button type="submit" style={styles.button}>
+                {isLogin ? "Sign In" : "Sign Up"}
+              </button>
+            </form>
 
-          <p style={styles.toggle}>
-            {isLogin ? (
-              <>
-                Don't have an account?{' '}
-                <span style={styles.link} onClick={() => setIsLogin(false)}>
-                  Sign up
+            {/* TOGGLE */}
+            <div style={styles.footer}>
+              <p style={styles.switchText}>
+                {isLogin ? "Don't have an account?" : "Already have an account?"}
+                <span style={styles.switchLink} onClick={handleToggle}>
+                  {isLogin ? " Sign up" : " Sign in"}
                 </span>
-              </>
-            ) : (
-              <>
-                Already have an account?{' '}
-                <span style={styles.link} onClick={() => setIsLogin(true)}>
-                  Log in
-                </span>
-              </>
-            )}
-          </p>
-        </div>
-      </div>
-
-      {/* Right side - Hero */}
-      <div style={styles.rightSection}>
-        <div style={styles.heroContent}>
-          <h2 style={styles.heroTitle}>Welcome to Kazi Flow</h2>
-          <p style={styles.heroText}>
-            Find the right talent or your next big opportunity — all in one place.
-          </p>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -60,119 +81,116 @@ export default function LoginPage() {
 }
 
 const styles = {
-
-  
-  page: {
-    display: 'flex',
-    height: '100vh',
-    backgroundColor: '#f9fafb',
-    width: '118%',
+  container: {
+    height: "100vh",
+    width: "145%",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     fontFamily: "'Inter', sans-serif",
-    overflow: 'hidden',
+    overflow: "hidden",
   },
-
-  leftSection: {
-    flex: 1,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
-    padding: '4rem 3rem',
+  background: {
+    position: "relative",
+    width: "100%",
+    height: "100%",
+    background: "#D85A3E",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
-
-  rightSection: {
-    flex: 1,
-
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#f97316',
-    padding: '4rem 3rem',
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: "rgba(0, 0, 0, 0.3)",
+    backdropFilter: "blur(2px)",
   },
-
-  card: {
-    width: '250vh',
-    maxWidth: '480px',
-    background: '#fff',
-    padding: '2.5rem 2rem',
+  content: {
+    position: "relative",
+    zIndex: 1,
+    width: "100%",
+    maxWidth: "400px",
+    padding: "2rem",
   },
-
-  heroContent: {
-    maxWidth: '550px',
-    textAlign: 'center',
-    color: '#fff',
-    padding: '2rem',
+  formCard: {
+    background: "rgba(255, 255, 255, 0.95)",
+    backdropFilter: "blur(20px)",
+    borderRadius: "24px",
+    padding: "3rem 2.5rem",
+    boxShadow: "0 25px 50px rgba(0, 0, 0, 0.15)",
+    border: "1px solid rgba(255, 255, 255, 0.2)",
+    transition: "all 0.3s ease",
   },
-
-  heroTitle: {
-    fontSize: '3rem',
-    fontWeight: '700',
-    marginBottom: '1.5rem',
-    lineHeight: '1.2',
-    letterSpacing: '-0.5px',
+  header: {
+    textAlign: "center",
+    marginBottom: "2.5rem",
   },
-
-  heroText: {
-    fontSize: '1.25rem',
-    lineHeight: '1.8',
-    opacity: '0.95',
+  title: {
+    fontSize: "2.5rem",
+    fontWeight: "700",
+    color: "#1e293b",
+    marginBottom: "0.5rem",
+    letterSpacing: "-0.5px",
   },
-
-  logo: {
-    fontSize: '2.5rem',
-    fontWeight: '700',
-    color: '#1f2937',
-    marginBottom: '1rem',
-    letterSpacing: '-0.5px',
+  description: {
+    color: "#64748b",
+    fontSize: "1rem",
+    lineHeight: "1.5",
   },
-
-  subtitle: {
-    color: '#6b7280',
-    marginBottom: '2.5rem',
-    fontSize: '1.05rem',
-    lineHeight: '1.6',
-  },
-
   form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1.25rem',
+    display: "flex",
+    flexDirection: "column",
+    gap: "1.5rem",
   },
-
+  inputGroup: {
+    position: "relative",
+  },
   input: {
-    padding: '1rem 1.25rem',
-    fontSize: '1rem',
-    border: '2px solid #e5e7eb',
-    borderRadius: '0.75rem',
-    outline: 'none',
-    transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
-    backgroundColor: '#ffffff',
+    width: "100%",
+    padding: "1.25rem 1.5rem",
+    fontSize: "1rem",
+    border: "2px solid #e2e8f0",
+    borderRadius: "12px",
+    outline: "none",
+    transition: "all 0.3s ease",
+    backgroundColor: "#ffffff",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.05)",
   },
-
   button: {
-    marginTop: '0.75rem',
-    padding: '1.1rem 1.25rem',
-    fontSize: '1.05rem',
-    fontWeight: '600',
-    backgroundColor: '#f97316',
-    border: 'none',
-    borderRadius: '0.75rem',
-    color: '#fff',
-    cursor: 'pointer',
-    transition: 'background 0.2s, transform 0.1s',
+    marginTop: "1rem",
+    padding: "1.25rem 1.5rem",
+    fontSize: "1.1rem",
+    fontWeight: "600",
+    background: "#D85A3E",
+    border: "none",
+    borderRadius: "12px",
+    color: "#ffffff",
+    cursor: "pointer",
+    transition: "all 0.3s ease",
+    boxShadow: "#F3F7F0",
   },
-
-  toggle: {
-    marginTop: '2rem',
-    fontSize: '0.95rem',
-    color: '#6b7280',
-    lineHeight: '1.5',
+  buttonHover: {
+    transform: "translateY(-2px)",
+    boxShadow: "",
   },
-
-  link: {
-    color: '#f97316',
-    fontWeight: '600',
-    cursor: 'pointer',
-    textDecoration: 'underline',
+  footer: {
+    marginTop: "2rem",
+    textAlign: "center",
+  },
+  switchText: {
+    fontSize: "0.95rem",
+    color: "#64748b",
+    margin: 0,
+  },
+  switchLink: {
+    color: "#f97316",
+    fontWeight: "600",
+    cursor: "pointer",
+    textDecoration: "none",
+    transition: "color 0.3s ease",
   },
 };
+
