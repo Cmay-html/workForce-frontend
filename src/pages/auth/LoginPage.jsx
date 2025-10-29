@@ -60,6 +60,8 @@ export default function LoginPage() {
 }
 
 const styles = {
+
+  
   page: {
     display: 'flex',
     height: '100vh',
