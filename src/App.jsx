@@ -30,9 +30,12 @@ import MilestoneSubmission from "./pages/freelancer/MilestoneSubmission";
 import PaymentTracking from "./pages/freelancer/PaymentTracking";
 import ProfilePortfolio from "./pages/freelancer/ProfilePortfolio";
 import FreelancerLayout from "./components/layouts/FreelancerLayout";
+import ClientLayout from "./components/layouts/ClientLayout";
+import EmailVerification from "./components/shared/auth/EmailVerification";
 import ProjectProposals from "./components/client/Projects/ProjectProposals";
 import MilestonesOverviewPage from "./components/client/Milestones/index";
 import FreelancersList from "./components/client/FreelancersList";
+import CreateMilestone from "./components/client/Milestones/CreateMilestone";
 
 // Protected Route component (requires authentication)
 const ProtectedRoute = ({ children }) => {
@@ -171,17 +174,15 @@ function App() {
               }
             />
 
+            {/* Email Verification Route */}
+            <Route
+              path="/verify-email"
+              element={<EmailVerification />}
+            />
+
             {/* Client Dashboard - Main dashboard route */}
             <Route
               path="/client/dashboard"
-              element={
-                <ClientRoute>
-                  <ClientDashboardPage />
-                </ClientRoute>
-              }
-            />
-            <Route
-              path="/dashboard"
               element={
                 <ClientRoute>
                   <ClientDashboardPage />
@@ -248,6 +249,14 @@ function App() {
                 </ClientRoute>
               }
             />
+            <Route
+              path="/client/milestones/:projectId/create"
+              element={
+                <ClientRoute>
+                  <CreateMilestone />
+                </ClientRoute>
+              }
+            />
 
             {/* Review Management Routes */}
             <Route
@@ -277,13 +286,24 @@ function App() {
               }
             />
 
+
             {/* Project Collaboration Routes */}
             <Route
               path="/projects/:projectId/chat"
               element={
-                <ClientRoute>
+                <ProtectedRoute>
                   <ChatPage />
-                </ClientRoute>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Global Chat Route - accessible from dashboard */}
+            <Route
+              path="/chat"
+              element={
+                <ProtectedRoute>
+                  <ChatPage />
+                </ProtectedRoute>
               }
             />
 
@@ -358,7 +378,7 @@ function App() {
 
             {/* Freelancer Dashboard - Alternative route */}
             <Route
-              path="/dashboard"
+              path="/freelancer/dashboard"
               element={
                 <FreelancerRoute>
                   <FreelancerLayout />

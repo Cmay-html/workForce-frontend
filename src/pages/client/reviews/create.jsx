@@ -134,7 +134,7 @@ const CreateReviewPage = ({
   );
 
   return embedded ? content : (
-    <div className="max-w-2xl mx-auto py-8" style={{ minWidth: '1024px' }}>
+    <div className="h-full p-12" style={{ minWidth: '1024px' }}>
       <div className="mb-6">
         <button
           onClick={() => navigate('/dashboard')}

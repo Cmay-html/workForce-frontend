@@ -15,23 +15,26 @@ const LoginPage = () => {
     const result = await login(credentials.email, credentials.password);
 
     if (result.success) {
-      // Redirect based on user role
+      // Clear any existing navigation state and redirect based on user role
       const redirectPath = result.user.role === 'client'
         ? '/client/dashboard'
         : '/freelancer/dashboard';
-      navigate(redirectPath);
+      console.log('Login successful, redirecting to:', redirectPath, 'for user:', result.user);
+      // Force a full page reload to clear any cached state and ensure proper routing
+      window.location.href = redirectPath;
     } else {
+      console.log('Login failed:', result.error);
       setError(result.error || 'Login failed');
     }
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-6" style={{ minWidth: '1024px' }}>
-      <div className="w-full max-w-lg">
+    <div className="min-h-screen bg-white flex items-center justify-center" style={{ minWidth: '1024px' }}>
+      <div className="w-full max-w-lg p-12">
         <div className="text-center mb-10">
           <div className="mb-6">
-            <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl mx-auto shadow-xl flex items-center justify-center">
-              <span className="text-white font-bold text-2xl">KF</span>
+            <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl mx-auto shadow-xl flex items-center justify-center text-white font-bold text-2xl">
+              KF
             </div>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-3">

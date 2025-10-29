@@ -260,6 +260,18 @@ const ClientDashboard = () => {
             </li>
             <li>
               <button
+                onClick={() => navigate('/chat')}
+                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+              >
+                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">C</span>
+                <div className="flex-1">
+                  <div className="font-medium">Messages</div>
+                  <div className="text-xs text-gray-500 mt-0.5">Chat with team</div>
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
                 onClick={() => navigate('/client/milestones')}
                 className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
               >
@@ -302,62 +314,61 @@ const ClientDashboard = () => {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-h-screen">
-        {/* Top Bar */}
-        <div className="bg-white border-b border-gray-200 px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div className="flex items-center gap-4 flex-1 max-w-md">
-            <div className="relative flex-1">
-              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <input
-                type="text"
-                placeholder="Search projects, milestones..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-            <button
-              onClick={() => {
-                // The search is already reactive, but we can add a search button for explicit search
-                console.log('Searching for:', searchQuery);
-              }}
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 flex items-center gap-2"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              Search
-            </button>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="text-right hidden sm:block">
-              <div className="text-sm font-semibold text-gray-900">
-                {user?.firstName} {user?.lastName}
+        {/* Top Navigation Bar - Similar to Freelancer Layout */}
+        <header className="bg-white shadow-sm border-b border-gray-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              <div className="flex items-center">
+                <h1 className="text-2xl font-bold text-blue-600">Kaziflow</h1>
+                <span className="ml-3 text-sm text-gray-500">Client Portal</span>
               </div>
-              <div className="text-xs text-gray-500">
-                Client
-              </div>
-            </div>
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
-              {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
+              <nav className="flex space-x-8">
+                <button
+                  onClick={() => navigate('/client/dashboard')}
+                  className="px-3 py-2 text-sm font-medium transition-colors rounded-md bg-blue-50 text-blue-600"
+                >
+                  Dashboard
+                </button>
+                <button
+                  onClick={() => navigate('/client/projects')}
+                  className="px-3 py-2 text-sm font-medium transition-colors rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                >
+                  Projects
+                </button>
+                <button
+                  onClick={() => navigate('/client/milestones')}
+                  className="px-3 py-2 text-sm font-medium transition-colors rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                >
+                  Milestones
+                </button>
+                <button
+                  onClick={() => navigate('/client/profile')}
+                  className="px-3 py-2 text-sm font-medium transition-colors rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                >
+                  Profile
+                </button>
+                <button
+                  onClick={() => navigate('/client/settings')}
+                  className="px-3 py-2 text-sm font-medium transition-colors rounded-md text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                >
+                  Settings
+                </button>
+              </nav>
             </div>
           </div>
-        </div>
+        </header>
 
         {/* Page Content */}
-        <main className="flex-1 bg-gray-50 overflow-auto">
-          <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-            <div className="px-4 py-6 sm:px-0">
-              <div className="mb-8">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                  Dashboard
-                </h1>
-                <p className="text-gray-600">
-                  Welcome back, {user?.firstName}! Here's your overview.
-                </p>
-              </div>
+        <main className="flex-1 bg-gray-50 overflow-auto h-full">
+          <div className="h-full p-12">
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                Dashboard
+              </h1>
+              <p className="text-gray-600">
+                Welcome back, {user?.firstName}! Here's your overview.
+              </p>
+            </div>
 
               {/* Stats Cards */}
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -606,16 +617,15 @@ const ClientDashboard = () => {
                       </div>
                     </div>
                     <div className="mt-4">
-                      <button
-                        onClick={() => navigate('/messages')}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
-                      >
-                        View Messages
-                      </button>
+                    <button
+                      onClick={() => navigate('/chat')}
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+                    >
+                      View Messages
+                    </button>
                     </div>
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         </main>

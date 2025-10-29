@@ -7,7 +7,7 @@ import { useAuth } from "../../../contexts/AuthContext";
 
 const FreelancerRegistrationForm = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { registerFreelancer } = useAuth();
   const [avatar, setAvatar] = useState(null);
 
   const skills = [
@@ -74,6 +74,8 @@ const FreelancerRegistrationForm = () => {
       lastName: "",
       email: "",
       phone: "",
+      password: "",
+      confirmPassword: "",
 
       // Professional Info
       title: "",
@@ -103,6 +105,12 @@ const FreelancerRegistrationForm = () => {
       email: Yup.string()
         .email("Invalid email address")
         .required("Email is required"),
+      password: Yup.string()
+        .min(8, "Password must be at least 8 characters")
+        .required("Password is required"),
+      confirmPassword: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Passwords must match')
+        .required('Confirm password is required'),
       title: Yup.string().required("Professional title is required"),
       bio: Yup.string()
         .min(100, "Bio must be at least 100 characters")
@@ -127,15 +135,22 @@ const FreelancerRegistrationForm = () => {
         // API call to register freelancer
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        // Simulate login with freelancer role
-        login(values, null, {
-          ...values,
-          role: "freelancer",
-          id: Date.now().toString(),
-        }, "freelancer");
-
-        setStatus({ success: "Freelancer profile created successfully!" });
-        setTimeout(() => navigate("/freelancer/projects"), 1500);
+        // Register freelancer (will require email verification)
+        const result = await registerFreelancer(values);
+        if (result.success) {
+          if (result.requiresVerification) {
+            setStatus({
+              success: result.message,
+              verificationRequired: true,
+              email: values.email
+            });
+          } else {
+            setStatus({ success: "Freelancer profile created successfully!" });
+            setTimeout(() => navigate('/freelancer/dashboard'), 1500);
+          }
+        } else {
+          setStatus({ error: result.error || "Registration failed. Please try again." });
+        }
       } catch {
         setStatus({ error: "Registration failed. Please try again." });
       } finally {
@@ -180,19 +195,43 @@ const FreelancerRegistrationForm = () => {
 
       <div className="chart-card">
         {formik.status?.success && (
-          <div
-            style={{
-              background: "#f0fdf4",
-              border: "1px solid #bbf7d0",
-              color: "#166534",
-              padding: "12px 16px",
-              borderRadius: "var(--radius-sm)",
-              marginBottom: "20px",
-            }}
-          >
-            {formik.status.success}
-          </div>
-        )}
+           <div
+             style={{
+               background: "#f0fdf4",
+               border: "1px solid #bbf7d0",
+               color: "#166534",
+               padding: "12px 16px",
+               borderRadius: "var(--radius-sm)",
+               marginBottom: "20px",
+             }}
+           >
+             {formik.status.success}
+             {formik.status.verificationRequired && (
+               <div style={{ marginTop: "12px", fontSize: "14px" }}>
+                 <p style={{ marginBottom: "8px" }}>
+                   Check your email at <strong>{formik.status.email}</strong> for a verification link.
+                 </p>
+                 <p style={{ marginBottom: "8px" }}>
+                   The verification link has been logged to the console for testing purposes.
+                 </p>
+                 <button
+                   onClick={() => navigate('/login')}
+                   style={{
+                     background: "#166534",
+                     color: "white",
+                     border: "none",
+                     padding: "8px 16px",
+                     borderRadius: "4px",
+                     cursor: "pointer",
+                     fontSize: "14px"
+                   }}
+                 >
+                   Go to Login
+                 </button>
+               </div>
+             )}
+           </div>
+         )}
 
         {formik.status?.error && (
           <div
@@ -323,25 +362,50 @@ const FreelancerRegistrationForm = () => {
               </div>
             </div>
 
+            <div style={{ marginBottom: "20px" }}>
+              <label className="form-label">Email Address *</label>
+              <input
+                type="email"
+                name="email"
+                className="form-input"
+                placeholder="john.doe@example.com"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              />
+              {formik.touched.email && formik.errors.email && (
+                <div
+                  style={{
+                    color: "#dc2626",
+                    fontSize: "14px",
+                    marginTop: "4px",
+                  }}
+                >
+                  {formik.errors.email}
+                </div>
+              )}
+            </div>
+
             <div
               style={{
                 display: "grid",
                 gridTemplateColumns: "1fr 1fr",
                 gap: "20px",
+                marginBottom: "20px",
               }}
             >
               <div>
-                <label className="form-label">Email Address *</label>
+                <label className="form-label">Password *</label>
                 <input
-                  type="email"
-                  name="email"
+                  type="password"
+                  name="password"
                   className="form-input"
-                  placeholder="john.doe@example.com"
-                  value={formik.values.email}
+                  placeholder="Create a password"
+                  value={formik.values.password}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
-                {formik.touched.email && formik.errors.email && (
+                {formik.touched.password && formik.errors.password && (
                   <div
                     style={{
                       color: "#dc2626",
@@ -349,22 +413,46 @@ const FreelancerRegistrationForm = () => {
                       marginTop: "4px",
                     }}
                   >
-                    {formik.errors.email}
+                    {formik.errors.password}
                   </div>
                 )}
               </div>
 
               <div>
-                <label className="form-label">Phone Number</label>
+                <label className="form-label">Confirm Password *</label>
                 <input
-                  type="tel"
-                  name="phone"
+                  type="password"
+                  name="confirmPassword"
                   className="form-input"
-                  placeholder="+1 (555) 123-4567"
-                  value={formik.values.phone}
+                  placeholder="Confirm your password"
+                  value={formik.values.confirmPassword}
                   onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
+                {formik.touched.confirmPassword && formik.errors.confirmPassword && (
+                  <div
+                    style={{
+                      color: "#dc2626",
+                      fontSize: "14px",
+                      marginTop: "4px",
+                    }}
+                  >
+                    {formik.errors.confirmPassword}
+                  </div>
+                )}
               </div>
+            </div>
+
+            <div style={{ marginBottom: "20px" }}>
+              <label className="form-label">Phone Number</label>
+              <input
+                type="tel"
+                name="phone"
+                className="form-input"
+                placeholder="+1 (555) 123-4567"
+                value={formik.values.phone}
+                onChange={formik.handleChange}
+              />
             </div>
           </div>
 

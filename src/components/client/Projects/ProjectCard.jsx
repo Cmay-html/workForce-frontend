@@ -86,7 +86,7 @@ const ProjectCard = ({ project }) => {
           View Details
         </button>
         <button
-          onClick={() => navigate(`/client/milestones/${project.id}`)}
+          onClick={() => navigate(`/client/projects/${project.id}/milestones/create`)}
           className="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-3 rounded-md text-sm transition-colors duration-200"
         >
           + Add Milestone

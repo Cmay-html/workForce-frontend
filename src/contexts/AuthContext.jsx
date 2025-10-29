@@ -12,15 +12,25 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('authToken');
     const userData = localStorage.getItem('userData');
 
+    console.log('AuthContext initialization:', {
+      token: !!token,
+      userData: !!userData,
+      tokenValue: token,
+      userDataValue: userData
+    });
+
     if (token && userData) {
       try {
         const parsedUser = JSON.parse(userData);
+        console.log('AuthContext: Setting user from localStorage:', parsedUser);
         setUser(parsedUser);
       } catch (error) {
         console.error('Error parsing user data:', error);
         localStorage.removeItem('authToken');
         localStorage.removeItem('userData');
       }
+    } else {
+      console.log('AuthContext: No stored auth data found - user needs to log in');
     }
     setLoading(false);
   }, []);
@@ -33,13 +43,37 @@ export const AuthProvider = ({ children }) => {
       // In production, replace with actual API call
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      // Mock user data based on email
+      // Check if user exists in localStorage (from registration)
+      const storedUserData = localStorage.getItem('userData');
+      let userData = null;
+
+      if (storedUserData) {
+        try {
+          userData = JSON.parse(storedUserData);
+        } catch (e) {
+          console.error('Error parsing stored user data:', e);
+        }
+      }
+
+      // If user exists and password matches, use stored data
+      if (userData && userData.email === email && userData.password === password) {
+        console.log('Login: Found existing user:', userData);
+        setUser(userData);
+        // Store fresh token for this session
+        localStorage.setItem('authToken', 'mock-jwt-token-' + Date.now());
+        return { success: true, user: userData };
+      }
+
+      // Fallback to mock data based on email for development
+      const emailStr = String(email || '');
+      console.log('Login: Using fallback mock user for email:', emailStr);
       const mockUser = {
         id: Date.now().toString(),
-        email: email,
-        firstName: email.includes('client') ? 'John' : 'Jane',
-        lastName: email.includes('client') ? 'Doe' : 'Smith',
-        role: email.includes('client') ? 'client' : 'freelancer'
+        email: emailStr,
+        firstName: emailStr.includes('client') ? 'John' : 'Jane',
+        lastName: emailStr.includes('client') ? 'Doe' : 'Smith',
+        role: emailStr.includes('client') ? 'client' : 'freelancer',
+        password: password // Store password for consistency
       };
 
       // Store mock token and user data
@@ -57,16 +91,153 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const registerClient = async (clientData) => {
+    try {
+      setLoading(true);
+
+      // Mock client registration
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Create client user data
+      const mockUser = {
+        id: Date.now().toString(),
+        email: clientData.email,
+        firstName: clientData.firstName,
+        lastName: clientData.lastName,
+        role: 'client',
+        companyName: clientData.companyName,
+        industry: clientData.industry,
+        companySize: clientData.companySize,
+        password: clientData.password, // Store password for login verification
+        emailVerified: false, // Email not verified yet
+        verificationToken: 'mock-verification-token-' + Date.now() // Mock verification token
+      };
+
+      // Store user data (but don't set as authenticated until email is verified)
+      localStorage.setItem('pendingUserData', JSON.stringify(mockUser));
+
+      // Mock sending verification email
+      console.log('Verification email would be sent to:', clientData.email);
+      console.log('Verification link:', `http://localhost:5173/verify-email?token=${mockUser.verificationToken}&email=${encodeURIComponent(clientData.email)}`);
+
+      return {
+        success: true,
+        requiresVerification: true,
+        message: 'Please check your email and click the verification link to complete registration.',
+        user: mockUser
+      };
+
+    } catch (error) {
+      console.error('Client registration error:', error);
+      return { success: false, error: error.message };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const registerFreelancer = async (freelancerData) => {
+    try {
+      setLoading(true);
+
+      // Mock freelancer registration
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      // Create freelancer user data
+      const mockUser = {
+        id: Date.now().toString(),
+        email: freelancerData.email,
+        firstName: freelancerData.firstName,
+        lastName: freelancerData.lastName,
+        role: 'freelancer',
+        title: freelancerData.title,
+        bio: freelancerData.bio,
+        experienceLevel: freelancerData.experienceLevel,
+        skills: freelancerData.skills,
+        categories: freelancerData.categories,
+        password: freelancerData.password, // Store password for login verification
+        emailVerified: false, // Email not verified yet
+        verificationToken: 'mock-verification-token-' + Date.now() // Mock verification token
+      };
+
+      // Store user data (but don't set as authenticated until email is verified)
+      localStorage.setItem('pendingUserData', JSON.stringify(mockUser));
+
+      // Mock sending verification email
+      console.log('Verification email would be sent to:', freelancerData.email);
+      console.log('Verification link:', `http://localhost:5173/verify-email?token=${mockUser.verificationToken}&email=${encodeURIComponent(freelancerData.email)}`);
+
+      return {
+        success: true,
+        requiresVerification: true,
+        message: 'Please check your email and click the verification link to complete registration.',
+        user: mockUser
+      };
+
+    } catch (error) {
+      console.error('Freelancer registration error:', error);
+      return { success: false, error: error.message };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const logout = () => {
+    console.log('Logout: Clearing user data');
     localStorage.removeItem('authToken');
     localStorage.removeItem('userData');
+    localStorage.removeItem('pendingUserData');
     setUser(null);
+  };
+
+  const verifyEmail = async (token, email) => {
+    try {
+      setLoading(true);
+
+      // Check if there's a pending user with matching token and email
+      const pendingUserData = localStorage.getItem('pendingUserData');
+
+      if (!pendingUserData) {
+        return { success: false, error: 'No pending verification found.' };
+      }
+
+      const pendingUser = JSON.parse(pendingUserData);
+
+      if (pendingUser.email !== email || pendingUser.verificationToken !== token) {
+        return { success: false, error: 'Invalid verification token or email.' };
+      }
+
+      // Mark email as verified and create authenticated user
+      const verifiedUser = {
+        ...pendingUser,
+        emailVerified: true
+      };
+
+      // Remove verification token and pending data
+      delete verifiedUser.verificationToken;
+
+      // Store authenticated user
+      localStorage.setItem('authToken', 'mock-jwt-token-' + Date.now());
+      localStorage.setItem('userData', JSON.stringify(verifiedUser));
+      localStorage.removeItem('pendingUserData');
+
+      setUser(verifiedUser);
+      return { success: true, user: verifiedUser };
+
+    } catch (error) {
+      console.error('Email verification error:', error);
+      return { success: false, error: error.message };
+    } finally {
+      setLoading(false);
+    }
   };
 
   const value = {
     user,
     login,
     logout,
+    registerClient,
+    registerFreelancer,
+    verifyEmail,
     loading,
     isAuthenticated: !!user,
     isClient: user?.role === 'client',

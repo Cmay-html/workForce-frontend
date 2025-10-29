@@ -38,9 +38,10 @@ const MilestoneList = () => {
   };
 
   return (
-    <div className="main-content">
-      <div className="top-bar">
-        <h1 className="text-2xl font-bold">Project Milestones</h1>
+    <div className="h-full p-12">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Project Milestones</h1>
+        <p className="text-gray-600">Review and approve milestone submissions</p>
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>

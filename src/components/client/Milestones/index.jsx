@@ -88,7 +88,7 @@ const MilestonesOverviewPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto py-8" style={{ minWidth: '1024px' }}>
+    <div className="h-full p-12" style={{ minWidth: '1024px' }}>
       <div className="mb-8">
         <button
           onClick={() => navigate('/dashboard')}

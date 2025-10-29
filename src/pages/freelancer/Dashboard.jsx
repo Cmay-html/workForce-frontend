@@ -130,6 +130,18 @@ const FreelancerDashboard = () => {
             </li>
             <li>
               <button
+                onClick={() => navigate('/chat')}
+                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+              >
+                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">C</span>
+                <div className="flex-1">
+                  <div className="font-medium">Messages</div>
+                  <div className="text-xs text-gray-500 mt-0.5">Chat with clients</div>
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
                 onClick={() => navigate('/freelancer/proposals')}
                 className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
               >
@@ -360,6 +372,15 @@ const FreelancerDashboard = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                       </svg>
                       Active Projects
+                    </button>
+                    <button
+                      onClick={() => navigate('/chat')}
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                      </svg>
+                      Messages
                     </button>
                     <button
                       onClick={() => navigate('/freelancer/profile')}

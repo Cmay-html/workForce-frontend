@@ -6,7 +6,7 @@ const ClientProjectsPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="main-content" style={{ minWidth: '1024px' }}>
+    <div className="h-full p-12" style={{ minWidth: '1024px' }}>
       <div className="mb-6">
         <button
           onClick={() => navigate('/dashboard')}

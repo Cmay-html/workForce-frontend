@@ -182,7 +182,7 @@ const MilestoneCard = ({ milestone, onApprove, onRequestRevision }) => {
             </p>
 
             <div style={{ marginBottom: "24px" }}>
-              {["Credit Card", "PayPal", "Bank Transfer"].map((method) => (
+              {["Credit Card", "PayPal", "Bank Transfer", "Mobile Money"].map((method) => (
                 <label
                   key={method}
                   style={{

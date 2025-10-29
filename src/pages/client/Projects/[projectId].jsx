@@ -443,7 +443,7 @@ const ProjectDetailsPage = () => {
                       <div className="flex justify-between items-center mb-6">
                         <h3 className="text-lg font-medium text-gray-900">Project Milestones</h3>
                         <button
-                          onClick={() => navigate(`/client/milestones/${project.id}`)}
+                          onClick={() => navigate(`/client/milestones/${project.id}/create`)}
                           className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
                         >
                           + Add Milestone
@@ -475,7 +475,7 @@ const ProjectDetailsPage = () => {
                           <p className="mt-1 text-sm text-gray-500">Get started by adding your first milestone.</p>
                           <div className="mt-6">
                             <button
-                              onClick={() => navigate(`/client/milestones/${project.id}`)}
+                              onClick={() => navigate(`/client/milestones/${project.id}/create`)}
                               className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
                             >
                               Add Milestone
@@ -504,12 +504,14 @@ const ProjectDetailsPage = () => {
 
               {/* Action Buttons */}
               <div className="flex gap-4">
-                <button
-                  onClick={() => navigate(`/client/projects/${project.id}/chat`)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
-                >
-                  Message Freelancer
-                </button>
+                {project.freelancer && (
+                  <button
+                    onClick={() => navigate(`/projects/${project.id}/chat`)}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+                  >
+                    Message Freelancer
+                  </button>
+                )}
                 <button
                   onClick={() => navigate(`/client/projects/${project.id}/edit`)}
                   className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"

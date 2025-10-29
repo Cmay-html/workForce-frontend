@@ -412,6 +412,18 @@ const PaymentTracking = () => {
                         </div>
                         <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">Edit</button>
                       </div>
+                      <div className="flex justify-between items-center p-3 border border-gray-200 rounded-lg">
+                        <div className="flex items-center">
+                          <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                            <span className="text-green-600 font-bold text-sm">📱</span>
+                          </div>
+                          <div>
+                            <p className="font-medium text-gray-900">Mobile Money</p>
+                            <p className="text-sm text-gray-600">+1 (555) 123-4567</p>
+                          </div>
+                        </div>
+                        <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">Edit</button>
+                      </div>
                     </div>
                     <button className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
