@@ -1,8 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [animating, setAnimating] = useState(false);
+  const [form, setForm] = useState({ email: "", password: "", confirm: "", role: "" });
+  const cardRef = useRef(null);
+  const [cardHeight, setCardHeight] = useState("auto");
+
+  // Adjust card height dynamically
+  useEffect(() => {
+    if (cardRef.current) {
+      setCardHeight(cardRef.current.scrollHeight + 32);
+    }
+  }, [isLogin, form]);
 
   const handleToggle = () => {
     setAnimating(true);
@@ -12,19 +23,56 @@ export default function LoginPage() {
     }, 300);
   };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((f) => ({ ...f, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if (!isLogin) {
+      // Signup validations
+      if (!form.role) {
+        alert("Please select a role.");
+        setLoading(false);
+        return;
+      }
+      if (form.password !== form.confirm) {
+        alert("Passwords do not match!");
+        setLoading(false);
+        return;
+      }
+
+      // Simulate email verification
+      await new Promise((r) => setTimeout(r, 1000));
+      alert(`Verification email sent to ${form.email}! Role: ${form.role}`);
+    } else {
+      // Login flow simulation
+      await new Promise((r) => setTimeout(r, 700));
+      alert(`Logged in as ${form.email}`);
+    }
+
+    setLoading(false);
+  };
+
   return (
     <div style={styles.container}>
       <div style={styles.background}>
         <div style={styles.overlay}></div>
         <div style={styles.content}>
-          {/* Dynamic animation */}
           <div
+            ref={cardRef}
             style={{
               ...styles.formCard,
+              height: cardHeight,
               transform: animating ? "scale(0.95)" : "scale(1)",
               opacity: animating ? 0.7 : 1,
+              transition: "all 0.35s ease",
             }}
           >
+            {/* Header */}
             <div style={styles.header}>
               <h1 style={styles.title}>Kazi Flow</h1>
               <p style={styles.description}>
@@ -32,39 +80,82 @@ export default function LoginPage() {
               </p>
             </div>
 
-            {/* FORM */}
-            <form style={styles.form}>
+            {/* Form */}
+            <form onSubmit={handleSubmit} style={styles.form}>
               <div style={styles.inputGroup}>
                 <input
                   type="email"
+                  name="email"
                   placeholder="Email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
                   style={styles.input}
                 />
               </div>
               <div style={styles.inputGroup}>
                 <input
                   type="password"
+                  name="password"
                   placeholder="Password"
+                  value={form.password}
+                  onChange={handleChange}
+                  required
                   style={styles.input}
                 />
               </div>
 
               {!isLogin && (
-                <div style={styles.inputGroup}>
-                  <input
-                    type="password"
-                    placeholder="Confirm Password"
-                    style={styles.input}
-                  />
-                </div>
+                <>
+                  <div style={styles.inputGroup}>
+                    <input
+                      type="password"
+                      name="confirm"
+                      placeholder="Confirm Password"
+                      value={form.confirm}
+                      onChange={handleChange}
+                      required
+                      style={styles.input}
+                    />
+                  </div>
+
+                  <div
+                    style={{
+                      ...styles.inputGroup,
+                      opacity: !isLogin ? 1 : 0,
+                      transition: "opacity 0.35s ease",
+                    }}
+                  >
+                    <select
+                      name="role"
+                      value={form.role}
+                      onChange={handleChange}
+                      required
+                      style={{
+                        ...styles.input,
+                        appearance: "none",
+                        backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+                        backgroundPosition: "right 0.5rem center",
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "1.25em 1.25em",
+                        paddingRight: "2rem",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <option value="">Select your role</option>
+                      <option value="freelancer">Freelancer</option>
+                      <option value="client">Client</option>
+                    </select>
+                  </div>
+                </>
               )}
 
-              <button type="submit" style={styles.button}>
-                {isLogin ? "Sign In" : "Sign Up"}
+              <button type="submit" disabled={loading} style={styles.button}>
+                {loading ? "Working…" : isLogin ? "Sign In" : "Sign Up"}
               </button>
             </form>
 
-            {/* TOGGLE */}
+            {/* Toggle link */}
             <div style={styles.footer}>
               <p style={styles.switchText}>
                 {isLogin ? "Don't have an account?" : "Already have an account?"}
@@ -83,7 +174,7 @@ export default function LoginPage() {
 const styles = {
   container: {
     height: "100vh",
-    width: "145%",
+    width: "100vw",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -108,46 +199,19 @@ const styles = {
     background: "rgba(0, 0, 0, 0.3)",
     backdropFilter: "blur(2px)",
   },
-  content: {
-    position: "relative",
-    zIndex: 1,
-    width: "100%",
-    maxWidth: "400px",
-    padding: "2rem",
-  },
+  content: { position: "relative", zIndex: 1, width: "100%", maxWidth: "400px", padding: "2rem" },
   formCard: {
     background: "rgba(255, 255, 255, 0.95)",
-    backdropFilter: "blur(20px)",
     borderRadius: "24px",
     padding: "3rem 2.5rem",
     boxShadow: "0 25px 50px rgba(0, 0, 0, 0.15)",
     border: "1px solid rgba(255, 255, 255, 0.2)",
-    transition: "all 0.3s ease",
   },
-  header: {
-    textAlign: "center",
-    marginBottom: "2.5rem",
-  },
-  title: {
-    fontSize: "2.5rem",
-    fontWeight: "700",
-    color: "#1e293b",
-    marginBottom: "0.5rem",
-    letterSpacing: "-0.5px",
-  },
-  description: {
-    color: "#64748b",
-    fontSize: "1rem",
-    lineHeight: "1.5",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "1.5rem",
-  },
-  inputGroup: {
-    position: "relative",
-  },
+  header: { textAlign: "center", marginBottom: "2.5rem" },
+  title: { fontSize: "2.5rem", fontWeight: "700", color: "#1e293b", marginBottom: "0.5rem" },
+  description: { color: "#64748b", fontSize: "1rem", lineHeight: "1.5" },
+  form: { display: "flex", flexDirection: "column", gap: "1.5rem" },
+  inputGroup: { position: "relative" },
   input: {
     width: "100%",
     padding: "1.25rem 1.5rem",
@@ -155,7 +219,6 @@ const styles = {
     border: "2px solid #e2e8f0",
     borderRadius: "12px",
     outline: "none",
-    transition: "all 0.3s ease",
     backgroundColor: "#ffffff",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.05)",
   },
@@ -169,28 +232,8 @@ const styles = {
     borderRadius: "12px",
     color: "#ffffff",
     cursor: "pointer",
-    transition: "all 0.3s ease",
-    boxShadow: "#F3F7F0",
   },
-  buttonHover: {
-    transform: "translateY(-2px)",
-    boxShadow: "",
-  },
-  footer: {
-    marginTop: "2rem",
-    textAlign: "center",
-  },
-  switchText: {
-    fontSize: "0.95rem",
-    color: "#64748b",
-    margin: 0,
-  },
-  switchLink: {
-    color: "#f97316",
-    fontWeight: "600",
-    cursor: "pointer",
-    textDecoration: "none",
-    transition: "color 0.3s ease",
-  },
+  footer: { marginTop: "2rem", textAlign: "center" },
+  switchText: { fontSize: "0.95rem", color: "#64748b", margin: 0 },
+  switchLink: { color: "#f97316", fontWeight: "600", cursor: "pointer" },
 };
-
