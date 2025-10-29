@@ -3,6 +3,7 @@ import { useAuth } from './Context/AuthContext';
 import AdminDashboard from './Pages/AdminDashboard';
 import UserManagement from './Pages/admin/UserManagement';
 import LandingPage from './Pages/LandingPage';
+import PrivacyPolicy from './Pages/PrivacyPolicy';
 
 const AdminRoute = ({ children }) => {
   const { user } = useAuth();
@@ -15,9 +16,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<LandingPage />}/>
+        <Route path='/privacypolicy' element={<PrivacyPolicy />}/>
         <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
         <Route path="/admin/users" element={<AdminRoute><UserManagement /></AdminRoute>} />
-        <Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} /> 
+        <Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} />
       </Routes>
     </BrowserRouter>
   );

@@ -273,8 +273,8 @@ const LandingPage = () => {
             <div>
               <h4 className="text-sm font-semibold mb-4 text-gray-200 uppercase tracking-wide">Platform</h4>
               <ul className="space-y-3 text-gray-400 text-sm">
-                <li><Link to="/find-work" className="hover:text-orange-500 transition-colors duration-300">Find Work</Link></li>
-                <li><Link to="/post-project" className="hover:text-orange-500 transition-colors duration-300">Post Project</Link></li>
+                <li><Link to="/register" className="hover:text-orange-500 transition-colors duration-300">Find Work</Link></li>
+                <li><Link to="/register" className="hover:text-orange-500 transition-colors duration-300">Post Project</Link></li>
                 <li><Link to="/enterprise" className="hover:text-orange-500 transition-colors duration-300">Enterprise</Link></li>
               </ul>
             </div>
@@ -289,7 +289,7 @@ const LandingPage = () => {
             <div>
               <h4 className="text-sm font-semibold mb-4 text-gray-200 uppercase tracking-wide">Legal</h4>
               <ul className="space-y-3 text-gray-400 text-sm">
-                <li><Link to="/privacy-policy" className="hover:text-orange-500 transition-colors duration-300">Privacy Policy</Link></li>
+                <li><Link to="/privacypolicy" className="hover:text-orange-500 transition-colors duration-300">Privacy Policy</Link></li>
                 <li><Link to="/terms-of-service" className="hover:text-orange-500 transition-colors duration-300">Terms of Service</Link></li>
                 <li><Link to="/cookie-policy" className="hover:text-orange-500 transition-colors duration-300">Cookie Policy</Link></li>
               </ul>
