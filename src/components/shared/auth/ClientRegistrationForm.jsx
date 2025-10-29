@@ -156,10 +156,10 @@ const ClientRegistrationForm = () => {
           <div className="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl mx-auto mb-6 shadow-2xl flex items-center justify-center">
             <span className="text-white font-bold text-3xl">KF</span>
           </div>
-          <h1 className="text-5xl font-bold text-gray-900 mb-4 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
             Join as a Client
           </h1>
-          <p className="text-xl text-gray-700 font-medium leading-relaxed max-w-2xl mx-auto">
+          <p className="text-lg text-gray-700 font-medium leading-relaxed max-w-2xl mx-auto">
             Create your client profile to start posting projects and hiring talented freelancers
           </p>
         </div>
@@ -175,13 +175,13 @@ const ClientRegistrationForm = () => {
                   </svg>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-2xl font-bold">{formik.status.success}</h3>
+                  <h3 className="text-xl font-bold">{formik.status.success}</h3>
                   {formik.status.verificationRequired && (
                     <div className="mt-3">
-                      <p className="mb-2 text-lg">
+                      <p className="mb-2 text-base">
                         Check your email at <strong>{formik.status.email}</strong> for a verification link.
                       </p>
-                      <p className="mb-3 text-lg opacity-90">
+                      <p className="mb-3 text-base opacity-90">
                         The verification link has been logged to the console for testing purposes.
                       </p>
                       <button
@@ -207,7 +207,7 @@ const ClientRegistrationForm = () => {
                   </svg>
                 </div>
                 <div className="ml-4">
-                  <h3 className="text-2xl font-bold">{formik.status.error}</h3>
+                  <h3 className="text-xl font-bold">{formik.status.error}</h3>
                 </div>
               </div>
             </div>
@@ -237,7 +237,7 @@ const ClientRegistrationForm = () => {
                   </svg>
                 </div>
               </div>
-              <p className="text-gray-600 text-lg font-medium mt-4">
+              <p className="text-gray-600 text-base font-medium mt-4">
                 Click to upload profile picture <span className="text-gray-400">(Optional)</span>
               </p>
             </div>
@@ -249,20 +249,20 @@ const ClientRegistrationForm = () => {
                   <span className="text-white font-bold text-xl">1</span>
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900">Personal Information</h2>
-                  <p className="text-gray-600 text-lg mt-1">Tell us about yourself</p>
+                  <h2 className="text-2xl font-bold text-gray-900">Personal Information</h2>
+                  <p className="text-gray-600 text-base mt-1">Tell us about yourself</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                  <label className="block text-lg font-semibold text-gray-800 mb-3">
+                  <label className="block text-base font-semibold text-gray-800 mb-3">
                     First Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     name="firstName"
-                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+                    className={`w-full border-2 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
                       formik.touched.firstName && formik.errors.firstName ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
                     }`}
                     placeholder="John"
@@ -281,13 +281,13 @@ const ClientRegistrationForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-lg font-semibold text-gray-800 mb-3">
+                  <label className="block text-base font-semibold text-gray-800 mb-3">
                     Last Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     name="lastName"
-                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+                    className={`w-full border-2 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
                       formik.touched.lastName && formik.errors.lastName ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
                     }`}
                     placeholder="Doe"
@@ -306,13 +306,13 @@ const ClientRegistrationForm = () => {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-lg font-semibold text-gray-800 mb-3">
+                  <label className="block text-base font-semibold text-gray-800 mb-3">
                     Email Address <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="email"
                     name="email"
-                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+                    className={`w-full border-2 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
                       formik.touched.email && formik.errors.email ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
                     }`}
                     placeholder="john.doe@company.com"
@@ -332,14 +332,14 @@ const ClientRegistrationForm = () => {
 
                 {/* Password Field with Visibility Toggle */}
                 <div>
-                  <label className="block text-lg font-semibold text-gray-800 mb-3">
+                  <label className="block text-base font-semibold text-gray-800 mb-3">
                     Password <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}
                       name="password"
-                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors pr-12 ${
+                      className={`w-full border-2 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors pr-12 ${
                         formik.touched.password && formik.errors.password ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
                       }`}
                       placeholder="Create a password"
@@ -376,14 +376,14 @@ const ClientRegistrationForm = () => {
 
                 {/* Confirm Password Field with Visibility Toggle */}
                 <div>
-                  <label className="block text-lg font-semibold text-gray-800 mb-3">
+                  <label className="block text-base font-semibold text-gray-800 mb-3">
                     Confirm Password <span className="text-red-500">*</span>
                   </label>
                   <div className="relative">
                     <input
                       type={showConfirmPassword ? "text" : "password"}
                       name="confirmPassword"
-                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors pr-12 ${
+                      className={`w-full border-2 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors pr-12 ${
                         formik.touched.confirmPassword && formik.errors.confirmPassword ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
                       }`}
                       placeholder="Confirm your password"
@@ -419,13 +419,13 @@ const ClientRegistrationForm = () => {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-lg font-semibold text-gray-800 mb-3">
+                  <label className="block text-base font-semibold text-gray-800 mb-3">
                     Phone Number
                   </label>
                   <input
                     type="tel"
                     name="phone"
-                    className="w-full border-2 border-blue-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white"
+                    className="w-full border-2 border-blue-200 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white"
                     placeholder="+1 (555) 123-4567"
                     value={formik.values.phone}
                     onChange={formik.handleChange}
@@ -441,20 +441,20 @@ const ClientRegistrationForm = () => {
                   <span className="text-white font-bold text-xl">2</span>
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900">Company Information</h2>
-                  <p className="text-gray-600 text-lg mt-1">Tell us about your company</p>
+                  <h2 className="text-2xl font-bold text-gray-900">Company Information</h2>
+                  <p className="text-gray-600 text-base mt-1">Tell us about your company</p>
                 </div>
               </div>
 
               <div className="space-y-8">
                 <div>
-                  <label className="block text-lg font-semibold text-gray-800 mb-3">
+                  <label className="block text-base font-semibold text-gray-800 mb-3">
                     Company Name <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="text"
                     name="companyName"
-                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
+                    className={`w-full border-2 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
                       formik.touched.companyName && formik.errors.companyName ? 'border-red-400 bg-red-50' : 'border-purple-200 bg-white'
                     }`}
                     placeholder="Acme Corporation"
@@ -474,12 +474,12 @@ const ClientRegistrationForm = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
-                    <label className="block text-lg font-semibold text-gray-800 mb-3">
+                    <label className="block text-base font-semibold text-gray-800 mb-3">
                       Industry <span className="text-red-500">*</span>
                     </label>
                     <select
                       name="industry"
-                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
+                      className={`w-full border-2 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
                         formik.touched.industry && formik.errors.industry ? 'border-red-400 bg-red-50' : 'border-purple-200 bg-white'
                       }`}
                       value={formik.values.industry}
@@ -504,12 +504,12 @@ const ClientRegistrationForm = () => {
                   </div>
 
                   <div>
-                    <label className="block text-lg font-semibold text-gray-800 mb-3">
+                    <label className="block text-base font-semibold text-gray-800 mb-3">
                       Company Size <span className="text-red-500">*</span>
                     </label>
                     <select
                       name="companySize"
-                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
+                      className={`w-full border-2 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
                         formik.touched.companySize && formik.errors.companySize ? 'border-red-400 bg-red-50' : 'border-purple-200 bg-white'
                       }`}
                       value={formik.values.companySize}
@@ -535,13 +535,13 @@ const ClientRegistrationForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-lg font-semibold text-gray-800 mb-3">
+                  <label className="block text-base font-semibold text-gray-800 mb-3">
                     Company Website
                   </label>
                   <input
                     type="url"
                     name="website"
-                    className="w-full border-2 border-purple-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors bg-white"
+                    className="w-full border-2 border-purple-200 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors bg-white"
                     placeholder="https://www.company.com"
                     value={formik.values.website}
                     onChange={formik.handleChange}
@@ -549,12 +549,12 @@ const ClientRegistrationForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-lg font-semibold text-gray-800 mb-3">
+                  <label className="block text-base font-semibold text-gray-800 mb-3">
                     Company Description
                   </label>
                   <textarea
                     name="description"
-                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-vertical ${
+                    className={`w-full border-2 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-vertical ${
                       formik.touched.description && formik.errors.description ? 'border-red-400 bg-red-50' : 'border-purple-200 bg-white'
                     }`}
                     rows="5"
@@ -571,7 +571,7 @@ const ClientRegistrationForm = () => {
                       {formik.errors.description}
                     </p>
                   )}
-                  <div className={`text-right mt-2 text-lg font-medium ${
+                  <div className={`text-right mt-2 text-base font-medium ${
                     formik.values.description.length < 50 ? 'text-red-600' : 'text-purple-600'
                   }`}>
                     {formik.values.description.length}/1000 characters
@@ -588,17 +588,17 @@ const ClientRegistrationForm = () => {
                   <span className="text-white font-bold text-xl">3</span>
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900">Project Preferences</h2>
-                  <p className="text-gray-600 text-lg mt-1">What type of projects do you need?</p>
+                  <h2 className="text-2xl font-bold text-gray-900">Project Preferences</h2>
+                  <p className="text-gray-600 text-base mt-1">What type of projects do you need?</p>
                 </div>
               </div>
 
               <div className="space-y-8">
                 <div>
-                  <label className="block text-lg font-semibold text-gray-800 mb-4">
+                  <label className="block text-base font-semibold text-gray-800 mb-4">
                     Project Types <span className="text-red-500">*</span>
                   </label>
-                  <p className="text-gray-600 text-lg mb-6">
+                  <p className="text-gray-600 text-base mb-6">
                     Select the types of projects you typically need (choose at least one)
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -629,12 +629,12 @@ const ClientRegistrationForm = () => {
                           }}
                           className="w-5 h-5 text-green-600 focus:ring-green-500 rounded"
                         />
-                        <span className="text-lg font-medium">{type}</span>
+                        <span className="text-base font-medium">{type}</span>
                       </label>
                     ))}
                   </div>
                   {formik.touched.projectTypes && formik.errors.projectTypes && (
-                    <p className="mt-4 text-red-600 font-medium text-lg flex items-center gap-2">
+                    <p className="mt-4 text-red-600 font-medium text-base flex items-center gap-2">
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                       </svg>
@@ -645,12 +645,12 @@ const ClientRegistrationForm = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <div>
-                    <label className="block text-lg font-semibold text-gray-800 mb-3">
+                    <label className="block text-base font-semibold text-gray-800 mb-3">
                       Typical Budget Range
                     </label>
                     <select
                       name="budgetRange"
-                      className="w-full border-2 border-green-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white"
+                      className="w-full border-2 border-green-200 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white"
                       value={formik.values.budgetRange}
                       onChange={formik.handleChange}
                     >
@@ -664,12 +664,12 @@ const ClientRegistrationForm = () => {
                   </div>
 
                   <div>
-                    <label className="block text-lg font-semibold text-gray-800 mb-3">
+                    <label className="block text-base font-semibold text-gray-800 mb-3">
                       Typical Project Timeline
                     </label>
                     <select
                       name="timeline"
-                      className="w-full border-2 border-green-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white"
+                      className="w-full border-2 border-green-200 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white"
                       value={formik.values.timeline}
                       onChange={formik.handleChange}
                     >
@@ -692,20 +692,20 @@ const ClientRegistrationForm = () => {
                   <span className="text-white font-bold text-xl">4</span>
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900">Location</h2>
-                  <p className="text-gray-600 text-lg mt-1">Where is your company based?</p>
+                  <h2 className="text-2xl font-bold text-gray-900">Location</h2>
+                  <p className="text-gray-600 text-base mt-1">Where is your company based?</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
-                  <label className="block text-lg font-semibold text-gray-800 mb-3">
+                  <label className="block text-base font-semibold text-gray-800 mb-3">
                     Country
                   </label>
                   <input
                     type="text"
                     name="country"
-                    className="w-full border-2 border-orange-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors bg-white"
+                    className="w-full border-2 border-orange-200 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors bg-white"
                     placeholder="United States"
                     value={formik.values.country}
                     onChange={formik.handleChange}
@@ -713,13 +713,13 @@ const ClientRegistrationForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-lg font-semibold text-gray-800 mb-3">
+                  <label className="block text-base font-semibold text-gray-800 mb-3">
                     City
                   </label>
                   <input
                     type="text"
                     name="city"
-                    className="w-full border-2 border-orange-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors bg-white"
+                    className="w-full border-2 border-orange-200 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors bg-white"
                     placeholder="New York"
                     value={formik.values.city}
                     onChange={formik.handleChange}
@@ -727,13 +727,13 @@ const ClientRegistrationForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-lg font-semibold text-gray-800 mb-3">
+                  <label className="block text-base font-semibold text-gray-800 mb-3">
                     Timezone
                   </label>
                   <input
                     type="text"
                     name="timezone"
-                    className="w-full border-2 border-orange-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors bg-white"
+                    className="w-full border-2 border-orange-200 rounded-xl px-5 py-4 text-base focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors bg-white"
                     placeholder="EST (UTC-5)"
                     value={formik.values.timezone}
                     onChange={formik.handleChange}
@@ -749,8 +749,8 @@ const ClientRegistrationForm = () => {
                   <span className="text-white font-bold text-xl">5</span>
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold text-gray-900">Terms & Agreement</h2>
-                  <p className="text-gray-600 text-lg mt-1">Final steps to complete your registration</p>
+                  <h2 className="text-2xl font-bold text-gray-900">Terms & Agreement</h2>
+                  <p className="text-gray-600 text-base mt-1">Final steps to complete your registration</p>
                 </div>
               </div>
 
@@ -769,12 +769,12 @@ const ClientRegistrationForm = () => {
                     <div className="text-2xl font-bold text-gray-900 mb-3">
                       I agree to the Client Terms of Service and Privacy Policy <span className="text-red-500">*</span>
                     </div>
-                    <div className="text-lg text-gray-700 leading-relaxed">
+                    <div className="text-base text-gray-700 leading-relaxed">
                       By creating a client account, you agree to our platform rules,
                       payment terms, and freelancer hiring guidelines.
                     </div>
                     {formik.touched.termsAccepted && formik.errors.termsAccepted && (
-                      <p className="mt-4 text-red-600 font-medium text-lg flex items-center gap-2">
+                      <p className="mt-4 text-red-600 font-medium text-base flex items-center gap-2">
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                         </svg>
@@ -791,13 +791,13 @@ const ClientRegistrationForm = () => {
               <button
                 type="button"
                 onClick={() => navigate("/")}
-                className="px-12 py-4 bg-gray-200 text-gray-800 text-xl font-semibold rounded-xl hover:bg-gray-300 transition-colors duration-200 border-2 border-gray-300"
+                className="px-12 py-4 bg-gray-200 text-gray-800 text-lg font-semibold rounded-xl hover:bg-gray-300 transition-colors duration-200 border-2 border-gray-300"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-12 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xl font-bold rounded-xl hover:from-purple-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg"
+                className="px-12 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-lg font-bold rounded-xl hover:from-purple-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg"
                 disabled={formik.isSubmitting}
               >
                 {formik.isSubmitting ? (

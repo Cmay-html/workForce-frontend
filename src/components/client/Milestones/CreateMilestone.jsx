@@ -109,7 +109,7 @@ const AddMilestoneForm = ({
                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <span className="text-green-800 font-semibold text-lg">
+            <span className="text-green-800 font-semibold text-sm">
               {formik.status.success}
             </span>
           </div>
@@ -132,7 +132,7 @@ const AddMilestoneForm = ({
                 d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <span className="text-red-800 font-semibold text-lg">
+            <span className="text-red-800 font-semibold text-sm">
               {formik.status.error}
             </span>
           </div>
@@ -157,7 +157,7 @@ const AddMilestoneForm = ({
               />
             </svg>
           </div>
-          <h3 className="text-xl font-bold text-gray-900">
+          <h3 className="text-base font-bold text-gray-900">
             Project Information
           </h3>
         </div>
@@ -179,10 +179,10 @@ const AddMilestoneForm = ({
             <span className="text-white font-bold text-lg">1</span>
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-gray-900">
+            <h3 className="text-lg font-bold text-gray-900">
               Milestone Details
             </h3>
-            <p className="text-gray-600 text-lg mt-1">
+            <p className="text-gray-600 text-sm mt-1">
               Define the milestone objectives and requirements
             </p>
           </div>
@@ -190,13 +190,13 @@ const AddMilestoneForm = ({
 
         <div className="space-y-6">
           <div>
-            <label className="block text-lg font-semibold text-gray-800 mb-3">
+            <label className="block text-sm font-semibold text-gray-800 mb-3">
               Milestone Title <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               name="title"
-              className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
+              className={`w-full border-2 rounded-xl px-5 py-4 text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
                 formik.touched.title && formik.errors.title
                   ? "border-red-400 bg-red-50"
                   : "border-purple-200 bg-white"
@@ -225,13 +225,13 @@ const AddMilestoneForm = ({
           </div>
 
           <div>
-            <label className="block text-lg font-semibold text-gray-800 mb-3">
+            <label className="block text-sm font-semibold text-gray-800 mb-3">
               Description <span className="text-red-500">*</span>
             </label>
             <textarea
               name="description"
               rows="4"
-              className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-vertical ${
+              className={`w-full border-2 rounded-xl px-5 py-4 text-sm focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-vertical ${
                 formik.touched.description && formik.errors.description
                   ? "border-red-400 bg-red-50"
                   : "border-purple-200 bg-white"
@@ -258,7 +258,7 @@ const AddMilestoneForm = ({
               </p>
             )}
             <div
-              className={`text-right mt-2 text-lg font-medium ${
+              className={`text-right mt-2 text-sm font-medium ${
                 formik.values.description.length < 10
                   ? "text-red-600"
                   : "text-purple-600"
@@ -277,10 +277,10 @@ const AddMilestoneForm = ({
             <span className="text-white font-bold text-lg">2</span>
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-gray-900">
+            <h3 className="text-lg font-bold text-gray-900">
               Timeline & Budget
             </h3>
-            <p className="text-gray-600 text-lg mt-1">
+            <p className="text-gray-600 text-sm mt-1">
               Set deadlines and payment details
             </p>
           </div>
@@ -288,7 +288,7 @@ const AddMilestoneForm = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-lg font-semibold text-gray-800 mb-3">
+            <label className="block text-sm font-semibold text-gray-800 mb-3">
               Due Date <span className="text-red-500">*</span>
             </label>
             <input
@@ -323,21 +323,21 @@ const AddMilestoneForm = ({
           </div>
 
           <div>
-            <label className="block text-lg font-semibold text-gray-800 mb-3">
+            <label className="block text-sm font-semibold text-gray-800 mb-3">
               Amount ($) <span className="text-red-500">*</span>
             </label>
             <div className="relative">
-              <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-lg">
+              <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-sm">
                 $
               </span>
               <input
                 type="number"
                 name="amount"
-                className={`w-full border-2 rounded-xl pl-10 pr-5 py-4 text-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors ${
-                  formik.touched.amount && formik.errors.amount
-                    ? "border-red-400 bg-red-50"
-                    : "border-green-200 bg-white"
-                }`}
+              className={`w-full border-2 rounded-xl pl-10 pr-5 py-4 text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors ${
+                formik.touched.amount && formik.errors.amount
+                  ? "border-red-400 bg-red-50"
+                  : "border-green-200 bg-white"
+              }`}
                 placeholder="0.00"
                 min="1"
                 max="1000000"
@@ -374,8 +374,8 @@ const AddMilestoneForm = ({
             <span className="text-white font-bold text-lg">3</span>
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-gray-900">Deliverables</h3>
-            <p className="text-gray-600 text-lg mt-1">
+            <h3 className="text-lg font-bold text-gray-900">Deliverables</h3>
+            <p className="text-gray-600 text-sm mt-1">
               List specific items to be delivered
             </p>
           </div>
@@ -390,7 +390,7 @@ const AddMilestoneForm = ({
                   value={deliverable}
                   onChange={(e) => updateDeliverable(index, e.target.value)}
                   onBlur={formik.handleBlur}
-                  className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors ${
+                  className={`w-full border-2 rounded-xl px-5 py-4 text-sm focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors ${
                     formik.touched.deliverables &&
                     formik.errors.deliverables?.[index]
                       ? "border-red-400 bg-red-50"
@@ -446,7 +446,7 @@ const AddMilestoneForm = ({
           <button
             type="button"
             onClick={addDeliverable}
-            className="flex items-center gap-3 px-6 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-colors text-lg font-semibold"
+            className="flex items-center gap-3 px-6 py-3 bg-orange-500 text-white rounded-xl hover:bg-orange-600 transition-colors text-sm font-semibold"
           >
             <svg
               className="w-5 h-5"
@@ -473,8 +473,8 @@ const AddMilestoneForm = ({
             <span className="text-white font-bold text-lg">4</span>
           </div>
           <div>
-            <h3 className="text-2xl font-bold text-gray-900">Status</h3>
-            <p className="text-gray-600 text-lg mt-1">
+            <h3 className="text-lg font-bold text-gray-900">Status</h3>
+            <p className="text-gray-600 text-sm mt-1">
               Set the initial status of this milestone
             </p>
           </div>
@@ -514,7 +514,7 @@ const AddMilestoneForm = ({
                 onChange={formik.handleChange}
                 className="w-5 h-5 text-blue-600 focus:ring-blue-500"
               />
-              <span className="text-lg font-semibold">{status.label}</span>
+              <span className="text-sm font-semibold">{status.label}</span>
             </label>
           ))}
         </div>
@@ -525,14 +525,14 @@ const AddMilestoneForm = ({
         <button
           type="button"
           onClick={embedded && onCancel ? onCancel : () => navigate(-1)}
-          className="px-8 py-4 bg-gray-200 text-gray-800 text-lg font-semibold rounded-xl hover:bg-gray-300 transition-colors duration-200 border-2 border-gray-300"
+          className="px-8 py-4 bg-gray-200 text-gray-800 text-sm font-semibold rounded-xl hover:bg-gray-300 transition-colors duration-200 border-2 border-gray-300"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-lg font-bold rounded-xl hover:from-purple-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg"
+          className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-sm font-bold rounded-xl hover:from-purple-700 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg"
         >
           {isSubmitting ? (
             <span className="flex items-center gap-3">
@@ -575,10 +575,10 @@ const AddMilestoneForm = ({
         <div className="mb-8">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center gap-3 text-gray-600 hover:text-gray-900 mb-6 transition-colors duration-200 text-lg font-semibold"
+            className="flex items-center gap-3 text-gray-600 hover:text-gray-900 mb-6 transition-colors duration-200 text-sm font-semibold"
           >
             <svg
-              className="w-5 h-5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -592,10 +592,10 @@ const AddMilestoneForm = ({
             </svg>
             Back to Project
           </button>
-          <h1 className="text-4xl font-bold text-gray-900 mb-3 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold text-gray-900 mb-3 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
             Add New Milestone
           </h1>
-          <p className="text-xl text-gray-600">
+          <p className="text-base text-gray-600">
             Create a milestone to track progress and manage payments for your
             project
           </p>
