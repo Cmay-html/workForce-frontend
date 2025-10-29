@@ -5,6 +5,7 @@ import UserManagement from './Pages/admin/UserManagement';
 import LandingPage from './Pages/LandingPage';
 import PrivacyPolicy from './Pages/PrivacyPolicy';
 import TermsOfService from './Pages/TermsOfService';
+import ContactPage from './Pages/Contact';
 
 const AdminRoute = ({ children }) => {
   const { user } = useAuth();
@@ -19,6 +20,7 @@ function App() {
         <Route path='/' element={<LandingPage />}/>
         <Route path='/privacypolicy' element={<PrivacyPolicy />}/>
         <Route path='/terms-of-service' element={<TermsOfService />}/>
+        <Route path='/contact' element={<ContactPage />}/>
         <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
         <Route path="/admin/users" element={<AdminRoute><UserManagement /></AdminRoute>} />
         <Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} />
