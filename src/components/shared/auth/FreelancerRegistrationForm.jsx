@@ -175,25 +175,47 @@ const FreelancerRegistrationForm = () => {
   };
 
   return (
-    <div className="main-content">
-      <div className="top-bar">
+    <div style={{
+      padding: "20px",
+      width: "100%",
+      height: "100%",
+      backgroundColor: "#ffffff",
+      overflow: "auto"
+    }}>
+      <div style={{
+        backgroundColor: "#f8f9fa",
+        padding: "20px",
+        borderRadius: "8px",
+        marginBottom: "20px",
+        border: "1px solid #e9ecef"
+      }}>
         <div>
-          <h1
-            style={{
-              fontSize: "24px",
-              fontWeight: "700",
-              color: "var(--text-primary)",
-            }}
-          >
+          <h1 style={{
+            fontSize: "24px",
+            fontWeight: "700",
+            color: "#1a202c",
+            margin: "0 0 8px 0"
+          }}>
             Become a Freelancer
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginTop: "8px" }}>
+          <p style={{
+            color: "#718096",
+            marginTop: "1px",
+            fontSize: "16px",
+            margin: "8px 0 0 0"
+          }}>
             Create your freelancer profile to start getting projects
           </p>
         </div>
       </div>
 
-      <div className="chart-card">
+      <div style={{
+        backgroundColor: "#ffffff",
+        borderRadius: "12px",
+        padding: "32px",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        border: "1px solid #e2e8f0"
+      }}>
         {formik.status?.success && (
            <div
              style={{
@@ -234,16 +256,16 @@ const FreelancerRegistrationForm = () => {
          )}
 
         {formik.status?.error && (
-          <div
-            style={{
-              background: "#fef2f2",
-              border: "1px solid #fecaca",
-              color: "#dc2626",
-              padding: "12px 16px",
-              borderRadius: "var(--radius-sm)",
-              marginBottom: "20px",
-            }}
-          >
+          <div style={{
+            background: "#fef2f2",
+            border: "1px solid #fecaca",
+            color: "#dc2626",
+            padding: "12px 16px",
+            borderRadius: "8px",
+            marginBottom: "20px",
+            fontSize: "14px",
+            fontWeight: "500"
+          }}>
             {formik.status.error}
           </div>
         )}
@@ -251,26 +273,24 @@ const FreelancerRegistrationForm = () => {
         <form onSubmit={formik.handleSubmit}>
           {/* Profile Picture */}
           <div style={{ marginBottom: "32px", textAlign: "center" }}>
-            <div
-              style={{
-                width: "120px",
-                height: "120px",
-                borderRadius: "50%",
-                background: avatar
-                  ? `url(${avatar}) center/cover`
-                  : "linear-gradient(135deg, var(--accent-blue), var(--accent-purple))",
-                margin: "0 auto 16px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                fontSize: "36px",
-                fontWeight: "600",
-                position: "relative",
-                border: "4px solid var(--primary-white)",
-                boxShadow: "var(--shadow-sm)",
-              }}
-            >
+            <div style={{
+              width: "120px",
+              height: "120px",
+              borderRadius: "50%",
+              background: avatar
+                ? `url(${avatar}) center/cover`
+                : "linear-gradient(135deg, #667eea, #764ba2)",
+              margin: "0 auto 16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+              fontSize: "36px",
+              fontWeight: "600",
+              position: "relative",
+              border: "4px solid #ffffff",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            }}>
               {!avatar && "FU"}
 
               <input
@@ -288,20 +308,23 @@ const FreelancerRegistrationForm = () => {
                 }}
               />
             </div>
-            <div style={{ fontSize: "14px", color: "var(--text-light)" }}>
+            <div style={{
+              fontSize: "14px",
+              color: "#718096",
+              textAlign: "center"
+            }}>
               Click to upload profile picture (Optional)
             </div>
           </div>
 
           {/* Personal Information */}
           <div style={{ marginBottom: "32px" }}>
-            <h2
-              style={{
-                fontSize: "20px",
-                fontWeight: "600",
-                marginBottom: "20px",
-              }}
-            >
+            <h2 style={{
+              fontSize: "20px",
+              fontWeight: "600",
+              marginBottom: "20px",
+              color: "#1a202c"
+            }}>
               Personal Information
             </h2>
 
@@ -314,48 +337,74 @@ const FreelancerRegistrationForm = () => {
               }}
             >
               <div>
-                <label className="form-label">First Name *</label>
+                <label style={{
+                  display: "block",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  color: "#374151",
+                  marginBottom: "8px"
+                }}>First Name *</label>
                 <input
                   type="text"
                   name="firstName"
-                  className="form-input"
+                  style={{
+                    width: "100%",
+                    padding: "12px 16px",
+                    border: "2px solid #e5e7eb",
+                    borderRadius: "8px",
+                    fontSize: "16px",
+                    outline: "none",
+                    transition: "border-color 0.2s",
+                    backgroundColor: "#ffffff"
+                  }}
                   placeholder="John"
                   value={formik.values.firstName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.firstName && formik.errors.firstName && (
-                  <div
-                    style={{
-                      color: "#dc2626",
-                      fontSize: "14px",
-                      marginTop: "4px",
-                    }}
-                  >
+                  <div style={{
+                    color: "#dc2626",
+                    fontSize: "14px",
+                    marginTop: "4px",
+                  }}>
                     {formik.errors.firstName}
                   </div>
                 )}
               </div>
 
               <div>
-                <label className="form-label">Last Name *</label>
+                <label style={{
+                  display: "block",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  color: "#374151",
+                  marginBottom: "8px"
+                }}>Last Name *</label>
                 <input
                   type="text"
                   name="lastName"
-                  className="form-input"
+                  style={{
+                    width: "100%",
+                    padding: "12px 16px",
+                    border: "2px solid #e5e7eb",
+                    borderRadius: "8px",
+                    fontSize: "16px",
+                    outline: "none",
+                    transition: "border-color 0.2s",
+                    backgroundColor: "#ffffff"
+                  }}
                   placeholder="Doe"
                   value={formik.values.lastName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.lastName && formik.errors.lastName && (
-                  <div
-                    style={{
-                      color: "#dc2626",
-                      fontSize: "14px",
-                      marginTop: "4px",
-                    }}
-                  >
+                  <div style={{
+                    color: "#dc2626",
+                    fontSize: "14px",
+                    marginTop: "4px",
+                  }}>
                     {formik.errors.lastName}
                   </div>
                 )}

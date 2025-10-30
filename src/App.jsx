@@ -123,7 +123,7 @@ const PublicRoute = ({ children }) => {
 
 // Smart root redirect based on auth status and role
 const RootRedirect = () => {
-  const { isAuthenticated, user, loading } = useAuth();
+  const { isAuthenticated, loading, role } = useAuth();
 
   if (loading) {
     return (
@@ -134,8 +134,12 @@ const RootRedirect = () => {
   }
 
   if (isAuthenticated) {
-    const redirectPath = user?.role === 'client' ? '/client/dashboard' : '/freelancer/dashboard';
-    return <Navigate to={redirectPath} replace />;
+    // Redirect based on role
+    return role === 'freelancer' ? (
+      <Navigate to="/freelancer/dashboard" replace />
+    ) : (
+      <Navigate to="/client/dashboard" replace />
+    );
   }
 
   return <Navigate to="/login" replace />;
@@ -306,70 +310,55 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
-            {/* Freelancer Routes with Nested Layout */}
             <Route
-              path="/freelancer"
+              path="/freelancer/projects"
               element={
                 <FreelancerRoute>
-                  <FreelancerLayout />
+                  <FreelancerProjectList />
                 </FreelancerRoute>
               }
-            >
-              <Route
-                path="dashboard"
-                element={<FreelancerDashboard />}
-              />
-              <Route
-                path="projects"
-                element={<FreelancerProjectList />}
-              />
-              <Route
-                path="projects/:projectId/propose"
-                element={<ProjectProposalForm />}
-              />
-              <Route
-                path="proposals"
-                element={<FreelancerProposals />}
-              />
-              <Route
-                path="active-projects"
-                element={<ActiveProjects />}
-              />
-              <Route
-                path="projects/:projectId/milestones"
-                element={<MilestoneSubmission />}
-              />
-              <Route
-                path="payments"
-                element={<PaymentTracking />}
-              />
-              <Route
-                path="profile"
-                element={<ProfilePortfolio />}
-              />
-              <Route
-                path="time-tracking"
-                element={
-                  <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-                    <div className="px-4 py-6 sm:px-0">
-                      <div className="mb-8">
-                        <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                          Time Tracking
-                        </h1>
-                        <p className="text-gray-600">
-                          Track your work hours and manage time entries.
-                        </p>
-                      </div>
-                      <div className="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200">
-                        <div className="px-4 py-5 sm:px-6 text-center">
-                          <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                          <h3 className="mt-2 text-sm font-medium text-gray-900">Time Tracking</h3>
-                          <p className="mt-1 text-sm text-gray-500">Time tracking feature coming soon...</p>
-                        </div>
-                      </div>
+            />
+            <Route
+              path="/freelancer/projects/:projectId/propose"
+              element={
+                <FreelancerRoute>
+                  <ProjectProposalForm />
+                </FreelancerRoute>
+              }
+            />
+            <Route
+              path="/freelancer/proposals"
+              element={
+                <FreelancerRoute>
+                  <FreelancerProposals />
+                </FreelancerRoute>
+              }
+            />
+            <Route
+              path="/freelancer/active-projects"
+              element={
+                <FreelancerRoute>
+                  <ActiveProjects />
+                </FreelancerRoute>
+              }
+            />
+            <Route
+              path="/freelancer/projects/:projectId/milestones"
+              element={
+                <FreelancerRoute>
+                  <MilestoneSubmission />
+                </FreelancerRoute>
+              }
+            />
+            <Route
+              path="/freelancer/time-tracking"
+              element={
+                <FreelancerRoute>
+                  <div className="max-w-6xl mx-auto py-8">
+                    <h1 className="text-3xl font-bold text-gray-800">Time Tracking</h1>
+                    <p className="text-gray-600 mt-2">Track your work hours and manage time entries</p>
+                    <div className="bg-white rounded-lg shadow-md p-8 mt-6 text-center">
+                      <p className="text-gray-500">Time tracking feature coming soon...</p>
                     </div>
                   </div>
                 }

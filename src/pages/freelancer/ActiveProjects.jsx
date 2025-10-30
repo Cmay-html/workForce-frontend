@@ -10,44 +10,64 @@ const ActiveProjects = () => {
   const [loadingProjects, setLoadingProjects] = useState(true);
 
   useEffect(() => {
-    // Skip API call and go directly to mock data to avoid HTML response errors
-    const mockProjects = [
-      {
-        id: 1,
-        title: 'E-commerce Website Development',
-        client: 'TechCorp Inc',
-        budget: 5000,
-        deadline: '2024-02-28',
-        status: 'in-progress',
-        progress: 65,
-        currentMilestone: 'Payment Integration',
-        nextMilestoneDue: '2024-02-15'
-      },
-      {
-        id: 2,
-        title: 'Mobile App UI/UX Design',
-        client: 'StartupXYZ',
-        budget: 3000,
-        deadline: '2024-03-15',
-        status: 'in-progress',
-        progress: 30,
-        currentMilestone: 'Wireframe Design',
-        nextMilestoneDue: '2024-02-10'
-      },
-      {
-        id: 3,
-        title: 'API Integration Service',
-        client: 'DataSystems Ltd',
-        budget: 2000,
-        deadline: '2024-02-20',
-        status: 'on-hold',
-        progress: 80,
-        currentMilestone: 'Testing Phase',
-        nextMilestoneDue: '2024-02-05'
-      }
-    ];
+    // Load active projects from accepted proposals in localStorage
+    const storedProposals = JSON.parse(localStorage.getItem('proposals') || '[]');
+    const acceptedProposals = storedProposals.filter(proposal => proposal.status === 'accepted');
 
-    setActiveProjects(mockProjects);
+    // If no accepted proposals, show default mock data
+    if (acceptedProposals.length === 0) {
+      const mockProjects = [
+        {
+          id: 1,
+          title: 'E-commerce Website Development',
+          client: 'TechCorp Inc',
+          budget: 5000,
+          deadline: '2024-02-28',
+          status: 'in-progress',
+          progress: 65,
+          currentMilestone: 'Payment Integration',
+          nextMilestoneDue: '2024-02-15'
+        },
+        {
+          id: 2,
+          title: 'Mobile App UI/UX Design',
+          client: 'StartupXYZ',
+          budget: 3000,
+          deadline: '2024-03-15',
+          status: 'in-progress',
+          progress: 30,
+          currentMilestone: 'Wireframe Design',
+          nextMilestoneDue: '2024-02-10'
+        },
+        {
+          id: 3,
+          title: 'API Integration Service',
+          client: 'DataSystems Ltd',
+          budget: 2000,
+          deadline: '2024-02-20',
+          status: 'on-hold',
+          progress: 80,
+          currentMilestone: 'Testing Phase',
+          nextMilestoneDue: '2024-02-05'
+        }
+      ];
+      setActiveProjects(mockProjects);
+    } else {
+      // Transform accepted proposals to active projects format
+      const formattedProjects = acceptedProposals.map(proposal => ({
+        id: proposal.id,
+        title: proposal.projectTitle,
+        client: proposal.clientName,
+        budget: proposal.proposedBudget,
+        deadline: new Date(Date.now() + proposal.proposedTimeline * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Timeline from now
+        status: 'in-progress',
+        progress: 10,
+        currentMilestone: 'Initial Setup',
+        nextMilestoneDue: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] // 7 days from now
+      }));
+      setActiveProjects(formattedProjects);
+    }
+
     setLoadingProjects(false);
   }, []);
 
@@ -90,15 +110,15 @@ const ActiveProjects = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50" style={{ minWidth: '1024px' }}>
+    <div className="flex h-screen bg-gray-50" style={{ minWidth: '140%' }}>
       {/* Sidebar */}
       <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
+            <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
               K
             </div>
-            <span className="text-xl font-bold text-gray-900">Kaziflow</span>
+            <span className="text-xl font-bold text-orange-600">Kaziflow</span>
           </div>
           <div className="bg-gray-50 rounded-lg p-3">
             <p className="text-sm font-semibold text-gray-900 mb-1">
@@ -137,7 +157,7 @@ const ActiveProjects = () => {
               </button>
             </li>
             <li>
-              <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left bg-blue-50 text-blue-700 border-r-2 border-blue-700">
+              <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left bg-orange-50 text-orange-700 border-r-2 border-orange-700">
                 <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">A</span>
                 <div className="flex-1">
                   <div className="font-medium">Active Projects</div>
@@ -213,7 +233,7 @@ const ActiveProjects = () => {
                 Freelancer
               </div>
             </div>
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
+            <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-semibold">
               {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
             </div>
           </div>
@@ -294,7 +314,9 @@ const ActiveProjects = () => {
                           <div className="w-full bg-gray-200 rounded-full h-3">
                             <div
                               className={`h-3 rounded-full ${
-                                project.status === 'on-hold' ? 'bg-yellow-500' : 'bg-blue-600'
+                                project.status === 'on-hold' ? 'bg-yellow-500' :
+                                project.progress < 30 ? 'bg-orange-300' :
+                                project.progress < 70 ? 'bg-orange-400' : 'bg-orange-500'
                               }`}
                               style={{ width: `${project.progress}%` }}
                             ></div>
@@ -305,7 +327,7 @@ const ActiveProjects = () => {
                         <div className="flex flex-wrap gap-3">
                           <button
                             onClick={() => navigate(`/projects/${project.id}/chat`)}
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-400 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400"
                           >
                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -314,7 +336,7 @@ const ActiveProjects = () => {
                           </button>
                           <button
                             onClick={() => navigate(`/freelancer/projects/${project.id}/milestones`)}
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400"
                           >
                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -323,7 +345,7 @@ const ActiveProjects = () => {
                           </button>
                           <button
                             onClick={() => navigate(`/freelancer/projects/${project.id}/time-tracking`)}
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
+                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-400 hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-400"
                           >
                             <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />

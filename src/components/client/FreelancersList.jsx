@@ -170,10 +170,10 @@ const FreelancersList = () => {
       <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
+            <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
               K
             </div>
-            <span className="text-xl font-bold text-gray-900">Kaziflow</span>
+            <span className="text-xl font-bold text-orange-600">Kaziflow</span>
           </div>
           <div className="bg-gray-50 rounded-lg p-3">
             <p className="text-sm font-semibold text-gray-900 mb-1">
@@ -212,7 +212,7 @@ const FreelancersList = () => {
               </button>
             </li>
             <li>
-              <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left bg-blue-50 text-blue-700 border-r-2 border-blue-700">
+              <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left bg-orange-50 text-orange-700 border-r-2 border-orange-700">
                 <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">F</span>
                 <div className="flex-1">
                   <div className="font-medium">Freelancers</div>
@@ -275,7 +275,7 @@ const FreelancersList = () => {
                 Client
               </div>
             </div>
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
+            <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-semibold">
               {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
             </div>
           </div>
@@ -326,7 +326,7 @@ const FreelancersList = () => {
                     <div className="p-6">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center">
-                          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-lg">
+                          <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-semibold text-lg">
                             {freelancer.firstName.charAt(0)}{freelancer.lastName.charAt(0)}
                           </div>
                           <div className="ml-3">
