@@ -104,7 +104,7 @@ const PaymentTracking = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50" style={{ minWidth: '1024px' }}>
+    <div className="flex h-screen bg-gray-50" style={{ width: '138%' }}>
       {/* Sidebar */}
       <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
         <div className="p-6 border-b border-gray-200">
