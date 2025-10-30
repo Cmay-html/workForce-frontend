@@ -10,44 +10,64 @@ const ActiveProjects = () => {
   const [loadingProjects, setLoadingProjects] = useState(true);
 
   useEffect(() => {
-    // Skip API call and go directly to mock data to avoid HTML response errors
-    const mockProjects = [
-      {
-        id: 1,
-        title: 'E-commerce Website Development',
-        client: 'TechCorp Inc',
-        budget: 5000,
-        deadline: '2024-02-28',
-        status: 'in-progress',
-        progress: 65,
-        currentMilestone: 'Payment Integration',
-        nextMilestoneDue: '2024-02-15'
-      },
-      {
-        id: 2,
-        title: 'Mobile App UI/UX Design',
-        client: 'StartupXYZ',
-        budget: 3000,
-        deadline: '2024-03-15',
-        status: 'in-progress',
-        progress: 30,
-        currentMilestone: 'Wireframe Design',
-        nextMilestoneDue: '2024-02-10'
-      },
-      {
-        id: 3,
-        title: 'API Integration Service',
-        client: 'DataSystems Ltd',
-        budget: 2000,
-        deadline: '2024-02-20',
-        status: 'on-hold',
-        progress: 80,
-        currentMilestone: 'Testing Phase',
-        nextMilestoneDue: '2024-02-05'
-      }
-    ];
+    // Load active projects from accepted proposals in localStorage
+    const storedProposals = JSON.parse(localStorage.getItem('proposals') || '[]');
+    const acceptedProposals = storedProposals.filter(proposal => proposal.status === 'accepted');
 
-    setActiveProjects(mockProjects);
+    // If no accepted proposals, show default mock data
+    if (acceptedProposals.length === 0) {
+      const mockProjects = [
+        {
+          id: 1,
+          title: 'E-commerce Website Development',
+          client: 'TechCorp Inc',
+          budget: 5000,
+          deadline: '2024-02-28',
+          status: 'in-progress',
+          progress: 65,
+          currentMilestone: 'Payment Integration',
+          nextMilestoneDue: '2024-02-15'
+        },
+        {
+          id: 2,
+          title: 'Mobile App UI/UX Design',
+          client: 'StartupXYZ',
+          budget: 3000,
+          deadline: '2024-03-15',
+          status: 'in-progress',
+          progress: 30,
+          currentMilestone: 'Wireframe Design',
+          nextMilestoneDue: '2024-02-10'
+        },
+        {
+          id: 3,
+          title: 'API Integration Service',
+          client: 'DataSystems Ltd',
+          budget: 2000,
+          deadline: '2024-02-20',
+          status: 'on-hold',
+          progress: 80,
+          currentMilestone: 'Testing Phase',
+          nextMilestoneDue: '2024-02-05'
+        }
+      ];
+      setActiveProjects(mockProjects);
+    } else {
+      // Transform accepted proposals to active projects format
+      const formattedProjects = acceptedProposals.map(proposal => ({
+        id: proposal.id,
+        title: proposal.projectTitle,
+        client: proposal.clientName,
+        budget: proposal.proposedBudget,
+        deadline: new Date(Date.now() + proposal.proposedTimeline * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Timeline from now
+        status: 'in-progress',
+        progress: 10,
+        currentMilestone: 'Initial Setup',
+        nextMilestoneDue: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] // 7 days from now
+      }));
+      setActiveProjects(formattedProjects);
+    }
+
     setLoadingProjects(false);
   }, []);
 
