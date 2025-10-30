@@ -1,9 +1,25 @@
 
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const AuthContext = createContext();
 
 export { AuthContext };
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+
+  const isClient = context.role === 'client';
+  const isFreelancer = context.role === 'freelancer';
+
+  return {
+    ...context,
+    isClient,
+    isFreelancer,
+  };
+};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);

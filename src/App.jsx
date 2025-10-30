@@ -103,7 +103,7 @@ const PublicRoute = ({ children }) => {
 
 // Component to handle root redirect based on auth status
 const RootRedirect = () => {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading, role } = useAuth();
 
   if (loading) {
     return (
@@ -113,11 +113,16 @@ const RootRedirect = () => {
     );
   }
 
-  return isAuthenticated ? (
-    <Navigate to="/dashboard" replace />
-  ) : (
-    <Navigate to="/login" replace />
-  );
+  if (isAuthenticated) {
+    // Redirect based on role
+    return role === 'freelancer' ? (
+      <Navigate to="/freelancer/dashboard" replace />
+    ) : (
+      <Navigate to="/client/dashboard" replace />
+    );
+  }
+
+  return <Navigate to="/login" replace />;
 };
 
 function App() {

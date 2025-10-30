@@ -1,13 +1,28 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [animating, setAnimating] = useState(false);
   const [form, setForm] = useState({ email: "", password: "", confirm: "", role: "" });
+  const [error, setError] = useState("");
   const cardRef = useRef(null);
   const [cardHeight, setCardHeight] = useState("auto");
   const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Load saved credentials on component mount
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('savedEmail');
+    const savedPassword = localStorage.getItem('savedPassword');
+    if (savedEmail) {
+      setForm(prev => ({ ...prev, email: savedEmail }));
+    }
+    if (savedPassword) {
+      setForm(prev => ({ ...prev, password: savedPassword }));
+    }
+  }, []);
 
   // Adjust card height dynamically
   useEffect(() => {
@@ -41,23 +56,41 @@ export default function LoginPage() {
     if (!isLogin) {
       // Signup validations
       if (!form.role) {
-        alert("Please select a role.");
+        setError("Please select a role.");
         setLoading(false);
         return;
       }
       if (form.password !== form.confirm) {
-        alert("Passwords do not match!");
+        setError("Passwords do not match!");
         setLoading(false);
         return;
       }
 
-      // Simulate email verification
-      await new Promise((r) => setTimeout(r, 1000));
-      alert(`Verification email sent to ${form.email}! Role: ${form.role}`);
+      // Save credentials for future logins
+      localStorage.setItem('savedEmail', form.email);
+      localStorage.setItem('savedPassword', form.password);
+
+      // Navigate to registration page with role parameter (skip email verification)
+      navigate(`/register?role=${form.role}`);
     } else {
       // Login flow simulation
       await new Promise((r) => setTimeout(r, 700));
-      alert(`Logged in as ${form.email}`);
+
+      // Simulate login validation - check if credentials match saved ones
+      const savedEmail = localStorage.getItem('savedEmail');
+      const savedPassword = localStorage.getItem('savedPassword');
+
+      if (savedEmail && savedPassword && form.email === savedEmail && form.password === savedPassword) {
+        // Save credentials for future logins
+        localStorage.setItem('savedEmail', form.email);
+        localStorage.setItem('savedPassword', form.password);
+        alert(`Logged in as ${form.email}`);
+        // The AuthContext will handle the actual login and navigation
+      } else {
+        setError("Invalid email or password. Please check your credentials.");
+        setLoading(false);
+        return;
+      }
     }
 
     setLoading(false);
@@ -85,6 +118,22 @@ export default function LoginPage() {
                 {isLogin ? "Sign in to your account" : "Create a new account"}
               </p>
             </div>
+
+            {/* Error Message */}
+            {error && (
+              <div style={{
+                background: "#fef2f2",
+                border: "1px solid #fecaca",
+                color: "#dc2626",
+                padding: "12px 16px",
+                borderRadius: "8px",
+                marginBottom: "1rem",
+                fontSize: "14px",
+                fontWeight: "500"
+              }}>
+                {error}
+              </div>
+            )}
 
             {/* Form */}
             <form onSubmit={handleSubmit} style={styles.form}>
