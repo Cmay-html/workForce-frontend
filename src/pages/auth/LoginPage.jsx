@@ -82,7 +82,7 @@ export default function LoginPage() {
             <div style={styles.header}>
               <h1 style={styles.title}>Kazi Flow</h1>
               <p style={styles.description}>
-                {isLogin ? "Sign in to your account" : "Create a new account"}
+                {isLogin ? "Login to your account" : "Sign up"}
               </p>
             </div>
 
@@ -151,7 +151,7 @@ export default function LoginPage() {
               )}
 
               <button type="submit" disabled={loading} style={styles.button}>
-                {loading ? "Working…" : isLogin ? "Sign In" : "Sign Up"}
+                {loading ? "Working…" : isLogin ? "Login" : "Sign Up"}
               </button>
             </form>
 
@@ -160,7 +160,7 @@ export default function LoginPage() {
               <p style={styles.switchText}>
                 {isLogin ? "Don't have an account?" : "Already have an account?"}
                 <span style={styles.switchLink} onClick={handleToggle}>
-                  {isLogin ? " Sign up" : " Sign in"}
+                  {isLogin ? " Sign up" : " Login"}
                 </span>
               </p>
             </div>
