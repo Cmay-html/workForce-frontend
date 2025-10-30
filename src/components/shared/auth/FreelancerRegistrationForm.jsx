@@ -135,7 +135,7 @@ const FreelancerRegistrationForm = () => {
         }, "freelancer");
 
         setStatus({ success: "Freelancer profile created successfully!" });
-        setTimeout(() => navigate("/freelancer/projects"), 1500);
+        setTimeout(() => navigate("/freelancer/profile"), 1500);
       } catch {
         setStatus({ error: "Registration failed. Please try again." });
       } finally {
