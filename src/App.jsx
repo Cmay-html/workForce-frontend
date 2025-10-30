@@ -103,7 +103,7 @@ const PublicRoute = ({ children }) => {
 
 // Component to handle root redirect based on auth status
 const RootRedirect = () => {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading, role } = useAuth();
 
   if (loading) {
     return (
@@ -113,11 +113,16 @@ const RootRedirect = () => {
     );
   }
 
-  return isAuthenticated ? (
-    <Navigate to="/dashboard" replace />
-  ) : (
-    <Navigate to="/login" replace />
-  );
+  if (isAuthenticated) {
+    // Redirect based on role
+    return role === 'freelancer' ? (
+      <Navigate to="/freelancer/dashboard" replace />
+    ) : (
+      <Navigate to="/client/dashboard" replace />
+    );
+  }
+
+  return <Navigate to="/login" replace />;
 };
 
 function App() {
@@ -156,14 +161,6 @@ function App() {
             {/* Client Dashboard - Main dashboard route */}
             <Route
               path="/client/dashboard"
-              element={
-                <ClientRoute>
-                  <ClientDashboardPage />
-                </ClientRoute>
-              }
-            />
-            <Route
-              path="/dashboard"
               element={
                 <ClientRoute>
                   <ClientDashboardPage />
@@ -272,14 +269,6 @@ function App() {
             {/* Freelancer Routes */}
             <Route
               path="/freelancer/dashboard"
-              element={
-                <FreelancerRoute>
-                  <FreelancerDashboard />
-                </FreelancerRoute>
-              }
-            />
-            <Route
-              path="/dashboard"
               element={
                 <FreelancerRoute>
                   <FreelancerDashboard />

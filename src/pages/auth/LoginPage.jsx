@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [loading, setLoading] = useState(false);
   const [animating, setAnimating] = useState(false);
@@ -54,6 +56,9 @@ export default function LoginPage() {
       // Simulate email verification
       await new Promise((r) => setTimeout(r, 1000));
       alert(`Verification email sent to ${form.email}! Role: ${form.role}`);
+
+      // Navigate to registration page with role parameter
+      navigate(`/register?role=${form.role}`);
     } else {
       // Login flow simulation
       await new Promise((r) => setTimeout(r, 700));
