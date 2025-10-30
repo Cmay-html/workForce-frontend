@@ -115,10 +115,10 @@ const ActiveProjects = () => {
       <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center text-white font-bold">
+            <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
               K
             </div>
-            <span className="text-xl font-bold text-gray-900">Kaziflow</span>
+            <span className="text-xl font-bold text-orange-600">Kaziflow</span>
           </div>
           <div className="bg-gray-50 rounded-lg p-3">
             <p className="text-sm font-semibold text-gray-900 mb-1">
@@ -233,7 +233,7 @@ const ActiveProjects = () => {
                 Freelancer
               </div>
             </div>
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
+            <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-semibold">
               {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
             </div>
           </div>
