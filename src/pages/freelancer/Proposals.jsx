@@ -147,7 +147,7 @@ const FreelancerProposals = () => {
               </button>
             </li>
             <li>
-              <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left bg-blue-50 text-blue-700 border-r-2 border-blue-700">
+              <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left bg-orange-50 text-orange-700 border-r-2 border-orange-700">
                 <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">R</span>
                 <div className="flex-1">
                   <div className="font-medium">My Proposals</div>

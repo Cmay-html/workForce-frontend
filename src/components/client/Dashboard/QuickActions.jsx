@@ -10,25 +10,25 @@ const QuickActions = () => {
       title: "Create Project",
       description: "Start a new project",
       action: () => navigate("/client/projects/create"),
-      gradient: "linear-gradient(135deg, #3b82f6, #8b5cf6)",
+      gradient: "linear-gradient(135deg, #93c5fd, #c4b5fd)",
     },
     {
       title: "Add Milestone",
       description: "Create project milestones",
       action: () => navigate("/client/milestones"),
-      gradient: "linear-gradient(135deg, #00d4aa, #0099ff)",
+      gradient: "linear-gradient(135deg, #86efac, #7dd3fc)",
     },
     {
       title: "Manage Projects",
       description: "View all your projects",
       action: () => navigate("/client/projects"),
-      gradient: "linear-gradient(135deg, #8b5cf6, #06b6d4)",
+      gradient: "linear-gradient(135deg, #c4b5fd, #67e8f9)",
     },
     {
       title: "Leave Review",
       description: "Review freelancers",
       action: () => navigate("/client/reviews/create"),
-      gradient: "linear-gradient(135deg, #ff6b6b, #ffa726)",
+      gradient: "linear-gradient(135deg, #fca5a5, #fcd34d)",
     },
   ];
 
