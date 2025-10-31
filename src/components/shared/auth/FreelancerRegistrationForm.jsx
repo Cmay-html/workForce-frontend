@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../contexts/AuthContext";
+import { useAuth } from "../../../hooks/useAuth";
 
 const FreelancerRegistrationForm = () => {
   const navigate = useNavigate();
@@ -403,11 +403,26 @@ const FreelancerRegistrationForm = () => {
             </div>
 
             <div style={{ marginBottom: "20px" }}>
-              <label className="form-label">Email Address *</label>
+              <label style={{
+                display: "block",
+                fontSize: "14px",
+                fontWeight: "600",
+                color: "#374151",
+                marginBottom: "8px"
+              }}>Email Address *</label>
               <input
                 type="email"
                 name="email"
-                className="form-input"
+                style={{
+                  width: "100%",
+                  padding: "12px 16px",
+                  border: "2px solid #e5e7eb",
+                  borderRadius: "8px",
+                  fontSize: "16px",
+                  outline: "none",
+                  transition: "border-color 0.2s",
+                  backgroundColor: "#ffffff"
+                }}
                 placeholder="john.doe@example.com"
                 value={formik.values.email}
                 onChange={formik.handleChange}
@@ -435,11 +450,26 @@ const FreelancerRegistrationForm = () => {
               }}
             >
               <div>
-                <label className="form-label">Password *</label>
+                <label style={{
+                  display: "block",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  color: "#374151",
+                  marginBottom: "8px"
+                }}>Password *</label>
                 <input
                   type="password"
                   name="password"
-                  className="form-input"
+                  style={{
+                    width: "100%",
+                    padding: "12px 16px",
+                    border: "2px solid #e5e7eb",
+                    borderRadius: "8px",
+                    fontSize: "16px",
+                    outline: "none",
+                    transition: "border-color 0.2s",
+                    backgroundColor: "#ffffff"
+                  }}
                   placeholder="Create a password"
                   value={formik.values.password}
                   onChange={formik.handleChange}
@@ -459,11 +489,26 @@ const FreelancerRegistrationForm = () => {
               </div>
 
               <div>
-                <label className="form-label">Confirm Password *</label>
+                <label style={{
+                  display: "block",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  color: "#374151",
+                  marginBottom: "8px"
+                }}>Confirm Password *</label>
                 <input
                   type="password"
                   name="confirmPassword"
-                  className="form-input"
+                  style={{
+                    width: "100%",
+                    padding: "12px 16px",
+                    border: "2px solid #e5e7eb",
+                    borderRadius: "8px",
+                    fontSize: "16px",
+                    outline: "none",
+                    transition: "border-color 0.2s",
+                    backgroundColor: "#ffffff"
+                  }}
                   placeholder="Confirm your password"
                   value={formik.values.confirmPassword}
                   onChange={formik.handleChange}
@@ -484,11 +529,26 @@ const FreelancerRegistrationForm = () => {
             </div>
 
             <div style={{ marginBottom: "20px" }}>
-              <label className="form-label">Phone Number</label>
+              <label style={{
+                display: "block",
+                fontSize: "14px",
+                fontWeight: "600",
+                color: "#374151",
+                marginBottom: "8px"
+              }}>Phone Number</label>
               <input
                 type="tel"
                 name="phone"
-                className="form-input"
+                style={{
+                  width: "100%",
+                  padding: "12px 16px",
+                  border: "2px solid #e5e7eb",
+                  borderRadius: "8px",
+                  fontSize: "16px",
+                  outline: "none",
+                  transition: "border-color 0.2s",
+                  backgroundColor: "#ffffff"
+                }}
                 placeholder="+1 (555) 123-4567"
                 value={formik.values.phone}
                 onChange={formik.handleChange}
@@ -509,11 +569,26 @@ const FreelancerRegistrationForm = () => {
             </h2>
 
             <div style={{ marginBottom: "20px" }}>
-              <label className="form-label">Professional Title *</label>
+              <label style={{
+                display: "block",
+                fontSize: "14px",
+                fontWeight: "600",
+                color: "#374151",
+                marginBottom: "8px"
+              }}>Professional Title *</label>
               <input
                 type="text"
                 name="title"
-                className="form-input"
+                style={{
+                  width: "100%",
+                  padding: "12px 16px",
+                  border: "2px solid #e5e7eb",
+                  borderRadius: "8px",
+                  fontSize: "16px",
+                  outline: "none",
+                  transition: "border-color 0.2s",
+                  backgroundColor: "#ffffff"
+                }}
                 placeholder="e.g., Senior React Developer, UI/UX Designer"
                 value={formik.values.title}
                 onChange={formik.handleChange}
@@ -533,10 +608,26 @@ const FreelancerRegistrationForm = () => {
             </div>
 
             <div style={{ marginBottom: "20px" }}>
-              <label className="form-label">Professional Bio *</label>
+              <label style={{
+                display: "block",
+                fontSize: "14px",
+                fontWeight: "600",
+                color: "#374151",
+                marginBottom: "8px"
+              }}>Professional Bio *</label>
               <textarea
                 name="bio"
-                className="form-input"
+                style={{
+                  width: "100%",
+                  padding: "12px 16px",
+                  border: "2px solid #e5e7eb",
+                  borderRadius: "8px",
+                  fontSize: "16px",
+                  outline: "none",
+                  transition: "border-color 0.2s",
+                  backgroundColor: "#ffffff",
+                  resize: "vertical"
+                }}
                 rows="5"
                 placeholder="Describe your experience, skills, expertise, and what you can offer to clients. Include your background, achievements, and what makes you unique..."
                 value={formik.values.bio}
@@ -560,7 +651,7 @@ const FreelancerRegistrationForm = () => {
                   color:
                     formik.values.bio.length < 100
                       ? "#dc2626"
-                      : "var(--text-light)",
+                      : "#6b7280",
                   marginTop: "4px",
                   textAlign: "right",
                 }}
@@ -572,10 +663,25 @@ const FreelancerRegistrationForm = () => {
             </div>
 
             <div style={{ marginBottom: "20px" }}>
-              <label className="form-label">Experience Level *</label>
+              <label style={{
+                display: "block",
+                fontSize: "14px",
+                fontWeight: "600",
+                color: "#374151",
+                marginBottom: "8px"
+              }}>Experience Level *</label>
               <select
                 name="experienceLevel"
-                className="form-input"
+                style={{
+                  width: "100%",
+                  padding: "12px 16px",
+                  border: "2px solid #e5e7eb",
+                  borderRadius: "8px",
+                  fontSize: "16px",
+                  outline: "none",
+                  transition: "border-color 0.2s",
+                  backgroundColor: "#ffffff"
+                }}
                 value={formik.values.experienceLevel}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -615,11 +721,17 @@ const FreelancerRegistrationForm = () => {
             </h2>
 
             <div style={{ marginBottom: "24px" }}>
-              <label className="form-label">Skills *</label>
+              <label style={{
+                display: "block",
+                fontSize: "14px",
+                fontWeight: "600",
+                color: "#374151",
+                marginBottom: "8px"
+              }}>Skills *</label>
               <p
                 style={{
                   fontSize: "14px",
-                  color: "var(--text-light)",
+                  color: "#6b7280",
                   marginBottom: "12px",
                 }}
               >
@@ -691,11 +803,17 @@ const FreelancerRegistrationForm = () => {
             </div>
 
             <div>
-              <label className="form-label">Categories *</label>
+              <label style={{
+                display: "block",
+                fontSize: "14px",
+                fontWeight: "600",
+                color: "#374151",
+                marginBottom: "8px"
+              }}>Categories *</label>
               <p
                 style={{
                   fontSize: "14px",
-                  color: "var(--text-light)",
+                  color: "#6b7280",
                   marginBottom: "12px",
                 }}
               >
@@ -784,7 +902,7 @@ const FreelancerRegistrationForm = () => {
             <p
               style={{
                 fontSize: "14px",
-                color: "var(--text-light)",
+                color: "#6b7280",
                 marginBottom: "16px",
               }}
             >
@@ -800,11 +918,26 @@ const FreelancerRegistrationForm = () => {
               }}
             >
               <div>
-                <label className="form-label">Portfolio Website</label>
+                <label style={{
+                  display: "block",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  color: "#374151",
+                  marginBottom: "8px"
+                }}>Portfolio Website</label>
                 <input
                   type="url"
                   name="portfolioUrl"
-                  className="form-input"
+                  style={{
+                    width: "100%",
+                    padding: "12px 16px",
+                    border: "2px solid #e5e7eb",
+                    borderRadius: "8px",
+                    fontSize: "16px",
+                    outline: "none",
+                    transition: "border-color 0.2s",
+                    backgroundColor: "#ffffff"
+                  }}
                   placeholder="https://yourportfolio.com"
                   value={formik.values.portfolioUrl}
                   onChange={formik.handleChange}
@@ -819,11 +952,26 @@ const FreelancerRegistrationForm = () => {
                 }}
               >
                 <div>
-                  <label className="form-label">GitHub URL</label>
+                  <label style={{
+                    display: "block",
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    color: "#374151",
+                    marginBottom: "8px"
+                  }}>GitHub URL</label>
                   <input
                     type="url"
                     name="githubUrl"
-                    className="form-input"
+                    style={{
+                      width: "100%",
+                      padding: "12px 16px",
+                      border: "2px solid #e5e7eb",
+                      borderRadius: "8px",
+                      fontSize: "16px",
+                      outline: "none",
+                      transition: "border-color 0.2s",
+                      backgroundColor: "#ffffff"
+                    }}
                     placeholder="https://github.com/username"
                     value={formik.values.githubUrl}
                     onChange={formik.handleChange}
@@ -831,11 +979,26 @@ const FreelancerRegistrationForm = () => {
                 </div>
 
                 <div>
-                  <label className="form-label">LinkedIn URL</label>
+                  <label style={{
+                    display: "block",
+                    fontSize: "14px",
+                    fontWeight: "600",
+                    color: "#374151",
+                    marginBottom: "8px"
+                  }}>LinkedIn URL</label>
                   <input
                     type="url"
                     name="linkedinUrl"
-                    className="form-input"
+                    style={{
+                      width: "100%",
+                      padding: "12px 16px",
+                      border: "2px solid #e5e7eb",
+                      borderRadius: "8px",
+                      fontSize: "16px",
+                      outline: "none",
+                      transition: "border-color 0.2s",
+                      backgroundColor: "#ffffff"
+                    }}
                     placeholder="https://linkedin.com/in/username"
                     value={formik.values.linkedinUrl}
                     onChange={formik.handleChange}
@@ -844,13 +1007,28 @@ const FreelancerRegistrationForm = () => {
               </div>
 
               <div>
-                <label className="form-label">
+                <label style={{
+                  display: "block",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  color: "#374151",
+                  marginBottom: "8px"
+                }}>
                   Behance/Dribbble (Designers)
                 </label>
                 <input
                   type="url"
                   name="behanceUrl"
-                  className="form-input"
+                  style={{
+                    width: "100%",
+                    padding: "12px 16px",
+                    border: "2px solid #e5e7eb",
+                    borderRadius: "8px",
+                    fontSize: "16px",
+                    outline: "none",
+                    transition: "border-color 0.2s",
+                    backgroundColor: "#ffffff"
+                  }}
                   placeholder="https://behance.net/username"
                   value={formik.values.behanceUrl}
                   onChange={formik.handleChange}
@@ -880,11 +1058,26 @@ const FreelancerRegistrationForm = () => {
               }}
             >
               <div>
-                <label className="form-label">Country</label>
+                <label style={{
+                  display: "block",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  color: "#374151",
+                  marginBottom: "8px"
+                }}>Country</label>
                 <input
                   type="text"
                   name="country"
-                  className="form-input"
+                  style={{
+                    width: "100%",
+                    padding: "12px 16px",
+                    border: "2px solid #e5e7eb",
+                    borderRadius: "8px",
+                    fontSize: "16px",
+                    outline: "none",
+                    transition: "border-color 0.2s",
+                    backgroundColor: "#ffffff"
+                  }}
                   placeholder="United States"
                   value={formik.values.country}
                   onChange={formik.handleChange}
@@ -892,11 +1085,26 @@ const FreelancerRegistrationForm = () => {
               </div>
 
               <div>
-                <label className="form-label">City</label>
+                <label style={{
+                  display: "block",
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  color: "#374151",
+                  marginBottom: "8px"
+                }}>City</label>
                 <input
                   type="text"
                   name="city"
-                  className="form-input"
+                  style={{
+                    width: "100%",
+                    padding: "12px 16px",
+                    border: "2px solid #e5e7eb",
+                    borderRadius: "8px",
+                    fontSize: "16px",
+                    outline: "none",
+                    transition: "border-color 0.2s",
+                    backgroundColor: "#ffffff"
+                  }}
                   placeholder="New York"
                   value={formik.values.city}
                   onChange={formik.handleChange}
@@ -989,17 +1197,17 @@ const FreelancerRegistrationForm = () => {
                   I agree to the Freelancer Terms of Service and Privacy Policy
                   *
                 </div>
-                <div
-                  style={{
-                    fontSize: "14px",
-                    color: "var(--text-light)",
-                    marginTop: "4px",
-                  }}
-                >
-                  By creating a freelancer account, you agree to our platform
-                  rules, community guidelines, and milestone-based payment
-                  terms.
-                </div>
+                  <div
+                    style={{
+                      fontSize: "14px",
+                      color: "#6b7280",
+                      marginTop: "4px",
+                    }}
+                  >
+                    By creating a freelancer account, you agree to our platform
+                    rules, community guidelines, and milestone-based payment
+                    terms.
+                  </div>
               </div>
             </label>
             {formik.touched.termsAccepted && formik.errors.termsAccepted && (
@@ -1039,8 +1247,18 @@ const FreelancerRegistrationForm = () => {
             </button>
             <button
               type="submit"
-              className="login-btn"
-              style={{ padding: "12px 32px", margin: 0 }}
+              style={{
+                background: "linear-gradient(135deg, #667eea, #764ba2)",
+                color: "white",
+                border: "none",
+                borderRadius: "8px",
+                padding: "12px 32px",
+                fontSize: "16px",
+                fontWeight: "600",
+                cursor: "pointer",
+                transition: "all 0.2s ease",
+                margin: 0
+              }}
               disabled={formik.isSubmitting}
             >
               {formik.isSubmitting
