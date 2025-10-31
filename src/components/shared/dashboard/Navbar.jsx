@@ -252,13 +252,10 @@ const Navbar = () => {
               {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
             </div>
             <button
-              onClick={async () => {
+              onClick={() => {
                 if (window.confirm('Are you sure you want to log out?')) {
                   logout();
-                  // Small delay to ensure state update before navigation
-                  setTimeout(() => {
-                    navigate('/login');
-                  }, 100);
+                  navigate('/login');
                 }
               }}
               style={{
