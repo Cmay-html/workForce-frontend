@@ -49,7 +49,7 @@ const LoginPage = () => {
             {/* Header */}
             <div style={styles.header}>
               <div style={styles.logo}>
-                
+                <img src="/logo.svg" alt="Kazi Flow Logo" style={styles.logoIcon} />
                 <h1 style={styles.title}>Kazi Flow</h1>
               </div>
               <p style={styles.description}>Welcome back! Please login to your account</p>
@@ -251,7 +251,8 @@ const styles = {
     marginBottom: "1rem",
   },
   logoIcon: {
-    fontSize: "2rem",
+    width: "3rem",
+    height: "3rem",
   },
   title: {
     fontSize: "2.25rem",

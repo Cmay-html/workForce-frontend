@@ -124,7 +124,7 @@ const Navbar = () => {
             onClick={() => {
               if (window.confirm('Are you sure you want to log out?')) {
                 logout();
-                navigate('/login');
+                navigate('/');
               }
             }}
             style={{

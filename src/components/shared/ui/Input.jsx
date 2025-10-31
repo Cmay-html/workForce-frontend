@@ -3,24 +3,39 @@ import React from 'react';
 const Input = ({
   label,
   type = 'text',
+  placeholder,
+  value,
+  onChange,
   error,
+  disabled = false,
+  required = false,
   className = '',
-  id,
   ...props
 }) => {
-  return(
-        <div className="flex flex-col space-y-2">
+  const baseClasses = 'w-full px-4 py-3 text-white placeholder-gray-400 border border-primary-300 rounded-3xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 bg-dark-900/80 backdrop-blur-xl shadow-glass hover:shadow-glass-hover';
+
+  const errorClasses = error ? 'border-red-300 focus:ring-red-500' : '';
+
+  const disabledClasses = disabled ? 'opacity-50 cursor-not-allowed' : '';
+
+  const classes = `${baseClasses} ${errorClasses} ${disabledClasses} ${className}`;
+
+  return (
+    <div className="space-y-1">
       {label && (
-        <label className="text-sm font-medium text-gray-700" htmlFor={id}>
+        <label className="block text-sm font-medium text-white">
           {label}
+          {required && <span className="text-accent-400 ml-1">*</span>}
         </label>
       )}
       <input
         type={type}
-        id={id}
-        className={`px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-          error ? 'border-red-500' : 'border-gray-300'
-        } ${className}`}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        disabled={disabled}
+        required={required}
+        className={classes}
         {...props}
       />
       {error && (
@@ -31,5 +46,3 @@ const Input = ({
 };
 
 export default Input;
-
- 

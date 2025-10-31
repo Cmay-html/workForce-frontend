@@ -680,7 +680,8 @@ const FreelancerRegistrationForm = () => {
                   fontSize: "16px",
                   outline: "none",
                   transition: "border-color 0.2s",
-                  backgroundColor: "#ffffff"
+                  backgroundColor: "#ffffff",
+                  color: "#374151"
                 }}
                 value={formik.values.experienceLevel}
                 onChange={formik.handleChange}

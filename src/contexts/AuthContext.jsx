@@ -91,8 +91,11 @@ export const AuthProvider = ({ children }) => {
       // Mock client registration
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      // Create client user data
-      const mockUser = {
+      // Generate verification token
+      const verificationToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+      // Create pending user data (not verified yet)
+      const pendingUser = {
         id: Date.now().toString(),
         email: clientData.email,
         firstName: clientData.firstName,
@@ -102,18 +105,22 @@ export const AuthProvider = ({ children }) => {
         industry: clientData.industry,
         companySize: clientData.companySize,
         password: clientData.password, // Store password for login verification
-        emailVerified: true // Mark as verified for immediate access
+        emailVerified: false,
+        verificationToken: verificationToken
       };
 
-      // Store authenticated user directly
-      localStorage.setItem('authToken', 'mock-jwt-token-' + Date.now());
-      localStorage.setItem('userData', JSON.stringify(mockUser));
+      // Store pending user data
+      localStorage.setItem('pendingUserData', JSON.stringify(pendingUser));
 
-      setUser(mockUser);
+      // Mock email sending - in production, this would send actual email
+      const verificationLink = `${window.location.origin}/verify-email?token=${verificationToken}&email=${encodeURIComponent(clientData.email)}`;
+      console.log('Email verification link (for testing):', verificationLink);
 
       return {
         success: true,
-        user: mockUser
+        verificationRequired: true,
+        email: clientData.email,
+        message: 'Registration successful! Please check your email for verification link.'
       };
 
     } catch (error) {
@@ -130,8 +137,11 @@ export const AuthProvider = ({ children }) => {
       // Mock freelancer registration
       await new Promise(resolve => setTimeout(resolve, 1000));
 
-      // Create freelancer user data
-      const mockUser = {
+      // Generate verification token
+      const verificationToken = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+      // Create pending user data (not verified yet)
+      const pendingUser = {
         id: Date.now().toString(),
         email: freelancerData.email,
         firstName: freelancerData.firstName,
@@ -143,18 +153,22 @@ export const AuthProvider = ({ children }) => {
         skills: freelancerData.skills,
         categories: freelancerData.categories,
         password: freelancerData.password, // Store password for login verification
-        emailVerified: true // Mark as verified for immediate access
+        emailVerified: false,
+        verificationToken: verificationToken
       };
 
-      // Store authenticated user directly
-      localStorage.setItem('authToken', 'mock-jwt-token-' + Date.now());
-      localStorage.setItem('userData', JSON.stringify(mockUser));
+      // Store pending user data
+      localStorage.setItem('pendingUserData', JSON.stringify(pendingUser));
 
-      setUser(mockUser);
+      // Mock email sending - in production, this would send actual email
+      const verificationLink = `${window.location.origin}/verify-email?token=${verificationToken}&email=${encodeURIComponent(freelancerData.email)}`;
+      console.log('Email verification link (for testing):', verificationLink);
 
       return {
         success: true,
-        user: mockUser
+        verificationRequired: true,
+        email: freelancerData.email,
+        message: 'Registration successful! Please check your email for verification link.'
       };
 
     } catch (error) {

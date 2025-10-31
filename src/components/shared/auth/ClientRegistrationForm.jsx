@@ -470,7 +470,7 @@ const ClientRegistrationForm = () => {
                     </label>
                     <select
                       name="industry"
-                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
+                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg text-gray-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
                         formik.touched.industry && formik.errors.industry ? 'border-red-400 bg-red-50' : 'border-purple-200 bg-white'
                       }`}
                       value={formik.values.industry}
@@ -500,7 +500,7 @@ const ClientRegistrationForm = () => {
                     </label>
                     <select
                       name="companySize"
-                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
+                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg text-gray-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
                         formik.touched.companySize && formik.errors.companySize ? 'border-red-400 bg-red-50' : 'border-purple-200 bg-white'
                       }`}
                       value={formik.values.companySize}
@@ -641,7 +641,7 @@ const ClientRegistrationForm = () => {
                     </label>
                     <select
                       name="budgetRange"
-                      className="w-full border-2 border-green-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white"
+                      className="w-full border-2 border-green-200 rounded-xl px-5 py-4 text-lg text-gray-900 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white"
                       value={formik.values.budgetRange}
                       onChange={formik.handleChange}
                     >
@@ -660,7 +660,7 @@ const ClientRegistrationForm = () => {
                     </label>
                     <select
                       name="timeline"
-                      className="w-full border-2 border-green-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white"
+                      className="w-full border-2 border-green-200 rounded-xl px-5 py-4 text-lg text-gray-900 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white"
                       value={formik.values.timeline}
                       onChange={formik.handleChange}
                     >
