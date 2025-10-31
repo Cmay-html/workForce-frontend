@@ -253,10 +253,8 @@ const Navbar = () => {
             </div>
             <button
               onClick={() => {
-                if (window.confirm('Are you sure you want to log out?')) {
-                  logout();
-                  navigate('/login');
-                }
+                logout();
+                navigate('/login');
               }}
               style={{
                 background: '#dc2626',
