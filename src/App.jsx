@@ -361,9 +361,9 @@ function App() {
                       <p className="text-gray-500">Time tracking feature coming soon...</p>
                     </div>
                   </div>
-                }
-              />
-            </Route>
+                </FreelancerRoute>
+              }
+            />
 
             {/* Freelancer Dashboard - Alternative route */}
             <Route
@@ -376,12 +376,26 @@ function App() {
             >
               <Route index element={<FreelancerDashboard />} />
             </Route>
-          </Routes>
-        </div>
-      </FreelancerRoute>
-    </AuthProvider>
-  );
-}
+
+            {/* Freelancer Profile Route */}
+            <Route
+              path="/freelancer/profile"
+              element={
+                <FreelancerRoute>
+                  <ProfilePortfolio />
+                </FreelancerRoute>
+              }
+            />
+
+            {/* Freelancer Payments Route */}
+            <Route
+              path="/freelancer/payments"
+              element={
+                <FreelancerRoute>
+                  <PaymentTracking />
+                </FreelancerRoute>
+              }
+            />
 
             {/* Freelancers Browse Route */}
             <Route
@@ -400,8 +414,8 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
-    </AuthProvider>
-  );
-}
+      </AuthProvider>
+    );
+  }
 
 export default App;

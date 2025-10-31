@@ -117,11 +117,11 @@ const ClientLayout = () => {
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-3">
                 <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl shadow-lg shadow-blue-500/25">
-                  <span className="text-white font-bold text-lg">KF</span>
+                  <span className="text-white font-bold text-lg">WFF</span>
                 </div>
                 <div>
                   <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                    KaziFlow
+                   WorkForceFlow
                   </h1>
                   <span className="text-xs text-gray-500 font-medium bg-gray-100 px-2 py-1 rounded-full">
                     Client Portal

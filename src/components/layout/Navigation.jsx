@@ -11,7 +11,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" className="text-xl font-bold text-blue-600">KaziFlow</Link>
+            <Link to="/" className="text-xl font-bold text-blue-600">WorkForceFlow</Link>
           </div>
 
           {/* Navigation Links */}

@@ -56,27 +56,195 @@ const ChatPage = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto py-8" style={{ minWidth: '1024px' }}>
-      <div className="mb-6">
-        <button
-          onClick={() => navigate(getBackPath())}
-          className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors duration-200"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          Back to Dashboard
-        </button>
-        <h1 className="text-3xl font-bold text-gray-900">
-          {isGlobalChat ? 'Messages' : 'Project Collaboration'}
-        </h1>
-        {projectDetails && (
-          <p className="text-gray-600">Project: {projectDetails.title}</p>
-        )}
-        {isGlobalChat && (
-          <p className="text-gray-600">Communicate with your team and clients</p>
-        )}
+    <div className="flex h-screen bg-gray-50" style={{ minWidth: '120%' }}>
+      {/* Sidebar */}
+      <div className="w-64 bg-white border-r border-gray-200 flex flex-col fixed left-0 top-0 h-full z-10">
+        <div className="p-6 border-b border-gray-200">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
+              K
+            </div>
+            <span className="text-xl font-bold text-orange-600">WorkForceFlow</span>
+          </div>
+          <div className="bg-gray-50 rounded-lg p-3">
+            <p className="text-sm font-semibold text-gray-900 mb-1">
+              {user?.firstName} {user?.lastName}
+            </p>
+            <p className="text-xs text-gray-500">
+              {user?.role === 'client' ? 'Client Account' : 'Freelancer Account'}
+            </p>
+          </div>
+        </div>
+
+        <nav className="flex-1 px-4 py-6">
+          <ul className="space-y-1">
+            <li>
+              <button
+                onClick={() => navigate(getBackPath())}
+                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+              >
+                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">D</span>
+                <div className="flex-1">
+                  <div className="font-medium">Dashboard</div>
+                  <div className="text-xs text-gray-500 mt-0.5">Business overview</div>
+                </div>
+              </button>
+            </li>
+            {user?.role === 'freelancer' && (
+              <>
+                <li>
+                  <button
+                    onClick={() => navigate('/freelancer/dashboard')}
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                  >
+                    <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">D</span>
+                    <div className="flex-1">
+                      <div className="font-medium">Dashboard</div>
+                      <div className="text-xs text-gray-500 mt-0.5">Business overview</div>
+                    </div>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => navigate('/freelancer/projects')}
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                  >
+                    <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">P</span>
+                    <div className="flex-1">
+                      <div className="font-medium">Browse Projects</div>
+                      <div className="text-xs text-gray-500 mt-0.5">Find new opportunities</div>
+                    </div>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => navigate('/freelancer/active-projects')}
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                  >
+                    <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">A</span>
+                    <div className="flex-1">
+                      <div className="font-medium">Active Projects</div>
+                      <div className="text-xs text-gray-500 mt-0.5">Current work</div>
+                    </div>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => navigate('/freelancer/proposals')}
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                  >
+                    <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">R</span>
+                    <div className="flex-1">
+                      <div className="font-medium">My Proposals</div>
+                      <div className="text-xs text-gray-500 mt-0.5">Track submissions</div>
+                    </div>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => navigate('/freelancer/payments')}
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                  >
+                    <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">$</span>
+                    <div className="flex-1">
+                      <div className="font-medium">Payments</div>
+                      <div className="text-xs text-gray-500 mt-0.5">Earnings & history</div>
+                    </div>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => navigate('/freelancer/profile')}
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 ease-in-out"
+                  >
+                    <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">P</span>
+                    <div className="flex-1">
+                      <div className="font-medium">Profile</div>
+                      <div className="text-xs text-gray-500 mt-0.5">Portfolio & settings</div>
+                    </div>
+                  </button>
+                </li>
+              </>
+            )}
+            <li>
+              <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left bg-orange-50 text-orange-700 border-r-2 border-orange-700 transition-all duration-200 ease-in-out">
+                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">M</span>
+                <div className="flex-1">
+                  <div className="font-medium">Messages</div>
+                  <div className="text-xs text-gray-500 mt-0.5">Chat with team</div>
+                </div>
+              </button>
+            </li>
+          </ul>
+
+          {/* Logout Button */}
+          <div className="mt-auto pt-6 border-t border-gray-200">
+            <button
+              onClick={() => {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('user');
+                localStorage.removeItem('role');
+                window.location.href = '/login';
+              }}
+              className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-colors"
+            >
+              <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">L</span>
+              <div className="flex-1 text-left">
+                <div className="font-medium">Logout</div>
+                <div className="text-xs text-gray-500 mt-0.5">Sign out of account</div>
+              </div>
+            </button>
+          </div>
+        </nav>
       </div>
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col min-h-screen ml-64">
+        {/* Top Bar */}
+        <div className="bg-white border-b border-gray-200 px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 fixed top-0 right-0 left-64 z-20">
+          <div className="flex items-center gap-4 flex-1 max-w-md">
+            <div className="relative flex-1">
+              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                type="text"
+                placeholder="Search messages..."
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-4">
+            <div className="text-right hidden sm:block">
+              <div className="text-sm font-semibold text-gray-900">
+                {user?.firstName} {user?.lastName}
+              </div>
+              <div className="text-xs text-gray-500">
+                {user?.role === 'freelancer' ? 'Freelancer' : 'Client'}
+              </div>
+            </div>
+            <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-semibold">
+              {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
+            </div>
+          </div>
+        </div>
+
+        {/* Page Content */}
+        <main className="flex-1 bg-gray-50 overflow-auto pt-20">
+          <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <div className="px-4 py-6 sm:px-0">
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold text-gray-900">
+                  {isGlobalChat ? 'Messages' : 'Project Collaboration'}
+                </h1>
+                {projectDetails && (
+                  <p className="text-gray-600">Project: {projectDetails.title}</p>
+                )}
+                {isGlobalChat && (
+                  <p className="text-gray-600">Communicate with your team and clients</p>
+                )}
+              </div>
 
       {/* Tab Navigation - Only show for project-specific chat */}
       {!isGlobalChat && (
@@ -300,6 +468,10 @@ const ChatPage = () => {
           </div>
         </div>
       )}
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
   );
 };

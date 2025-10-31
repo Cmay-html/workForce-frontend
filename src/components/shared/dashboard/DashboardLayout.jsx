@@ -50,7 +50,7 @@ const DashboardLayout = ({ children }) => {
             <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
               K
             </div>
-            <span className="text-xl font-bold text-orange-600">Kaziflow</span>
+            <span className="text-xl font-bold text-orange-600">WorkForceFlow</span>
           </div>
           <div className="bg-gray-50 rounded-lg p-3">
             <p className="text-sm font-semibold text-gray-900 mb-1">

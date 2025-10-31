@@ -1,33 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 const LoginPage = () => {
-  const [credentials, setCredentials] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
-  const { login, loading } = useAuth();
   const navigate = useNavigate();
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-
-    const result = await login(credentials.email, credentials.password);
-
-    if (result.success) {
-      // Clear any existing navigation state and redirect based on user role
-      const redirectPath = result.user.role === 'client'
-        ? '/client/dashboard'
-        : '/freelancer/dashboard';
-      console.log('Login successful, redirecting to:', redirectPath, 'for user:', result.user);
-      // Force a full page reload to clear any cached state and ensure proper routing
-      window.location.href = redirectPath;
-    } else {
-      console.log('Login failed:', result.error);
-      setError(result.error || 'Login failed');
-    }
   const [isLogin, setIsLogin] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [loadingState, setLoadingState] = useState(false);
   const [animating, setAnimating] = useState(false);
   const [form, setForm] = useState({ email: "", password: "", confirm: "", role: "" });
   const cardRef = useRef(null);
@@ -59,20 +37,20 @@ const LoginPage = () => {
     setForm((f) => ({ ...f, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmitForm = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoadingState(true);
 
     if (!isLogin) {
       // Signup validations
       if (!form.role) {
         alert("Please select a role.");
-        setLoading(false);
+        setLoadingState(false);
         return;
       }
       if (form.password !== form.confirm) {
         alert("Passwords do not match!");
-        setLoading(false);
+        setLoadingState(false);
         return;
       }
 
@@ -88,16 +66,10 @@ const LoginPage = () => {
       alert(`Logged in as ${form.email}`);
     }
 
-    setLoading(false);
+    setLoadingState(false);
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center" style={{ minWidth: '1024px' }}>
-      <div className="w-full max-w-lg p-12">
-        <div className="text-center mb-10">
-          <div className="mb-6">
-            <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl mx-auto shadow-xl flex items-center justify-center text-white font-bold text-2xl">
-              KF
     <div style={styles.container}>
       <div style={styles.background}>
         <div style={styles.overlay}></div>
@@ -121,7 +93,7 @@ const LoginPage = () => {
             </div>
 
             {/* Form */}
-            <form onSubmit={handleSubmit} style={styles.form}>
+            <form onSubmit={handleSubmitForm} style={styles.form}>
               <div style={styles.inputGroup}>
                 <input
                   type="email"
@@ -184,8 +156,8 @@ const LoginPage = () => {
                 </>
               )}
 
-              <button type="submit" disabled={loading} style={styles.button}>
-                {loading ? "Working…" : isLogin ? "Login" : "Sign Up"}
+              <button type="submit" disabled={loadingState} style={styles.button}>
+                {loadingState ? "Working…" : isLogin ? "Login" : "Sign Up"}
               </button>
             </form>
 
@@ -199,67 +171,11 @@ const LoginPage = () => {
               </p>
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-3">
-            KaziFlow
-          </h1>
-          <p className="text-gray-600 text-lg font-medium">
-            Workflow Intelligence Platform
-          </p>
-        </div>
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-xl p-8">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            {error && (
-              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                {error}
-              </div>
-            )}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
-              </label>
-              <input
-                type="email"
-                value={credentials.email}
-                onChange={(e) => setCredentials({...credentials, email: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter your email"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Password
-              </label>
-              <input
-                type="password"
-                value={credentials.password}
-                onChange={(e) => setCredentials({...credentials, password: e.target.value})}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Enter your password"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? 'Signing in...' : 'Sign in'}
-            </button>
-          </form>
-          <div className="mt-6 text-center">
-            <p className="text-gray-600">
-              Don't have an account?{' '}
-              <a href="/register" className="text-blue-600 hover:text-blue-800 font-medium">
-                Sign up
-              </a>
-            </p>
-          </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 const styles = {
   container: {
@@ -330,3 +246,6 @@ const styles = {
   switchText: { fontSize: "0.95rem", color: "#64748b", margin: 0 },
   switchLink: { color: "#f97316", fontWeight: "600", cursor: "pointer" },
 };
+
+export default LoginPage
+;

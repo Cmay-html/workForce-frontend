@@ -109,21 +109,17 @@ export const AuthProvider = ({ children }) => {
         industry: clientData.industry,
         companySize: clientData.companySize,
         password: clientData.password, // Store password for login verification
-        emailVerified: false, // Email not verified yet
-        verificationToken: 'mock-verification-token-' + Date.now() // Mock verification token
+        emailVerified: true // Mark as verified for immediate access
       };
 
-      // Store user data (but don't set as authenticated until email is verified)
-      localStorage.setItem('pendingUserData', JSON.stringify(mockUser));
+      // Store authenticated user directly
+      localStorage.setItem('authToken', 'mock-jwt-token-' + Date.now());
+      localStorage.setItem('userData', JSON.stringify(mockUser));
 
-      // Mock sending verification email
-      console.log('Verification email would be sent to:', clientData.email);
-      console.log('Verification link:', `http://localhost:5173/verify-email?token=${mockUser.verificationToken}&email=${encodeURIComponent(clientData.email)}`);
+      setUser(mockUser);
 
       return {
         success: true,
-        requiresVerification: true,
-        message: 'Please check your email and click the verification link to complete registration.',
         user: mockUser
       };
 
@@ -155,21 +151,17 @@ export const AuthProvider = ({ children }) => {
         skills: freelancerData.skills,
         categories: freelancerData.categories,
         password: freelancerData.password, // Store password for login verification
-        emailVerified: false, // Email not verified yet
-        verificationToken: 'mock-verification-token-' + Date.now() // Mock verification token
+        emailVerified: true // Mark as verified for immediate access
       };
 
-      // Store user data (but don't set as authenticated until email is verified)
-      localStorage.setItem('pendingUserData', JSON.stringify(mockUser));
+      // Store authenticated user directly
+      localStorage.setItem('authToken', 'mock-jwt-token-' + Date.now());
+      localStorage.setItem('userData', JSON.stringify(mockUser));
 
-      // Mock sending verification email
-      console.log('Verification email would be sent to:', freelancerData.email);
-      console.log('Verification link:', `http://localhost:5173/verify-email?token=${mockUser.verificationToken}&email=${encodeURIComponent(freelancerData.email)}`);
+      setUser(mockUser);
 
       return {
         success: true,
-        requiresVerification: true,
-        message: 'Please check your email and click the verification link to complete registration.',
         user: mockUser
       };
 

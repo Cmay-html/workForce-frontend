@@ -110,15 +110,15 @@ const ActiveProjects = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50" style={{ minWidth: '140%' }}>
+    <div className="flex h-screen bg-gray-50" style={{ minWidth: '118%' }}>
       {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
+      <div className="w-64 bg-white border-r border-gray-200 flex flex-col fixed left-0 top-0 h-full z-10">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
               K
             </div>
-            <span className="text-xl font-bold text-orange-600">Kaziflow</span>
+            <span className="text-xl font-bold text-orange-600">WorkForceFlow</span>
           </div>
           <div className="bg-gray-50 rounded-lg p-3">
             <p className="text-sm font-semibold text-gray-900 mb-1">
@@ -131,7 +131,7 @@ const ActiveProjects = () => {
         </div>
 
         <nav className="flex-1 px-4 py-6">
-          <ul className="space-y-2">
+          <ul className="space-y-1">
             <li>
               <button
                 onClick={() => navigate('/dashboard')}
@@ -157,7 +157,7 @@ const ActiveProjects = () => {
               </button>
             </li>
             <li>
-              <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left bg-orange-50 text-orange-700 border-r-2 border-orange-700">
+              <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left bg-orange-50 text-orange-700 border-r-2 border-orange-700 transition-all duration-200 ease-in-out">
                 <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">A</span>
                 <div className="flex-1">
                   <div className="font-medium">Active Projects</div>
@@ -179,6 +179,30 @@ const ActiveProjects = () => {
             </li>
             <li>
               <button
+                onClick={() => navigate('/chat')}
+                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+              >
+                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">M</span>
+                <div className="flex-1">
+                  <div className="font-medium">Messages</div>
+                  <div className="text-xs text-gray-500 mt-0.5">Chat with clients</div>
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => navigate('/freelancer/payments')}
+                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 ease-in-out"
+              >
+                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">$</span>
+                <div className="flex-1">
+                  <div className="font-medium">Payments</div>
+                  <div className="text-xs text-gray-500 mt-0.5">Earnings & history</div>
+                </div>
+              </button>
+            </li>
+            <li>
+              <button
                 onClick={() => navigate('/freelancer/profile')}
                 className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
               >
@@ -195,7 +219,7 @@ const ActiveProjects = () => {
           <div className="mt-auto pt-6 border-t border-gray-200">
             <button
               onClick={handleLogout}
-              className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-colors"
+              className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-all duration-200 ease-in-out"
             >
               <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">L</span>
               <div className="flex-1 text-left">
@@ -208,9 +232,9 @@ const ActiveProjects = () => {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className="flex-1 flex flex-col min-h-screen ml-64">
         {/* Top Bar */}
-        <div className="bg-white border-b border-gray-200 px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="bg-white border-b border-gray-200 px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 fixed top-0 right-0 left-64 z-20">
           <div className="flex items-center gap-4 flex-1 max-w-md">
             <div className="relative flex-1">
               <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -240,7 +264,7 @@ const ActiveProjects = () => {
         </div>
 
         {/* Page Content */}
-        <main className="flex-1 bg-gray-50 overflow-auto">
+        <main className="flex-1 bg-gray-50 overflow-auto pt-20">
           <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
             <div className="px-4 py-6 sm:px-0">
               <div className="mb-8">

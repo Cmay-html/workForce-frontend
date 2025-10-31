@@ -115,7 +115,7 @@ const MilestoneSubmission = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50" style={{ minWidth: '1024px' }}>
+    <div className="flex h-screen bg-gray-50" style={{ minWidth: '100%' }}>
       {/* Sidebar */}
       <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
         <div className="p-6 border-b border-gray-200">
@@ -123,7 +123,7 @@ const MilestoneSubmission = () => {
             <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
               K
             </div>
-            <span className="text-xl font-bold text-orange-600">Kaziflow</span>
+            <span className="text-xl font-bold text-orange-600">WorkForceFlow</span>
           </div>
           <div className="bg-gray-50 rounded-lg p-3">
             <p className="text-sm font-semibold text-gray-900 mb-1">

@@ -135,19 +135,11 @@ const FreelancerRegistrationForm = () => {
         // API call to register freelancer
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        // Register freelancer (will require email verification)
+        // Register freelancer
         const result = await registerFreelancer(values);
         if (result.success) {
-          if (result.requiresVerification) {
-            setStatus({
-              success: result.message,
-              verificationRequired: true,
-              email: values.email
-            });
-          } else {
-            setStatus({ success: "Freelancer profile created successfully!" });
-            setTimeout(() => navigate('/freelancer/dashboard'), 1500);
-          }
+          setStatus({ success: "Freelancer profile created successfully!" });
+          setTimeout(() => navigate('/freelancer/dashboard'), 1500);
         } else {
           setStatus({ error: result.error || "Registration failed. Please try again." });
         }

@@ -109,19 +109,11 @@ const ClientRegistrationForm = () => {
         // API call to register client
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        // Register client (will require email verification)
+        // Register client
         const result = await registerClient(values);
         if (result.success) {
-          if (result.requiresVerification) {
-            setStatus({
-              success: result.message,
-              verificationRequired: true,
-              email: values.email
-            });
-          } else {
-            setStatus({ success: "Client profile created successfully!" });
-            setTimeout(() => navigate('/client/dashboard'), 1500);
-          }
+          setStatus({ success: "Client profile created successfully!" });
+          setTimeout(() => navigate('/client/dashboard'), 1500);
         } else {
           setStatus({ error: result.error || "Registration failed. Please try again." });
         }
