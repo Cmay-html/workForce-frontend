@@ -1,8 +1,11 @@
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const ClientDashboard = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredProjects, setFilteredProjects] = useState([]);
+
   const stats = [
     {
       value: "2",
@@ -192,6 +195,33 @@ const ClientDashboard = () => {
     },
   ];
 
+  // Filter projects based on search query
+  useEffect(() => {
+    const handleSearch = (event) => {
+      const query = event.detail;
+      setSearchQuery(query);
+    };
+
+    window.addEventListener('dashboardSearch', handleSearch);
+
+    return () => {
+      window.removeEventListener('dashboardSearch', handleSearch);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredProjects(projects);
+    } else {
+      const filtered = projects.filter(project =>
+        project.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.status.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredProjects(filtered);
+    }
+  }, [searchQuery, projects]);
+
   const getStatusColor = (status) => {
     const colors = {
       "in-progress": "bg-blue-100 text-blue-800 border-blue-200",
@@ -319,7 +349,7 @@ const ClientDashboard = () => {
             </div>
 
             <div className="space-y-4">
-              {projects.map((project, index) => (
+              {filteredProjects.map((project, index) => (
                 <div
                   key={project.name}
                   className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-6 hover:shadow-lg transition-all duration-300"

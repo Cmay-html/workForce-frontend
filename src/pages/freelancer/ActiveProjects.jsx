@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
+import Navbar from '../../components/shared/dashboard/Navbar';
 
 const ActiveProjects = () => {
   const navigate = useNavigate();
   const { isAuthenticated, user, loading } = useAuth();
   const [activeProjects, setActiveProjects] = useState([]);
+  const [filteredProjects, setFilteredProjects] = useState([]);
   const [loadingProjects, setLoadingProjects] = useState(true);
 
   useEffect(() => {
@@ -52,6 +54,7 @@ const ActiveProjects = () => {
         }
       ];
       setActiveProjects(mockProjects);
+      setFilteredProjects(mockProjects);
     } else {
       // Transform accepted proposals to active projects format
       const formattedProjects = acceptedProposals.map(proposal => ({
@@ -66,10 +69,42 @@ const ActiveProjects = () => {
         nextMilestoneDue: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] // 7 days from now
       }));
       setActiveProjects(formattedProjects);
+      setFilteredProjects(formattedProjects);
     }
 
     setLoadingProjects(false);
   }, []);
+
+  // Filter projects based on search query
+  useEffect(() => {
+    const handleSearch = (event) => {
+      const query = event.detail;
+      if (query === 'all' || query.trim() === '') {
+        setFilteredProjects(activeProjects);
+      } else if (query === 'projects') {
+        setFilteredProjects(activeProjects);
+      } else if (query === 'milestones') {
+        const filtered = activeProjects.filter(project =>
+          project.currentMilestone.toLowerCase().includes('milestone')
+        );
+        setFilteredProjects(filtered);
+      } else {
+        const filtered = activeProjects.filter(project =>
+          project.title.toLowerCase().includes(query.toLowerCase()) ||
+          project.client.toLowerCase().includes(query.toLowerCase()) ||
+          project.status.toLowerCase().includes(query.toLowerCase()) ||
+          project.currentMilestone.toLowerCase().includes(query.toLowerCase())
+        );
+        setFilteredProjects(filtered);
+      }
+    };
+
+    window.addEventListener('dashboardSearch', handleSearch);
+
+    return () => {
+      window.removeEventListener('dashboardSearch', handleSearch);
+    };
+  }, [activeProjects]);
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -112,9 +147,11 @@ const ActiveProjects = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50" style={{ minWidth: '1024px' }}>
-      {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-gray-200 flex flex-col fixed left-0 top-0 h-full z-10">
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      <div className="flex" style={{ minWidth: '1024px' }}>
+        {/* Sidebar */}
+        <div className="w-64 bg-white border-r border-gray-200 flex flex-col fixed left-0 top-0 h-full z-10">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
@@ -304,7 +341,7 @@ const ActiveProjects = () => {
                     </div>
                   </div>
                 ) : (
-                  activeProjects.map(project => (
+                  filteredProjects.map(project => (
                     <div key={project.id} className="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200">
                       <div className="px-4 py-5 sm:px-6">
                         <div className="flex justify-between items-start mb-4">
@@ -392,6 +429,7 @@ const ActiveProjects = () => {
             </div>
           </div>
         </main>
+        </div>
       </div>
     </div>
   );

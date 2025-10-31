@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Navigate } from "react-router-dom";
+import Navbar from "../../components/shared/dashboard/Navbar";
 
 const FreelancerDashboard = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const FreelancerDashboard = () => {
     totalEarnings: 0,
   });
   const [recentActivity, setRecentActivity] = useState([]);
+  const [filteredActivity, setFilteredActivity] = useState([]);
   const [loadingStats, setLoadingStats] = useState(true);
 
   useEffect(() => {
@@ -48,8 +50,42 @@ const FreelancerDashboard = () => {
         timestamp: new Date(Date.now() - 172800000).toISOString(),
       },
     ]);
+    setFilteredActivity(recentActivity);
     setLoadingStats(false);
   }, []);
+
+  // Filter recent activity based on search query
+  useEffect(() => {
+    const handleSearch = (event) => {
+      const query = event.detail;
+      if (query === 'all' || query.trim() === '') {
+        setFilteredActivity(recentActivity);
+      } else if (query === 'projects') {
+        const filtered = recentActivity.filter(activity =>
+          activity.type.toLowerCase().includes('project')
+        );
+        setFilteredActivity(filtered);
+      } else if (query === 'milestones') {
+        const filtered = recentActivity.filter(activity =>
+          activity.type.toLowerCase().includes('milestone')
+        );
+        setFilteredActivity(filtered);
+      } else {
+        const filtered = recentActivity.filter(activity =>
+          activity.project.toLowerCase().includes(query.toLowerCase()) ||
+          activity.client.toLowerCase().includes(query.toLowerCase()) ||
+          activity.type.toLowerCase().includes(query.toLowerCase())
+        );
+        setFilteredActivity(filtered);
+      }
+    };
+
+    window.addEventListener('dashboardSearch', handleSearch);
+
+    return () => {
+      window.removeEventListener('dashboardSearch', handleSearch);
+    };
+  }, [recentActivity]);
 
   const handleLogout = () => {
     // Clear authentication and navigate to login
@@ -72,9 +108,11 @@ const FreelancerDashboard = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50" style={{ minWidth: '108%' }}>
-      {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-gray-200 flex flex-col fixed left-0 top-0 h-full z-10">
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      <div className="flex" style={{ minWidth: '108%' }}>
+        {/* Sidebar */}
+        <div className="w-64 bg-white border-r border-gray-200 flex flex-col fixed left-0 top-0 h-full z-10">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
@@ -400,7 +438,7 @@ const FreelancerDashboard = () => {
                       </div>
                     ) : (
                       <div className="space-y-4">
-                        {recentActivity.map((activity) => (
+                        {filteredActivity.map((activity) => (
                           <div
                             key={activity.id}
                             className="flex items-start space-x-3"
@@ -554,6 +592,7 @@ const FreelancerDashboard = () => {
             </div>
           </div>
         </main>
+        </div>
       </div>
     </div>
   );

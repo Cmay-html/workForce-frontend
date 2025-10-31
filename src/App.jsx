@@ -8,6 +8,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { useAuth } from "./hooks/useAuth";
 import LoginPage from "./pages/auth/LoginPage";
 import RegistrationPage from "./pages/auth/RegistrationPage";
+import LandingPage from "./pages/LandingPage";
 import ClientDashboard from "./pages/client/Dashboard";
 import AuthForm from "./components/shared/auth/AuthForm";
 import DashboardLayout from "./components/shared/dashboard/DashboardLayout";
@@ -407,8 +408,11 @@ function App() {
               }
             />
 
-            {/* Smart root redirect */}
-            <Route path="/" element={<RootRedirect />} />
+            {/* Landing Page */}
+            <Route path="/" element={<LandingPage />} />
+
+            {/* Smart root redirect for authenticated users */}
+            <Route path="/dashboard" element={<RootRedirect />} />
 
             {/* Catch-all redirect */}
             <Route path="*" element={<Navigate to="/" replace />} />

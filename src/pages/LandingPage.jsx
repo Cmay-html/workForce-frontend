@@ -119,13 +119,13 @@ const LandingPage = () => {
                 to="/register"
                 className="bg-gradient-to-r from-purple-600 to-blue-500 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-purple-700 hover:to-blue-600 transition-all shadow-lg hover:shadow-xl hover:scale-105"
               >
-                🚀 Hire Talent
+                Hire Talent
               </Link>
               <Link
                 to="/register"
                 className="border-2 border-purple-600 text-purple-600 px-8 py-4 rounded-xl font-semibold text-lg hover:bg-purple-600 hover:text-white transition-all hover:scale-105"
               >
-                💼 Find Work
+                Find Work
               </Link>
             </div>
 
@@ -359,13 +359,13 @@ const LandingPage = () => {
               to="/register"
               className="bg-white text-purple-600 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-purple-50 transition-all hover:scale-105 shadow-lg"
             >
-              🚀 Join as Client
+              Join as Client
             </Link>
             <Link
               to="/register"
               className="border-2 border-white text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white hover:text-purple-600 transition-all hover:scale-105"
             >
-              💼 Join as Freelancer
+              Join as Freelancer
             </Link>
           </div>
         </div>

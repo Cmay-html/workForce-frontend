@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import { Navigate } from "react-router-dom";
+import Navbar from "../../shared/dashboard/Navbar";
 
 const FreelancerProjectList = () => {
   const navigate = useNavigate();
@@ -12,6 +13,35 @@ const FreelancerProjectList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("newest");
+
+  // Filter projects based on search query from navbar
+  useEffect(() => {
+    const handleSearch = (event) => {
+      const query = event.detail;
+      if (query === 'all' || query.trim() === '') {
+        setFilteredProjects(projects);
+      } else if (query === 'projects') {
+        setFilteredProjects(projects);
+      } else if (query === 'milestones') {
+        // No milestones on this page, show all
+        setFilteredProjects(projects);
+      } else {
+        const filtered = projects.filter(project =>
+          project.title.toLowerCase().includes(query.toLowerCase()) ||
+          project.description.toLowerCase().includes(query.toLowerCase()) ||
+          project.category.toLowerCase().includes(query.toLowerCase()) ||
+          project.client.toLowerCase().includes(query.toLowerCase())
+        );
+        setFilteredProjects(filtered);
+      }
+    };
+
+    window.addEventListener('dashboardSearch', handleSearch);
+
+    return () => {
+      window.removeEventListener('dashboardSearch', handleSearch);
+    };
+  }, [projects]);
 
   // Categories for filtering
   const categories = ["All", "Web Development", "Mobile Development", "Design", "Content Writing", "Data Science", "DevOps"];
@@ -140,9 +170,11 @@ const FreelancerProjectList = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50" style={{ minWidth: '100%' }}>
-      {/* Sidebar */}
-      <div className="w-64 bg-white border-r border-gray-200 flex flex-col fixed left-0 top-0 h-full z-10">
+    <div className="min-h-screen bg-gray-50">
+      <Navbar />
+      <div className="flex" style={{ minWidth: '100%' }}>
+        {/* Sidebar */}
+        <div className="w-64 bg-white border-r border-gray-200 flex flex-col fixed left-0 top-0 h-full z-10">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
@@ -406,6 +438,7 @@ const FreelancerProjectList = () => {
             </div>
           </div>
         </main>
+        </div>
       </div>
     </div>
   );
