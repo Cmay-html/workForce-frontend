@@ -50,7 +50,6 @@ const AddMilestoneForm = ({
     onSubmit: async (values, { setStatus }) => {
       setIsSubmitting(true);
       try {
-        console.log("Creating milestone:", values);
 
         // Simulate API call
         await new Promise((resolve) => setTimeout(resolve, 1500));

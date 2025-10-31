@@ -121,8 +121,6 @@ const FreelancerProfileForm = () => {
     }),
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        console.log("Updating freelancer profile:", values);
-        // API call would go here
         await new Promise((resolve) => setTimeout(resolve, 1500));
 
         setStatus({ success: "Profile updated successfully!" });

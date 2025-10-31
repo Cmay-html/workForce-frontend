@@ -17,7 +17,6 @@ const FreelancerProjectList = () => {
   const categories = ["All", "Web Development", "Mobile Development", "Design", "Content Writing", "Data Science", "DevOps"];
 
   useEffect(() => {
-    // Skip API call and go directly to mock data to avoid HTML response errors
     const mockProjects = [
       {
         id: 1,
@@ -123,7 +122,9 @@ const FreelancerProjectList = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('user');
     localStorage.removeItem('role');
-    window.location.href = '/login';
+    localStorage.removeItem('userProjects');
+    localStorage.removeItem('proposals');
+    navigate('/login');
   };
 
   if (loading || loadingProjects) {
@@ -238,7 +239,7 @@ const FreelancerProjectList = () => {
                 localStorage.removeItem('authToken');
                 localStorage.removeItem('user');
                 localStorage.removeItem('role');
-                window.location.href = '/login';
+                navigate('/login');
               }}
               className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-all duration-200 ease-in-out"
             >

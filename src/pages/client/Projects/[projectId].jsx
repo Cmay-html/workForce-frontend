@@ -83,7 +83,6 @@ const ProjectDetailsPage = () => {
 
         setProject(foundProject);
       } catch (error) {
-        console.error('Error loading project:', error);
       } finally {
         setLoadingProject(false);
       }

@@ -30,8 +30,6 @@ const FreelancerSettingsForm = () => {
     },
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        console.log("Updating freelancer settings:", values);
-        // API call would go here
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         setStatus({ success: "Settings updated successfully!" });
@@ -388,7 +386,6 @@ const FreelancerSettingsForm = () => {
                       "Are you sure you want to deactivate your account? This action can be reversed within 30 days."
                     )
                   ) {
-                    console.log("Deactivating account...");
                   }
                 }}
                 style={{

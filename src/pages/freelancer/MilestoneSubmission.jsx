@@ -17,7 +17,6 @@ const MilestoneSubmission = () => {
   });
 
   useEffect(() => {
-    // Skip API call and go directly to mock data to avoid HTML response errors
     const mockMilestones = [
       {
         id: 1,
@@ -66,12 +65,7 @@ const MilestoneSubmission = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Submitting milestone:', {
-      milestoneId: selectedMilestone.id,
-      ...submissionData
-    });
     // API call to submit milestone work
-    alert('Milestone submitted for review!');
     setSelectedMilestone(null);
     setSubmissionData({ description: '', files: [], notes: '' });
   };
@@ -99,7 +93,9 @@ const MilestoneSubmission = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('user');
     localStorage.removeItem('role');
-    window.location.href = '/login';
+    localStorage.removeItem('userProjects');
+    localStorage.removeItem('proposals');
+    navigate('/login');
   };
 
   if (loading || loadingMilestones) {

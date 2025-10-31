@@ -165,16 +165,13 @@ const ProjectEditForm = () => {
     try {
       let response;
       if (isCreateMode) {
-        console.log("Creating project:", values);
         response = await clientService.createProject(values);
       } else {
-        console.log("Updating project:", values);
         response = await clientService.updateProject(projectId, values);
       }
 
       if (response.ok) {
         const result = await response.json();
-        console.log(`${isCreateMode ? 'Created' : 'Updated'} project:`, result);
         formik.setStatus({ success: `Project ${isCreateMode ? 'created' : 'updated'} successfully!` });
         // Store the new project in localStorage to persist across page refreshes
         if (isCreateMode && result.id) {
@@ -195,7 +192,6 @@ const ProjectEditForm = () => {
         setTimeout(() => navigate(isCreateMode ? "/dashboard" : "/client/projects"), 1500);
       } else {
         // Fallback for when API is not available - simulate success
-        console.log(`Simulating ${isCreateMode ? 'create' : 'update'} project success`);
         formik.setStatus({ success: `Project ${isCreateMode ? 'created' : 'updated'} successfully!` });
         // Store the new project in localStorage for demo purposes
         if (isCreateMode) {
@@ -216,7 +212,6 @@ const ProjectEditForm = () => {
         setTimeout(() => navigate(isCreateMode ? "/dashboard" : "/client/projects"), 1500);
       }
     } catch (error) {
-      console.error(`Error ${isCreateMode ? 'creating' : 'updating'} project:`, error);
       // Fallback for when API fails - simulate success for demo purposes
       formik.setStatus({ success: `Project ${isCreateMode ? 'created' : 'updated'} successfully!` });
       // Store the new project in localStorage for demo purposes
@@ -609,7 +604,6 @@ const ProjectEditForm = () => {
                           )
                         ) {
                           // Delete project logic
-                          console.log("Deleting project:", projectId);
                           navigate("/client/projects");
                         }
                       }}

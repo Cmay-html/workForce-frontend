@@ -29,9 +29,7 @@ const MilestoneCard = ({ milestone, onApprove, onRequestRevision }) => {
     statusColors[milestone.status] || statusColors.pending_approval;
 
   const handlePayment = () => {
-    console.log(
-      `Processing payment of $${milestone.amount} via ${paymentMethod}`
-    );
+    alert(`Processing payment of $${milestone.amount} via ${paymentMethod}`);
     setShowPaymentModal(false);
     onApprove(milestone.id);
   };

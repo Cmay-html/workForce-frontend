@@ -89,10 +89,6 @@ const ProjectProposalForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Proposal submitted:", proposal);
-
-    // Simulate API call
-    alert(`Proposal submitted successfully for "${project.title}"!`);
 
     // Add to pending proposals
     const proposals = JSON.parse(localStorage.getItem('proposals') || '[]');
@@ -125,7 +121,7 @@ const ProjectProposalForm = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('user');
     localStorage.removeItem('role');
-    window.location.href = '/login';
+    navigate('/login');
   };
 
   if (loading || loadingProject) {

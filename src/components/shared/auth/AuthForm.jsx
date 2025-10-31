@@ -130,7 +130,6 @@ const AuthForm = () => {
       
       navigate('/dashboard');
     } catch (error) {
-      console.error('Auth error:', error);
       setErrors({ submit: 'Authentication failed. Please try again.' });
     } finally {
       setLoading(false);

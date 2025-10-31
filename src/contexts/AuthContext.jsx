@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('authToken');
     const userData = localStorage.getItem('userData');
 
-    console.log('AuthContext initialization:', {
+    console.log('Auth check:', {
       token: !!token,
       userData: !!userData,
       tokenValue: token,
@@ -22,15 +22,12 @@ export const AuthProvider = ({ children }) => {
     if (token && userData) {
       try {
         const parsedUser = JSON.parse(userData);
-        console.log('AuthContext: Setting user from localStorage:', parsedUser);
         setUser(parsedUser);
       } catch (error) {
-        console.error('Error parsing user data:', error);
         localStorage.removeItem('authToken');
         localStorage.removeItem('userData');
       }
     } else {
-      console.log('AuthContext: No stored auth data found - user needs to log in');
     }
     setLoading(false);
   }, []);
@@ -51,13 +48,11 @@ export const AuthProvider = ({ children }) => {
         try {
           userData = JSON.parse(storedUserData);
         } catch (e) {
-          console.error('Error parsing stored user data:', e);
         }
       }
 
       // If user exists and password matches, use stored data
       if (userData && userData.email === email && userData.password === password) {
-        console.log('Login: Found existing user:', userData);
         setUser(userData);
         // Store fresh token for this session
         localStorage.setItem('authToken', 'mock-jwt-token-' + Date.now());
@@ -66,7 +61,6 @@ export const AuthProvider = ({ children }) => {
 
       // Fallback to mock data based on email for development
       const emailStr = String(email || '');
-      console.log('Login: Using fallback mock user for email:', emailStr);
       const mockUser = {
         id: Date.now().toString(),
         email: emailStr,
@@ -84,7 +78,6 @@ export const AuthProvider = ({ children }) => {
       return { success: true, user: mockUser };
 
     } catch (error) {
-      console.error('Login error:', error);
       return { success: false, error: error.message };
     } finally {
       setLoading(false);
@@ -124,7 +117,6 @@ export const AuthProvider = ({ children }) => {
       };
 
     } catch (error) {
-      console.error('Client registration error:', error);
       return { success: false, error: error.message };
     } finally {
       setLoading(false);
@@ -166,7 +158,6 @@ export const AuthProvider = ({ children }) => {
       };
 
     } catch (error) {
-      console.error('Freelancer registration error:', error);
       return { success: false, error: error.message };
     } finally {
       setLoading(false);
@@ -174,10 +165,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    console.log('Logout: Clearing user data');
     localStorage.removeItem('authToken');
     localStorage.removeItem('userData');
     localStorage.removeItem('pendingUserData');
+    localStorage.removeItem('userProjects');
+    localStorage.removeItem('proposals');
     setUser(null);
   };
 
@@ -216,7 +208,6 @@ export const AuthProvider = ({ children }) => {
       return { success: true, user: verifiedUser };
 
     } catch (error) {
-      console.error('Email verification error:', error);
       return { success: false, error: error.message };
     } finally {
       setLoading(false);

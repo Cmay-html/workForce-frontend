@@ -61,7 +61,6 @@ const ProjectProposals = ({ projectId }) => {
         setProposals(mockProposals);
       } catch (err) {
         setError('Failed to load proposals');
-        console.error('Error fetching proposals:', err);
       } finally {
         setLoading(false);
       }
@@ -80,17 +79,17 @@ const ProjectProposals = ({ projectId }) => {
   const confirmHire = async () => {
     try {
       // API call to update proposal status and create contract
-      setProposals(proposals.map(proposal => 
-        proposal.id === selectedProposal.id 
+      setProposals(proposals.map(proposal =>
+        proposal.id === selectedProposal.id
           ? { ...proposal, status: 'hired' }
           : { ...proposal, status: 'rejected' }
       ));
-      
-      console.log('Hired freelancer:', {
+
+      const contractData = {
         proposalId: selectedProposal.id,
         freelancerId: selectedProposal.freelancerId,
         projectId: projectId
-      });
+      };
       
       // Here you would make the actual API call
       // await api.hireFreelancer(selectedProposal.id, projectId);
@@ -99,7 +98,6 @@ const ProjectProposals = ({ projectId }) => {
       setSelectedProposal(null);
     } catch (err) {
       setError('Failed to hire freelancer');
-      console.error('Error hiring freelancer:', err);
     }
   };
 
@@ -111,11 +109,9 @@ const ProjectProposals = ({ projectId }) => {
           : proposal
       ));
       
-      console.log('Rejected proposal ID:', proposalId);
       // await api.rejectProposal(proposalId);
     } catch (err) {
       setError('Failed to reject proposal');
-      console.error('Error rejecting proposal:', err);
     }
   };
 

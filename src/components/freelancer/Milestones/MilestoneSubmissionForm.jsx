@@ -32,14 +32,13 @@ const MilestoneSubmissionForm = () => {
     }),
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        console.log("Submitting milestone:", {
+        const submissionData = {
           projectId,
           milestoneId,
           ...values,
           files,
-        });
+        };
 
-        // API call would go here
         await new Promise((resolve) => setTimeout(resolve, 1500));
 
         setStatus({ success: "Milestone submitted successfully!" });

@@ -1,38 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [isLogin, setIsLogin] = useState(true);
   const [loadingState, setLoadingState] = useState(false);
-  const [animating, setAnimating] = useState(false);
-  const [form, setForm] = useState({ email: "", password: "", confirm: "", role: "" });
+  const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState('');
-  const cardRef = useRef(null);
-  const [cardHeight, setCardHeight] = useState("auto");
-  const [isTransitioning, setIsTransitioning] = useState(false);
-
-  // Adjust card height dynamically
-  useEffect(() => {
-    if (cardRef.current && !isTransitioning) {
-      const height = cardRef.current.scrollHeight + 2;
-      setCardHeight(`${height}px`);
-    }
-  }, [isLogin, form, isTransitioning]);
-
-  const handleToggle = () => {
-    setIsTransitioning(true);
-    setAnimating(true);
-    setTimeout(() => {
-      setIsLogin((prev) => !prev);
-      setTimeout(() => {
-        setAnimating(false);
-        setIsTransitioning(false);
-      }, 50);
-    }, 300);
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,34 +19,17 @@ const LoginPage = () => {
     setLoadingState(true);
     setError('');
 
-    if (!isLogin) {
-      // Signup validations
-      if (!form.role) {
-        setError("Please select a role.");
-        setLoadingState(false);
-        return;
-      }
-      if (form.password !== form.confirm) {
-        setError("Passwords do not match!");
-        setLoadingState(false);
-        return;
-      }
+    // Login flow
+    const result = await login(form.email, form.password);
 
-      // Navigate to registration page with role parameter
-      navigate(`/register?role=${form.role}`);
+    if (result.success) {
+      // Redirect based on user role
+      const redirectPath = result.user.role === 'client'
+        ? '/client/dashboard'
+        : '/freelancer/dashboard';
+      navigate(redirectPath);
     } else {
-      // Login flow
-      const result = await login(form.email, form.password);
-
-      if (result.success) {
-        // Redirect based on user role
-        const redirectPath = result.user.role === 'client'
-          ? '/client/dashboard'
-          : '/freelancer/dashboard';
-        navigate(redirectPath);
-      } else {
-        setError(result.error || 'Login failed');
-      }
+      setError(result.error || 'Login failed');
     }
 
     setLoadingState(false);
@@ -82,22 +40,11 @@ const LoginPage = () => {
       <div style={styles.background}>
         <div style={styles.overlay}></div>
         <div style={styles.content}>
-          <div
-            ref={cardRef}
-            style={{
-              ...styles.formCard,
-              height: isTransitioning ? "auto" : cardHeight,
-              transform: animating ? "scale(0.95)" : "scale(1)",
-              opacity: animating ? 0.7 : 1,
-              transition: isTransitioning ? "none" : "all 0.35s ease",
-            }}
-          >
+          <div style={styles.formCard}>
             {/* Header */}
             <div style={styles.header}>
               <h1 style={styles.title}>Kazi Flow</h1>
-              <p style={styles.description}>
-                {isLogin ? "Login to your account" : "Sign up"}
-              </p>
+              <p style={styles.description}>Login to your account</p>
             </div>
 
             {/* Error Message */}
@@ -141,56 +88,17 @@ const LoginPage = () => {
                 />
               </div>
 
-              {!isLogin && (
-                <>
-                  <div style={styles.inputGroup}>
-                    <input
-                      type="password"
-                      name="confirm"
-                      placeholder="Confirm Password"
-                      value={form.confirm}
-                      onChange={handleChange}
-                      required
-                      style={styles.input}
-                    />
-                  </div>
-
-                  <div style={styles.inputGroup}>
-                    <select
-                      name="role"
-                      value={form.role}
-                      onChange={handleChange}
-                      required
-                      style={{
-                        ...styles.input,
-                        appearance: "none",
-                        backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
-                        backgroundPosition: "right 0.5rem center",
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "1.25em 1.25em",
-                        paddingRight: "2rem",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <option value="">Select your role</option>
-                      <option value="freelancer">Freelancer</option>
-                      <option value="client">Client</option>
-                    </select>
-                  </div>
-                </>
-              )}
-
               <button type="submit" disabled={loadingState} style={styles.button}>
-                {loadingState ? "Working…" : isLogin ? "Login" : "Sign Up"}
+                {loadingState ? "Working…" : "Login"}
               </button>
             </form>
 
-            {/* Toggle link */}
+            {/* Sign up link */}
             <div style={styles.footer}>
               <p style={styles.switchText}>
-                {isLogin ? "Don't have an account?" : "Already have an account?"}
-                <span style={styles.switchLink} onClick={handleToggle}>
-                  {isLogin ? " Sign up" : " Login"}
+                Don't have an account?
+                <span style={styles.switchLink} onClick={() => navigate('/register')}>
+                  Sign up
                 </span>
               </p>
             </div>

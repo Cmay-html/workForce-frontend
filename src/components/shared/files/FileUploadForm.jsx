@@ -17,16 +17,13 @@ const FileUploadForm = ({ projectId }) => {
 
     // Simulate file upload
     try {
-      console.log('Uploading files:', files);
       // Here you would make actual API call to upload files
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      console.log('Files uploaded successfully');
       setFiles([]);
       // Reset file input
       e.target.reset();
     } catch (error) {
-      console.error('Upload failed:', error);
     } finally {
       setUploading(false);
     }

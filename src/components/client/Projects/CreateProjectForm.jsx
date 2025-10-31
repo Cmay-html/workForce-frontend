@@ -1,7 +1,9 @@
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateProjectForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -15,10 +17,8 @@ const CreateProjectForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log("Project created:", formData);
       // Here you would typically make an API call to create the project
       // For now, we'll simulate success
-      alert("Project created successfully!");
       // Reset form
       setFormData({
         title: "",
@@ -30,10 +30,9 @@ const CreateProjectForm = () => {
         requirements: "",
       });
       // Navigate back to dashboard to see the new project
-      window.location.href = '/dashboard';
+      navigate('/client/dashboard');
     } catch (error) {
-      console.error("Error creating project:", error);
-      alert("Failed to create project. Please try again.");
+      // Handle error appropriately
     }
   };
 
@@ -101,7 +100,7 @@ const CreateProjectForm = () => {
         <input
           type="date"
           id="project-deadline"
-          name="due date"                                  
+          name="deadline"
           value={formData.deadline}
           onChange={handleChange}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"

@@ -17,7 +17,6 @@ const CreateReviewPage = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Review submitted:', review);
 
     if (onSubmit) {
       onSubmit(review);

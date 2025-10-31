@@ -13,7 +13,6 @@ const ClientDashboard = () => {
   const [filteredProjects, setFilteredProjects] = useState([]);
 
   useEffect(() => {
-    // Skip API call and go directly to localStorage/mock data to avoid HTML response errors
     const loadProjects = () => {
       try {
         // Check for user-created projects in localStorage first
@@ -71,7 +70,6 @@ const ClientDashboard = () => {
           ]);
         }
       } catch (error) {
-        console.error('Error loading projects:', error);
         // Final fallback to mock data
         setProjects([
           {
@@ -139,7 +137,6 @@ const ClientDashboard = () => {
         }
         // If no user projects, keep existing mock data
       } catch (error) {
-        console.error('Error refreshing projects:', error);
       }
     };
 
@@ -196,7 +193,9 @@ const ClientDashboard = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('user');
     localStorage.removeItem('role');
-    window.location.href = '/login';
+    localStorage.removeItem('userProjects');
+    localStorage.removeItem('proposals');
+    navigate('/login');
   };
 
   const getStatusColor = (status) => {

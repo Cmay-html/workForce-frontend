@@ -97,11 +97,9 @@ const ProjectForm = () => {
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
         setUploading(true);
-        console.log("Project created with files:", values);
 
         // Simulate file upload to Cloudinary (capstone requirement)
         if (values.files.length > 0) {
-          console.log("Uploading files to Cloudinary...");
           await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate upload
         }
 

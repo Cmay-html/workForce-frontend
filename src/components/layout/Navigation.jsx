@@ -57,7 +57,12 @@ const Navigation = () => {
               {user?.firstName} ({user?.role})
             </span>
             <button
-              onClick={logout}
+              onClick={() => {
+                if (window.confirm('Are you sure you want to log out?')) {
+                  logout();
+                  window.location.href = '/login';
+                }
+              }}
               className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors"
             >
               Logout

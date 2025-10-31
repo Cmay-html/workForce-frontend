@@ -48,8 +48,6 @@ const ClientSettingsForm = () => {
     }),
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        console.log("Updating settings:", values);
-        // API call would go here
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         setStatus({ success: "Settings updated successfully!" });
@@ -552,7 +550,7 @@ const ClientSettingsForm = () => {
               >
                 <button
                   type="button"
-                  onClick={() => window.location.href = '/dashboard'}
+                  onClick={() => navigate('/dashboard')}
                   style={{
                     background: "var(--secondary-white)",
                     color: "var(--text-primary)",

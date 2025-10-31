@@ -31,7 +31,6 @@ const ProfilePortfolio = () => {
   });
 
   useEffect(() => {
-    // Skip API call and go directly to mock data to avoid HTML response errors
     setProfile({
       name: 'John Doe',
       title: 'Senior Full Stack Developer',
@@ -49,9 +48,8 @@ const ProfilePortfolio = () => {
 
   const handleProfileUpdate = (e) => {
     e.preventDefault();
-    console.log('Updating profile:', profile);
     // API call to update profile
-    alert('Profile updated successfully!');
+    // Handle success appropriately
   };
 
   const handleAddSkill = () => {
@@ -93,7 +91,9 @@ const ProfilePortfolio = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('user');
     localStorage.removeItem('role');
-    window.location.href = '/login';
+    localStorage.removeItem('userProjects');
+    localStorage.removeItem('proposals');
+    navigate('/login');
   };
 
   const handleAddProject = () => {
@@ -122,7 +122,7 @@ const ProfilePortfolio = () => {
         category: ''
       });
       setShowAddProject(false);
-      alert('Project added successfully!');
+      // Handle success appropriately
     }
   };
 

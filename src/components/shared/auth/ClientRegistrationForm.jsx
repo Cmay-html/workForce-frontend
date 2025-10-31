@@ -104,7 +104,6 @@ const ClientRegistrationForm = () => {
     }),
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        console.log("Client registration:", values);
 
         // API call to register client
         await new Promise((resolve) => setTimeout(resolve, 2000));

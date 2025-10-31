@@ -130,7 +130,6 @@ const FreelancerRegistrationForm = () => {
     }),
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        console.log("Freelancer registration:", values);
 
         // API call to register freelancer
         await new Promise((resolve) => setTimeout(resolve, 2000));

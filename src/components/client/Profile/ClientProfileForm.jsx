@@ -66,8 +66,6 @@ const ClientProfileForm = () => {
     }),
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        console.log("Updating client profile:", values);
-        // API call would go here
         await new Promise((resolve) => setTimeout(resolve, 1500));
 
         setStatus({ success: "Profile updated successfully!" });

@@ -16,7 +16,6 @@ const FreelancerDashboard = () => {
   const [loadingStats, setLoadingStats] = useState(true);
 
   useEffect(() => {
-    // Skip API call and go directly to mock data to avoid HTML response errors
     setStats({
       activeProjects: 3,
       pendingProposals: 5,
@@ -57,7 +56,7 @@ const FreelancerDashboard = () => {
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
     localStorage.removeItem("role");
-    window.location.href = "/login";
+    navigate("/login");
   };
 
   if (loading || loadingStats) {
@@ -73,7 +72,7 @@ const FreelancerDashboard = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-50" style={{ minWidth: "108%" }}>
+    <div className="flex h-screen bg-gray-50" style={{ minWidth: '108%' }}>
       {/* Sidebar */}
       <div className="w-64 bg-white border-r border-gray-200 flex flex-col fixed left-0 top-0 h-full z-10">
         <div className="p-6 border-b border-gray-200">
@@ -81,15 +80,15 @@ const FreelancerDashboard = () => {
             <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
               K
             </div>
-            <span className="text-xl font-bold text-gray-900">
-              WorkForceFlow
-            </span>
+            <span className="text-xl font-bold text-orange-600">WorkForceFlow</span>
           </div>
-          <div className=" rounded-lg p-3">
+          <div className="bg-gray-50 rounded-lg p-3">
             <p className="text-sm font-semibold text-gray-900 mb-1">
               {user?.firstName} {user?.lastName}
             </p>
-            <p className="text-xs text-gray-500">Freelancer Account</p>
+            <p className="text-xs text-gray-500">
+              Freelancer Account
+            </p>
           </div>
         </div>
 
@@ -209,17 +208,18 @@ const FreelancerDashboard = () => {
           {/* Logout Button */}
           <div className="mt-auto pt-6 border-t border-gray-200">
             <button
-              onClick={handleLogout}
+              onClick={() => {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('user');
+                localStorage.removeItem('role');
+                navigate('/login');
+              }}
               className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-all duration-200 ease-in-out"
             >
-              <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">
-                L
-              </span>
+              <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">L</span>
               <div className="flex-1 text-left">
                 <div className="font-medium">Logout</div>
-                <div className="text-xs text-gray-500 mt-0.5">
-                  Sign out of account
-                </div>
+                <div className="text-xs text-gray-500 mt-0.5">Sign out of account</div>
               </div>
             </button>
           </div>

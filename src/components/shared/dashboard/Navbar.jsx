@@ -12,7 +12,6 @@ const Navbar = () => {
     e.preventDefault();
     if (searchQuery.trim()) {
       // Navigate to search results or filter current page
-      console.log('Searching for:', searchQuery);
       // You could implement search functionality here
     }
   };
@@ -122,7 +121,12 @@ const Navbar = () => {
             {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
           </div>
           <button
-            onClick={logout}
+            onClick={() => {
+              if (window.confirm('Are you sure you want to log out?')) {
+                logout();
+                navigate('/login');
+              }
+            }}
             style={{
               background: '#ffffff',
               color: '#374151',

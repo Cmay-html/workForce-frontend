@@ -35,13 +35,11 @@ const ChatPage = () => {
   } : null;
 
   const handleProjectUpdate = (updatedData) => {
-    console.log('Project updated:', updatedData);
     setShowEditForm(false);
     // Here you would typically update the project via API
   };
 
   const handleReviewSubmit = (reviewData) => {
-    console.log('Review submitted:', reviewData);
     setShowReviewForm(false);
     // Here you would typically submit the review via API
   };
@@ -184,7 +182,9 @@ const ChatPage = () => {
                 localStorage.removeItem('authToken');
                 localStorage.removeItem('user');
                 localStorage.removeItem('role');
-                window.location.href = '/login';
+                localStorage.removeItem('userProjects');
+                localStorage.removeItem('proposals');
+                navigate('/login');
               }}
               className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-colors"
             >

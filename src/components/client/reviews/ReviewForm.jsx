@@ -54,8 +54,6 @@ const ReviewForm = () => {
     }),
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        console.log("Review submitted:", values);
-        // API call would go here
         setStatus({ success: "Review submitted successfully!" });
         setTimeout(() => navigate("/client/reviews"), 1500);
       } catch {

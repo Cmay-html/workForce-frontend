@@ -12,7 +12,6 @@ const FreelancersList = () => {
   const [selectedSkills, setSelectedSkills] = useState([]);
 
   useEffect(() => {
-    // Skip API call and go directly to mock data to avoid HTML response errors
     setFreelancers([
       {
         id: 1,

@@ -79,7 +79,7 @@ const FreelancerProposals = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50" style={{ minWidth: "100%" }}>
+    <div className="flex h-screen bg-gray-50" style={{ minWidth: '1024px' }}>
       {/* Sidebar */}
       <div className="w-64 bg-white border-r border-gray-200 flex flex-col fixed left-0 top-0 h-full z-10">
         <div className="p-6 border-b border-gray-200">
@@ -93,7 +93,9 @@ const FreelancerProposals = () => {
             <p className="text-sm font-semibold text-gray-900 mb-1">
               {user?.firstName} {user?.lastName}
             </p>
-            <p className="text-xs text-gray-500">Freelancer Account</p>
+            <p className="text-xs text-gray-500">
+              Freelancer Account
+            </p>
           </div>
         </div>
 
@@ -101,17 +103,13 @@ const FreelancerProposals = () => {
           <ul className="space-y-1">
             <li>
               <button
-                onClick={() => navigate("/dashboard")}
+                onClick={() => navigate('/freelancer/dashboard')}
                 className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
               >
-                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">
-                  D
-                </span>
+                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">D</span>
                 <div className="flex-1">
                   <div className="font-medium">Dashboard</div>
-                  <div className="text-xs text-gray-500 mt-0.5">
-                    Business overview
-                  </div>
+                  <div className="text-xs text-gray-500 mt-0.5">Business overview</div>
                 </div>
               </button>
             </li>
@@ -213,17 +211,18 @@ const FreelancerProposals = () => {
           {/* Logout Button */}
           <div className="mt-auto pt-6 border-t border-gray-200">
             <button
-              onClick={() => logout()}
+              onClick={() => {
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('user');
+                localStorage.removeItem('role');
+                navigate('/login');
+              }}
               className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-all duration-200 ease-in-out"
             >
-              <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">
-                L
-              </span>
+              <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">L</span>
               <div className="flex-1 text-left">
                 <div className="font-medium">Logout</div>
-                <div className="text-xs text-gray-500 mt-0.5">
-                  Sign out of account
-                </div>
+                <div className="text-xs text-gray-500 mt-0.5">Sign out of account</div>
               </div>
             </button>
           </div>
@@ -315,11 +314,10 @@ const FreelancerProposals = () => {
               {/* Proposals List */}
               <div className="space-y-6">
                 {(() => {
-                  const filteredProposals =
-                    filter === "all"
-                      ? proposals
-                      : proposals.filter((p) => p.status === filter);
-                  return filteredProposals && filteredProposals.length === 0 ? (
+                  const filteredProposals = filter === "all"
+                    ? proposals
+                    : proposals.filter((p) => p.status === filter);
+                  return filteredProposals.length === 0 ? (
                     <div className="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200">
                       <div className="px-4 py-5 sm:px-6 text-center">
                         <svg

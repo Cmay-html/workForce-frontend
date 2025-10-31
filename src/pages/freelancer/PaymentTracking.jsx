@@ -16,7 +16,6 @@ const PaymentTracking = () => {
   });
 
   useEffect(() => {
-    // Skip API call and go directly to mock data to avoid HTML response errors
     const mockPayments = [
       {
         id: 1,
@@ -88,7 +87,9 @@ const PaymentTracking = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('user');
     localStorage.removeItem('role');
-    window.location.href = '/login';
+    localStorage.removeItem('userProjects');
+    localStorage.removeItem('proposals');
+    navigate('/login');
   };
 
   if (loading || loadingPayments) {
@@ -128,7 +129,7 @@ const PaymentTracking = () => {
           <ul className="space-y-1">
             <li>
               <button
-                onClick={() => navigate('/dashboard')}
+                onClick={() => navigate('/freelancer/dashboard')}
                 className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
               >
                 <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">D</span>
@@ -204,7 +205,7 @@ const PaymentTracking = () => {
                 localStorage.removeItem('authToken');
                 localStorage.removeItem('user');
                 localStorage.removeItem('role');
-                window.location.href = '/login';
+                navigate('/login');
               }}
               className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-all duration-200 ease-in-out"
             >
