@@ -376,6 +376,12 @@ function App() {
             >
               <Route index element={<FreelancerDashboard />} />
             </Route>
+          </Routes>
+        </div>
+      </FreelancerRoute>
+    </AuthProvider>
+  );
+}
 
             {/* Freelancers Browse Route */}
             <Route
