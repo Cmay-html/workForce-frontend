@@ -17,7 +17,7 @@ const RegistrationPage = () => {
       <div style={{ width: '150%', maxWidth: 'none' }}>
         <div className="text-center mb-10">
           <div className="mb-6">
-            <div className="w-24 h-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-3xl mx-auto shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
+            <div className="w-24 h-24 bg-gradient-to-r from-orange-500 to-red-500 rounded-3xl mx-auto shadow-2xl flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
               <span className="text-white font-bold text-3xl">KF</span>
             </div>
           </div>
