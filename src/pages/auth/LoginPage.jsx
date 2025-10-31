@@ -4,10 +4,12 @@ import { useAuth } from '../../hooks/useAuth';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [loadingState, setLoadingState] = useState(false);
   const [animating, setAnimating] = useState(false);
   const [form, setForm] = useState({ email: "", password: "", confirm: "", role: "" });
+  const [error, setError] = useState('');
   const cardRef = useRef(null);
   const [cardHeight, setCardHeight] = useState("auto");
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -40,30 +42,36 @@ const LoginPage = () => {
   const handleSubmitForm = async (e) => {
     e.preventDefault();
     setLoadingState(true);
+    setError('');
 
     if (!isLogin) {
       // Signup validations
       if (!form.role) {
-        alert("Please select a role.");
+        setError("Please select a role.");
         setLoadingState(false);
         return;
       }
       if (form.password !== form.confirm) {
-        alert("Passwords do not match!");
+        setError("Passwords do not match!");
         setLoadingState(false);
         return;
       }
 
-      // Simulate email verification
-      await new Promise((r) => setTimeout(r, 1000));
-      alert(`Verification email sent to ${form.email}! Role: ${form.role}`);
-
       // Navigate to registration page with role parameter
       navigate(`/register?role=${form.role}`);
     } else {
-      // Login flow simulation
-      await new Promise((r) => setTimeout(r, 700));
-      alert(`Logged in as ${form.email}`);
+      // Login flow
+      const result = await login(form.email, form.password);
+
+      if (result.success) {
+        // Redirect based on user role
+        const redirectPath = result.user.role === 'client'
+          ? '/client/dashboard'
+          : '/freelancer/dashboard';
+        navigate(redirectPath);
+      } else {
+        setError(result.error || 'Login failed');
+      }
     }
 
     setLoadingState(false);
@@ -91,6 +99,22 @@ const LoginPage = () => {
                 {isLogin ? "Login to your account" : "Sign up"}
               </p>
             </div>
+
+            {/* Error Message */}
+            {error && (
+              <div style={{
+                background: "#fef2f2",
+                border: "1px solid #fecaca",
+                color: "#dc2626",
+                padding: "12px 16px",
+                borderRadius: "8px",
+                marginBottom: "1rem",
+                fontSize: "14px",
+                fontWeight: "500"
+              }}>
+                {error}
+              </div>
+            )}
 
             {/* Form */}
             <form onSubmit={handleSubmitForm} style={styles.form}>
