@@ -51,7 +51,7 @@ const CreateReviewPage = ({
             name="freelancerId"
             value={review.freelancerId}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
             required
           >
             <option value="">Select Freelancer</option>
@@ -68,7 +68,7 @@ const CreateReviewPage = ({
             name="projectId"
             value={review.projectId}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
             required
           >
             <option value="">Select Project</option>
@@ -88,7 +88,7 @@ const CreateReviewPage = ({
               onClick={() => setReview({...review, rating: star})}
               className={`w-10 h-10 rounded-full border-2 flex items-center justify-center text-sm font-medium ${
                 star <= review.rating
-                  ? 'bg-blue-600 text-white border-blue-600'
+                  ? 'bg-primary-500 text-white border-blue-600'
                   : 'bg-white text-gray-600 border-gray-300'
               }`}
             >
@@ -106,7 +106,7 @@ const CreateReviewPage = ({
           value={review.comment}
           onChange={handleChange}
           rows={4}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
           placeholder="Share your experience working with this freelancer..."
           required
         />
@@ -124,7 +124,7 @@ const CreateReviewPage = ({
         )}
         <button
           type="submit"
-          className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          className="bg-primary-500 text-white py-2 px-6 rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
         >
           Submit Review
         </button>

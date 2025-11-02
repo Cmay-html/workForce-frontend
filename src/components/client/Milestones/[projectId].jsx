@@ -96,7 +96,7 @@ const ProjectMilestonesPage = () => {
               onChange={(e) =>
                 setNewMilestone({ ...newMilestone, title: e.target.value })
               }
-              className="w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               required
             />
           </div>
@@ -108,7 +108,7 @@ const ProjectMilestonesPage = () => {
               onChange={(e) =>
                 setNewMilestone({ ...newMilestone, dueDate: e.target.value })
               }
-              className="w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               required
             />
           </div>
@@ -121,7 +121,7 @@ const ProjectMilestonesPage = () => {
                 setNewMilestone({ ...newMilestone, description: e.target.value })
               }
               rows={3}
-              className="w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               required
             />
           </div>
@@ -134,14 +134,14 @@ const ProjectMilestonesPage = () => {
               onChange={(e) =>
                 setNewMilestone({ ...newMilestone, amount: e.target.value })
               }
-              className="w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full border border-gray-300 rounded-md p-3 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               required
             />
           </div>
           <div className="flex items-end">
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white rounded-md hover:bg-blue-700 py-3 px-6 font-medium transition-colors duration-200"
+              className="w-full bg-primary-500 text-white rounded-md hover:bg-primary-600 py-3 px-6 font-medium transition-colors duration-200"
             >
               Add Milestone
             </button>
@@ -198,7 +198,7 @@ const ProjectMilestonesPage = () => {
                   <span className="text-sm font-medium text-gray-500">Status</span>
                   <p className={`text-sm font-medium mt-1 ${
                     milestone.status === "completed" ? "text-green-600" :
-                    milestone.status === "in-progress" ? "text-blue-600" : "text-gray-600"
+                    milestone.status === "in-progress" ? "text-primary-600" : "text-gray-600"
                   }`}>
                     {milestone.status.charAt(0).toUpperCase() + milestone.status.slice(1)}
                   </p>
@@ -209,7 +209,7 @@ const ProjectMilestonesPage = () => {
                 {milestone.status === "pending" && (
                   <button
                     onClick={() => handleMilestoneStatus(milestone.id, "in-progress")}
-                    className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 text-sm font-medium transition-colors duration-200"
+                    className="bg-primary-500 text-white py-2 px-4 rounded-md hover:bg-primary-600 text-sm font-medium transition-colors duration-200"
                   >
                     Start Milestone
                   </button>

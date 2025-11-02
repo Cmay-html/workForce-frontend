@@ -110,7 +110,7 @@ const ChatWindow = ({ conversation, isConnected, connectionError, projectId, onB
               placeholder="Search messages..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-3 py-2 pl-10 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-3 py-2 pl-10 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
             <svg
               className="absolute left-3 top-2.5 h-4 w-4 text-gray-400"
@@ -146,7 +146,7 @@ const ChatWindow = ({ conversation, isConnected, connectionError, projectId, onB
             <button
               onClick={handleLoadMore}
               disabled={loading}
-              className="text-sm text-blue-600 hover:text-blue-800 disabled:opacity-50"
+              className="text-sm text-primary-600 hover:text-primary-700 disabled:opacity-50"
             >
               {loading ? 'Loading...' : 'Load earlier messages'}
             </button>

@@ -216,7 +216,7 @@ const ProjectProposals = ({ projectId }) => {
                             href={proposal.portfolioUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+                            className="text-primary-600 hover:text-primary-700 hover:underline transition-colors"
                           >
                             Portfolio
                           </a>
@@ -240,7 +240,7 @@ const ProjectProposals = ({ projectId }) => {
                 </div>
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                   <span className="font-medium text-gray-700">Timeline:</span>
-                  <p className="text-lg text-blue-600 font-semibold">{proposal.estimatedTimeline} days</p>
+                  <p className="text-lg text-primary-600 font-semibold">{proposal.estimatedTimeline} days</p>
                 </div>
                 <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
                   <span className="font-medium text-gray-700">Experience:</span>

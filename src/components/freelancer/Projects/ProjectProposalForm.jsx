@@ -372,7 +372,7 @@ const ProjectProposalForm = () => {
                     value={proposal.coverLetter}
                     onChange={(e) => setProposal({...proposal, coverLetter: e.target.value})}
                     rows={6}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder="Introduce yourself and explain why you're the perfect fit for this project..."
                     required
                   />
@@ -388,7 +388,7 @@ const ProjectProposalForm = () => {
                       name="proposedBudget"
                       value={proposal.proposedBudget}
                       onChange={(e) => setProposal({...proposal, proposedBudget: e.target.value})}
-                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                       placeholder="Your proposed price"
                       min="1"
                       required
@@ -405,7 +405,7 @@ const ProjectProposalForm = () => {
                       name="estimatedTimeline"
                       value={proposal.estimatedTimeline}
                       onChange={(e) => setProposal({...proposal, estimatedTimeline: e.target.value})}
-                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                       placeholder="How many days to complete"
                       min="1"
                       required
@@ -422,7 +422,7 @@ const ProjectProposalForm = () => {
                     value={proposal.relevantExperience}
                     onChange={(e) => setProposal({...proposal, relevantExperience: e.target.value})}
                     rows={4}
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     placeholder="Describe your relevant experience and past projects..."
                     required
                   />
@@ -438,7 +438,7 @@ const ProjectProposalForm = () => {
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                    className="flex-1 bg-primary-500 hover:bg-primary-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />

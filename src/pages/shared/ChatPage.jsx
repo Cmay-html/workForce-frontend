@@ -210,7 +210,7 @@ const ChatPage = () => {
               <input
                 type="text"
                 placeholder="Search messages..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -255,7 +255,7 @@ const ChatPage = () => {
                 onClick={() => setActiveTab('chat')}
                 className={`py-2 px-1 border-b-2 font-medium text-sm ${
                   activeTab === 'chat'
-                    ? 'border-blue-500 text-blue-600'
+                    ? 'border-primary-500 text-primary-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
@@ -265,7 +265,7 @@ const ChatPage = () => {
                 onClick={() => setActiveTab('activity')}
                 className={`py-2 px-1 border-b-2 font-medium text-sm ${
                   activeTab === 'activity'
-                    ? 'border-blue-500 text-blue-600'
+                    ? 'border-primary-500 text-primary-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
@@ -275,7 +275,7 @@ const ChatPage = () => {
                 onClick={() => setActiveTab('milestones')}
                 className={`py-2 px-1 border-b-2 font-medium text-sm ${
                   activeTab === 'milestones'
-                    ? 'border-blue-500 text-blue-600'
+                    ? 'border-primary-500 text-primary-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
@@ -285,7 +285,7 @@ const ChatPage = () => {
                 onClick={() => setActiveTab('files')}
                 className={`py-2 px-1 border-b-2 font-medium text-sm ${
                   activeTab === 'files'
-                    ? 'border-blue-500 text-blue-600'
+                    ? 'border-primary-500 text-primary-600'
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
@@ -325,14 +325,14 @@ const ChatPage = () => {
             <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-lg font-semibold">Project Milestones</h3>
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                <button className="bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-600">
                   Add Milestone
                 </button>
               </div>
               <p className="text-gray-600">
                 Milestone management is available in the dedicated milestones section.
                 <br />
-                <a href={`/client/milestones/${projectId}`} className="text-blue-600 hover:underline">
+                <a href={`/client/milestones/${projectId}`} className="text-primary-600 hover:underline">
                   Go to Milestones Management →
                 </a>
               </p>
@@ -353,7 +353,7 @@ const ChatPage = () => {
                 <h4 className="font-semibold">Project Details</h4>
                 <button
                   onClick={() => setShowEditForm(true)}
-                  className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                  className="text-primary-600 hover:text-primary-700 text-sm font-medium"
                 >
                   Edit
                 </button>
@@ -380,7 +380,7 @@ const ChatPage = () => {
             <div className="bg-white rounded-lg shadow-md p-4 border border-gray-200">
               <h4 className="font-semibold mb-3">Team Member</h4>
               <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+                <div className="w-10 h-10 bg-primary-500 rounded-full flex items-center justify-center text-white font-semibold">
                   {recipient.name.charAt(0)}
                 </div>
                 <div>
@@ -402,7 +402,7 @@ const ChatPage = () => {
               <div className="space-y-2">
                 <a
                   href={`/client/projects/${projectId}/proposals`}
-                  className="block w-full text-center bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 text-sm"
+                  className="block w-full text-center bg-primary-500 text-white py-2 px-4 rounded-md hover:bg-primary-600 text-sm"
                 >
                   View Proposals
                 </a>

@@ -221,7 +221,7 @@ const ClientRegistrationForm = () => {
                   onChange={handleAvatarChange}
                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer rounded-full"
                 />
-                <div className="absolute bottom-2 right-2 w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white shadow-lg border-2 border-white">
+                <div className="absolute bottom-2 right-2 w-10 h-10 bg-primary-500 rounded-full flex items-center justify-center text-white shadow-lg border-2 border-white">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -253,7 +253,7 @@ const ClientRegistrationForm = () => {
                   <input
                     type="text"
                     name="firstName"
-                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
                       formik.touched.firstName && formik.errors.firstName ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
                     }`}
                     placeholder="John"
@@ -278,7 +278,7 @@ const ClientRegistrationForm = () => {
                   <input
                     type="text"
                     name="lastName"
-                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
                       formik.touched.lastName && formik.errors.lastName ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
                     }`}
                     placeholder="Doe"
@@ -303,7 +303,7 @@ const ClientRegistrationForm = () => {
                   <input
                     type="email"
                     name="email"
-                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
+                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
                       formik.touched.email && formik.errors.email ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
                     }`}
                     placeholder="john.doe@company.com"
@@ -330,7 +330,7 @@ const ClientRegistrationForm = () => {
                     <input
                       type={showPassword ? "text" : "password"}
                       name="password"
-                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors pr-12 ${
+                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors pr-12 ${
                         formik.touched.password && formik.errors.password ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
                       }`}
                       placeholder="Create a password"
@@ -374,7 +374,7 @@ const ClientRegistrationForm = () => {
                     <input
                       type={showConfirmPassword ? "text" : "password"}
                       name="confirmPassword"
-                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors pr-12 ${
+                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors pr-12 ${
                         formik.touched.confirmPassword && formik.errors.confirmPassword ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
                       }`}
                       placeholder="Confirm your password"
@@ -416,7 +416,7 @@ const ClientRegistrationForm = () => {
                   <input
                     type="tel"
                     name="phone"
-                    className="w-full border-2 border-blue-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors bg-white"
+                    className="w-full border-2 border-blue-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-white"
                     placeholder="+1 (555) 123-4567"
                     value={formik.values.phone}
                     onChange={formik.handleChange}
@@ -752,7 +752,7 @@ const ClientRegistrationForm = () => {
                     name="termsAccepted"
                     checked={formik.values.termsAccepted}
                     onChange={formik.handleChange}
-                    className={`mt-2 w-6 h-6 text-blue-600 focus:ring-blue-500 rounded ${
+                    className={`mt-2 w-6 h-6 text-primary-600 focus:ring-primary-500 rounded ${
                       formik.touched.termsAccepted && formik.errors.termsAccepted ? 'border-red-400' : 'border-gray-300'
                     }`}
                   />

@@ -277,7 +277,7 @@ const ProfilePortfolio = () => {
               <input
                 type="text"
                 placeholder="Search profile..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -326,7 +326,7 @@ const ProfilePortfolio = () => {
                             type="text"
                             value={profile.name}
                             onChange={(e) => setProfile({...profile, name: e.target.value})}
-                            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                             required
                           />
                         </div>
@@ -337,7 +337,7 @@ const ProfilePortfolio = () => {
                             type="text"
                             value={profile.title}
                             onChange={(e) => setProfile({...profile, title: e.target.value})}
-                            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                             required
                           />
                         </div>
@@ -349,7 +349,7 @@ const ProfilePortfolio = () => {
                           value={profile.bio}
                           onChange={(e) => setProfile({...profile, bio: e.target.value})}
                           rows="4"
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                           placeholder="Tell clients about your experience and expertise..."
                           required
                         />
@@ -362,7 +362,7 @@ const ProfilePortfolio = () => {
                             type="number"
                             value={profile.hourlyRate}
                             onChange={(e) => setProfile({...profile, hourlyRate: e.target.value})}
-                            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                             required
                           />
                         </div>
@@ -373,7 +373,7 @@ const ProfilePortfolio = () => {
                             type="text"
                             value={profile.experience}
                             onChange={(e) => setProfile({...profile, experience: e.target.value})}
-                            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                             required
                           />
                         </div>
@@ -386,7 +386,7 @@ const ProfilePortfolio = () => {
                             type="text"
                             value={newSkill}
                             onChange={(e) => setNewSkill(e.target.value)}
-                            className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                             placeholder="Add a skill"
                           />
                           <button
@@ -407,7 +407,7 @@ const ProfilePortfolio = () => {
                               <button
                                 type="button"
                                 onClick={() => handleRemoveSkill(skill)}
-                                className="text-blue-600 hover:text-blue-800 text-lg leading-none"
+                                className="text-primary-600 hover:text-primary-700 text-lg leading-none"
                               >
                                 ×
                               </button>
@@ -423,7 +423,7 @@ const ProfilePortfolio = () => {
                             type="text"
                             value={newLanguage}
                             onChange={(e) => setNewLanguage(e.target.value)}
-                            className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                             placeholder="Add a language"
                           />
                           <button
@@ -459,7 +459,7 @@ const ProfilePortfolio = () => {
                           value={profile.education}
                           onChange={(e) => setProfile({...profile, education: e.target.value})}
                           rows="3"
-                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                           placeholder="Your educational background..."
                         />
                       </div>
@@ -542,7 +542,7 @@ const ProfilePortfolio = () => {
                                 type="text"
                                 value={newProject.title}
                                 onChange={(e) => setNewProject({...newProject, title: e.target.value})}
-                                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                 placeholder="Enter project title"
                                 required
                               />
@@ -553,7 +553,7 @@ const ProfilePortfolio = () => {
                                 value={newProject.description}
                                 onChange={(e) => setNewProject({...newProject, description: e.target.value})}
                                 rows="3"
-                                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                 placeholder="Describe your project"
                                 required
                               />
@@ -564,7 +564,7 @@ const ProfilePortfolio = () => {
                                 type="text"
                                 value={newProject.technologies}
                                 onChange={(e) => setNewProject({...newProject, technologies: e.target.value})}
-                                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                 placeholder="React, Node.js, MongoDB"
                               />
                             </div>
@@ -574,7 +574,7 @@ const ProfilePortfolio = () => {
                                 type="url"
                                 value={newProject.projectUrl}
                                 onChange={(e) => setNewProject({...newProject, projectUrl: e.target.value})}
-                                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                                 placeholder="https://github.com/username/project"
                               />
                             </div>
@@ -622,7 +622,7 @@ const ProfilePortfolio = () => {
                               href={item.projectUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline inline-flex items-center gap-1"
+                              className="text-primary-600 hover:text-primary-700 text-sm font-medium hover:underline inline-flex items-center gap-1"
                             >
                               View Project
                               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

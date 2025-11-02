@@ -276,7 +276,7 @@ const FreelancerDashboard = () => {
               <input
                 type="text"
                 placeholder="Search projects, clients..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -315,7 +315,7 @@ const FreelancerDashboard = () => {
                 <div className="bg-white border border-gray-200 overflow-hidden rounded-lg p-5 shadow-sm">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
-                      <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold">
                           {stats.activeProjects}
                         </span>
@@ -443,7 +443,7 @@ const FreelancerDashboard = () => {
                             key={activity.id}
                             className="flex items-start space-x-3"
                           >
-                            <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                            <div className="w-2 h-2 bg-primary-500 rounded-full mt-2"></div>
                             <div className="flex-1">
                               <p className="text-sm text-gray-800">
                                 {activity.type === "proposal_accepted" && (
@@ -493,7 +493,7 @@ const FreelancerDashboard = () => {
                   <div className="px-4 py-5 sm:px-6 space-y-4">
                     <button
                       onClick={() => navigate("/freelancer/projects")}
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                      className="w-full bg-primary-500 hover:bg-primary-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
                     >
                       <svg
                         className="w-5 h-5"
@@ -550,7 +550,7 @@ const FreelancerDashboard = () => {
                     </button>
                     <button
                       onClick={() => navigate("/chat")}
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
+                      className="w-full bg-primary-500 hover:bg-primary-600 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
                     >
                       <svg
                         className="w-5 h-5"

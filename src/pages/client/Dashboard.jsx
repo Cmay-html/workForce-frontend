@@ -318,7 +318,7 @@ const ClientDashboard = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex items-center">
-                <h1 className="text-2xl font-bold text-blue-600">Kaziflow</h1>
+                <h1 className="text-2xl font-bold text-primary-600">Kaziflow</h1>
                 <span className="ml-3 text-sm text-gray-500">Client Portal</span>
               </div>
               <div className="text-xs text-gray-500">
@@ -348,7 +348,7 @@ const ClientDashboard = () => {
                 <div className="bg-white border border-gray-200 overflow-hidden rounded-lg p-5 shadow-sm">
                    <div className="flex items-center">
                      <div className="flex-shrink-0">
-                       <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                       <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
                          <span className="text-white font-bold">{filteredProjects.length}</span>
                        </div>
                      </div>
@@ -380,7 +380,7 @@ const ClientDashboard = () => {
                 <div className="bg-white border border-gray-200 overflow-hidden rounded-lg p-5 shadow-sm">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
-                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold">{filteredProjects.filter(p => p.status === 'in_progress').length}</span>
                       </div>
                     </div>
@@ -419,7 +419,7 @@ const ClientDashboard = () => {
                   </div>
                   <button
                     onClick={handleCreateProject}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+                    className="bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
                   >
                     + New Project
                   </button>
@@ -435,7 +435,7 @@ const ClientDashboard = () => {
                     <div className="mt-6">
                       <button
                         onClick={handleCreateProject}
-                        className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                        className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                       >
                         Create Project
                       </button>
@@ -448,7 +448,7 @@ const ClientDashboard = () => {
                         <div className="flex items-center justify-between">
                           <div className="flex-1">
                             <div className="flex items-center justify-between">
-                              <h4 className="text-lg font-medium text-blue-600 truncate">
+                              <h4 className="text-lg font-medium text-primary-600 truncate">
                                 {project.title}
                               </h4>
                               <div className="ml-2 flex-shrink-0 flex">
@@ -501,20 +501,20 @@ const ClientDashboard = () => {
                         <div className="mt-4 flex space-x-3">
                           <button
                             onClick={() => handleViewDetails(project.id)}
-                            className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                           >
                             View Details
                           </button>
                           <button
                             onClick={() => handleChat(project.id)}
-                            className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                           >
                             Chat
                           </button>
                           {project.status === 'open' && (
                             <button
                               onClick={() => navigate(`/client/projects/${project.id}/edit`)}
-                              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                              className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                             >
                               Edit Project
                             </button>
@@ -532,7 +532,7 @@ const ClientDashboard = () => {
                   <div className="p-6">
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
-                        <svg className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
                       </div>
@@ -544,7 +544,7 @@ const ClientDashboard = () => {
                     <div className="mt-4">
                       <button
                         onClick={handleCreateProject}
-                        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+                        className="w-full bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
                       >
                         Get Started
                       </button>
@@ -580,7 +580,7 @@ const ClientDashboard = () => {
                   <div className="p-6">
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
-                        <svg className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className="h-8 w-8 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                         </svg>
                       </div>
@@ -592,7 +592,7 @@ const ClientDashboard = () => {
                     <div className="mt-4">
                     <button
                       onClick={() => navigate('/chat')}
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+                      className="w-full bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
                     >
                       View Messages
                     </button>

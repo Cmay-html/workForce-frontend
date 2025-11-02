@@ -15,7 +15,7 @@ const ProjectCard = ({ project }) => {
 
   const getProgressColor = (progress) => {
     if (progress === 100) return 'bg-green-500';
-    if (progress >= 50) return 'bg-blue-500';
+    if (progress >= 50) return 'bg-primary-500';
     if (progress > 0) return 'bg-yellow-500';
     return 'bg-gray-300';
   };
@@ -81,7 +81,7 @@ const ProjectCard = ({ project }) => {
       <div className="flex gap-2">
         <button
           onClick={() => navigate(`/client/projects/${project.id}/chat`)}
-          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-3 rounded-md text-sm transition-colors duration-200"
+          className="flex-1 bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-3 rounded-md text-sm transition-colors duration-200"
         >
           View Details
         </button>

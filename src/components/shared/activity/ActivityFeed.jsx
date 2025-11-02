@@ -52,7 +52,7 @@ const ActivityFeed = ({ projectId }) => {
       case 'milestone_completed':
         return 'text-green-600';
       case 'message_sent':
-        return 'text-blue-600';
+        return 'text-primary-600';
       case 'proposal_accepted':
         return 'text-purple-600';
       case 'project_created':

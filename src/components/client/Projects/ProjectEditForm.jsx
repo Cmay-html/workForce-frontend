@@ -266,7 +266,7 @@ const ProjectEditForm = () => {
             </svg>
             Back to {isCreateMode ? 'Dashboard' : 'Projects'}
           </button>
-          <h1 className="text-4xl font-bold text-gray-900 mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold text-gray-900 mb-3 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
             {isCreateMode ? 'Create New Project' : 'Edit Project'}
           </h1>
           <p className="text-lg text-gray-600 mb-8">
@@ -308,8 +308,8 @@ const ProjectEditForm = () => {
           <form onSubmit={formik.handleSubmit} className="space-y-8">
             {/* Project Status - Only show when editing */}
             {!isCreateMode && (
-              <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-                <label className="block text-lg font-semibold text-gray-800 mb-4 text-blue-600">Project Status</label>
+              <div className="bg-white p-6 rounded-lg border border-gray-200">
+                <label className="block text-lg font-semibold text-gray-800 mb-4 text-primary-600">Project Status</label>
                 <div className="flex gap-6">
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
@@ -318,7 +318,7 @@ const ProjectEditForm = () => {
                       value="accepting_proposals"
                       checked={formik.values.status === "accepting_proposals"}
                       onChange={formik.handleChange}
-                      className="text-blue-600 focus:ring-blue-500"
+                      className="text-primary-600 focus:ring-primary-500"
                     />
                     <span className="text-sm text-gray-700">Accepting Proposals</span>
                   </label>
@@ -329,7 +329,7 @@ const ProjectEditForm = () => {
                       value="paused"
                       checked={formik.values.status === "paused"}
                       onChange={formik.handleChange}
-                      className="text-blue-600 focus:ring-blue-500"
+                      className="text-primary-600 focus:ring-primary-500"
                     />
                     <span className="text-sm text-gray-700">Paused</span>
                   </label>
@@ -340,7 +340,7 @@ const ProjectEditForm = () => {
                       value="closed"
                       checked={formik.values.status === "closed"}
                       onChange={formik.handleChange}
-                      className="text-blue-600 focus:ring-blue-500"
+                      className="text-primary-600 focus:ring-primary-500"
                     />
                     <span className="text-sm text-gray-700">Closed</span>
                   </label>
@@ -349,18 +349,17 @@ const ProjectEditForm = () => {
             )}
 
             {/* Project Title & Category */}
-            <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-              <h3 className="text-xl font-semibold text-blue-800 mb-6 flex items-center">
-                <span className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">1</span>
+            <div className="bg-white p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-black mb-6">
                 Basic Information
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-base font-medium text-gray-800 mb-3">Project Title *</label>
+                  <label className="block text-base font-medium text-black mb-3">Project Title *</label>
                   <input
                     type="text"
                     name="title"
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-black placeholder:text-gray-500 bg-white"
                     placeholder="Enter a clear, descriptive project title"
                     maxLength="100"
                     value={formik.values.title}
@@ -376,17 +375,17 @@ const ProjectEditForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
+                  <label className="block text-sm font-medium text-black mb-2">Category *</label>
                   <select
                     name="category"
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-black bg-white"
                     value={formik.values.category}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   >
-                    <option value="">Select Category</option>
+                    <option value="" className="text-gray-500">Select Category</option>
                     {categories.map((cat) => (
-                      <option key={cat} value={cat}>
+                      <option key={cat} value={cat} className="text-black">
                         {cat}
                       </option>
                     ))}
@@ -399,17 +398,16 @@ const ProjectEditForm = () => {
             </div>
 
             {/* Project Description */}
-            <div className="bg-green-50 p-6 rounded-lg border border-green-200">
-              <h3 className="text-xl font-semibold text-green-800 mb-6 flex items-center">
-                <span className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">2</span>
+            <div className="bg-white p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-black mb-6">
                 Project Details
               </h3>
               <div>
-                <label className="block text-base font-medium text-gray-800 mb-3">Project Description *</label>
+                <label className="block text-base font-medium text-black mb-3">Project Description *</label>
                 <textarea
                   name="description"
                   rows="6"
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent resize-vertical"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent resize-vertical text-black placeholder:text-gray-500 bg-white"
                   placeholder="Describe your project in detail. Include specific requirements, deliverables, and any technical specifications..."
                   value={formik.values.description}
                   onChange={formik.handleChange}
@@ -425,20 +423,19 @@ const ProjectEditForm = () => {
             </div>
 
             {/* Budget, Deadline & Duration */}
-            <div className="bg-purple-50 p-6 rounded-lg border border-purple-200">
-              <h3 className="text-xl font-semibold text-purple-800 mb-6 flex items-center">
-                <span className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">3</span>
+            <div className="bg-white p-6 rounded-lg">
+              <h3 className="text-xl font-semibold text-black mb-6">
                 Project Requirements
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Budget ($) *</label>
+                  <label className="block text-sm font-medium text-black mb-2">Budget ($) *</label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
                     <input
                       type="number"
                       name="budget"
-                      className="w-full border border-gray-300 rounded-md pl-8 pr-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full border border-gray-300 rounded-md pl-8 pr-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-black placeholder:text-gray-500 bg-white"
                       placeholder="5000"
                       min="50"
                       max="100000"
@@ -454,11 +451,11 @@ const ProjectEditForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Deadline *</label>
+                  <label className="block text-sm font-medium text-black mb-2">Deadline *</label>
                   <input
                     type="date"
                     name="deadline"
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-black bg-white"
                     min={new Date().toISOString().split('T')[0]}
                     value={formik.values.deadline}
                     onChange={formik.handleChange}
@@ -471,17 +468,17 @@ const ProjectEditForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Duration *</label>
+                  <label className="block text-sm font-medium text-black mb-2">Duration *</label>
                   <select
                     name="duration"
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-black bg-white"
                     value={formik.values.duration}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   >
-                    <option value="">Select Duration</option>
+                    <option value="" className="text-gray-500">Select Duration</option>
                     {projectDurations.map((duration) => (
-                      <option key={duration} value={duration}>
+                      <option key={duration} value={duration} className="text-black">
                         {duration}
                       </option>
                     ))}
@@ -495,8 +492,7 @@ const ProjectEditForm = () => {
 
             {/* Experience Level */}
             <div className="bg-orange-50 p-6 rounded-lg border border-orange-200">
-              <h3 className="text-xl font-semibold text-orange-800 mb-6 flex items-center">
-                <span className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">4</span>
+              <h3 className="text-xl font-semibold text-orange-800 mb-6">
                 Skills & Experience
               </h3>
               <div>
@@ -510,7 +506,7 @@ const ProjectEditForm = () => {
                         value={level}
                         checked={formik.values.experienceLevel === level}
                         onChange={formik.handleChange}
-                        className="text-blue-600 focus:ring-blue-500"
+                        className="text-primary-600 focus:ring-primary-500"
                       />
                       <span className="text-sm text-gray-700">{level}</span>
                     </label>
@@ -530,7 +526,7 @@ const ProjectEditForm = () => {
                       key={skill}
                       className={`flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition-colors ${
                         formik.values.skills.includes(skill)
-                          ? 'border-blue-500 bg-blue-50 text-blue-700'
+                          ? 'border-primary-500 bg-blue-50 text-blue-700'
                           : 'border-gray-300 hover:border-gray-400'
                       }`}
                     >
@@ -580,9 +576,8 @@ const ProjectEditForm = () => {
             </div>
 
             {/* Submit Buttons */}
-            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-              <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-                <span className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">5</span>
+            <div className="bg-white p-6 rounded-lg border border-gray-200">
+              <h3 className="text-xl font-semibold text-gray-800 mb-6">
                 Review & Submit
               </h3>
               <div className="flex justify-between items-center pt-6 border-t border-gray-200">
@@ -616,7 +611,7 @@ const ProjectEditForm = () => {
 
                 <button
                   type="submit"
-                  className="px-8 py-3 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                  className="px-8 py-3 bg-orange-600 text-white rounded-md font-medium hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                   disabled={formik.isSubmitting}
                 >
                   {formik.isSubmitting ? (isCreateMode ? "Creating..." : "Updating...") : (isCreateMode ? "Create Project" : "Update Project")}
@@ -632,7 +627,7 @@ const ProjectEditForm = () => {
             <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
               <div className="flex items-center mb-4">
                 <div className="flex-shrink-0">
-                  <svg className="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="h-6 w-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
@@ -664,7 +659,7 @@ const ProjectEditForm = () => {
                 </button>
                 <button
                   onClick={handleConfirmSubmit}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition-colors duration-200"
+                  className="px-4 py-2 bg-primary-500 text-white rounded-md font-medium hover:bg-primary-600 transition-colors duration-200"
                 >
                   Create Project
                 </button>

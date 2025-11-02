@@ -113,7 +113,7 @@ const MessageInput = ({ onSendMessage, disabled, placeholder }) => {
             placeholder={placeholder}
             disabled={disabled}
             rows={1}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-none disabled:opacity-50 disabled:cursor-not-allowed"
             style={{ minHeight: '40px', maxHeight: '120px' }}
           />
         </div>
@@ -122,7 +122,7 @@ const MessageInput = ({ onSendMessage, disabled, placeholder }) => {
         <button
           type="submit"
           disabled={!message.trim() || disabled}
-          className="flex-shrink-0 bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors duration-200"
+          className="flex-shrink-0 bg-primary-500 text-white p-2 rounded-lg hover:bg-primary-500 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors duration-200"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path

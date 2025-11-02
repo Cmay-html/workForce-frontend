@@ -147,7 +147,7 @@ const ClientLayout = () => {
                       ${
                         isActive
                           ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/25 transform scale-105"
-                          : "text-gray-600 hover:text-blue-600 hover:bg-white/80 hover:shadow-md"
+                          : "text-gray-600 hover:text-primary-600 hover:bg-white/80 hover:shadow-md"
                       }
                     `}
                   >
@@ -237,19 +237,19 @@ const ClientLayout = () => {
             <div className="flex space-x-6">
               <a
                 href="#"
-                className="text-sm text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium hover:underline underline-offset-4"
+                className="text-sm text-gray-600 hover:text-primary-600 transition-colors duration-200 font-medium hover:underline underline-offset-4"
               >
                 Privacy Policy
               </a>
               <a
                 href="#"
-                className="text-sm text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium hover:underline underline-offset-4"
+                className="text-sm text-gray-600 hover:text-primary-600 transition-colors duration-200 font-medium hover:underline underline-offset-4"
               >
                 Terms of Service
               </a>
               <a
                 href="#"
-                className="text-sm text-gray-600 hover:text-blue-600 transition-colors duration-200 font-medium hover:underline underline-offset-4"
+                className="text-sm text-gray-600 hover:text-primary-600 transition-colors duration-200 font-medium hover:underline underline-offset-4"
               >
                 Support
               </a>
