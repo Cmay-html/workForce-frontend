@@ -37,7 +37,8 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
 
       // TODO: Replace with actual API call to backend
-      const response = await fetch('/api/auth/login', {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${apiUrl}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,7 +69,8 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
 
       // TODO: Replace with actual API call to backend
-      const response = await fetch('/api/auth/register/client', {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${apiUrl}/api/auth/register/client`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -101,7 +103,8 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
 
       // TODO: Replace with actual API call to backend
-      const response = await fetch('/api/auth/register/freelancer', {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${apiUrl}/api/auth/register/freelancer`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -143,7 +146,8 @@ export const AuthProvider = ({ children }) => {
       setLoading(true);
 
       // TODO: Replace with actual API call to backend
-      const response = await fetch('/api/auth/verify-email', {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      const response = await fetch(`${apiUrl}/api/auth/verify-email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
