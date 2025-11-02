@@ -11,78 +11,24 @@ const ProjectDetailsPage = () => {
   const [activeTab, setActiveTab] = useState('overview');
 
   useEffect(() => {
-    const loadProject = () => {
+    const loadProject = async () => {
       try {
-        // Try to get from localStorage first (user-created projects)
-        const userProjects = JSON.parse(localStorage.getItem('userProjects') || '[]');
-        let foundProject = userProjects.find(p => p.id === parseInt(projectId));
+        // TODO: Replace with actual API call to fetch project details
+        const response = await fetch(`/api/client/projects/${projectId}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
 
-        if (!foundProject) {
-          // Fallback to mock data
-          const mockProjects = [
-            {
-              id: 1,
-              title: 'E-commerce Website',
-              status: 'in_progress',
-              freelancer: 'John Doe',
-              budget: 3500,
-              description: 'Full-stack e-commerce platform with payment integration',
-              deadline: '2024-02-15',
-              milestones: [
-                { id: 1, title: 'Planning & Design', status: 'completed', amount: 800 },
-                { id: 2, title: 'Frontend Development', status: 'in_progress', amount: 1500 },
-                { id: 3, title: 'Backend & Payment', status: 'pending', amount: 1000 },
-                { id: 4, title: 'Testing & Deployment', status: 'pending', amount: 200 }
-              ],
-              skills: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-              category: 'Web Development',
-              createdAt: '2024-01-01',
-              progress: 45
-            },
-            {
-              id: 2,
-              title: 'Mobile App Development',
-              status: 'open',
-              freelancer: null,
-              budget: 2800,
-              description: 'Cross-platform mobile app for task management',
-              deadline: '2024-03-01',
-              milestones: [
-                { id: 5, title: 'UI/UX Design', status: 'pending', amount: 600 },
-                { id: 6, title: 'iOS Development', status: 'pending', amount: 1200 },
-                { id: 7, title: 'Android Development', status: 'pending', amount: 800 },
-                { id: 8, title: 'Testing & Launch', status: 'pending', amount: 200 }
-              ],
-              skills: ['React Native', 'Firebase', 'iOS', 'Android'],
-              category: 'Mobile Development',
-              createdAt: '2024-01-05',
-              progress: 0
-            },
-            {
-              id: 3,
-              title: 'Data Analytics Dashboard',
-              status: 'completed',
-              freelancer: 'Jane Smith',
-              budget: 1800,
-              description: 'Interactive dashboard for business analytics',
-              deadline: '2024-01-20',
-              milestones: [
-                { id: 9, title: 'Data Analysis', status: 'completed', amount: 500 },
-                { id: 10, title: 'Dashboard Design', status: 'completed', amount: 600 },
-                { id: 11, title: 'Implementation', status: 'completed', amount: 600 },
-                { id: 12, title: 'Final Review', status: 'completed', amount: 100 }
-              ],
-              skills: ['Python', 'Pandas', 'Tableau', 'SQL'],
-              category: 'Data Science',
-              createdAt: '2023-12-15',
-              progress: 100
-            }
-          ];
-          foundProject = mockProjects.find(p => p.id === parseInt(projectId));
+        if (!response.ok) {
+          throw new Error('Failed to fetch project');
         }
 
-        setProject(foundProject);
+        const data = await response.json();
+        setProject(data.project);
       } catch (error) {
+        console.error('Error loading project:', error);
+        setProject(null);
       } finally {
         setLoadingProject(false);
       }

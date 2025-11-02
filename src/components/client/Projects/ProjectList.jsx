@@ -9,67 +9,19 @@ const ProjectList = () => {
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    // Mock projects data - replace with actual API call
-    const mockProjects = [
-      {
-        id: 1,
-        title: "Website Redesign",
-        description: "Complete website redesign with modern UI/UX and responsive design",
-        status: "active",
-        budget: 5000,
-        freelancer: "John Grinder",
-        progress: 75,
-        deadline: "2024-02-15",
-        createdAt: "2024-01-01",
-        category: "Web Development",
-        proposals: 3,
-        milestones: 4
-      },
-      {
-        id: 2,
-        title: "Mobile App Development",
-        description: "Cross-platform mobile application for iOS and Android",
-        status: "pending",
-        budget: 12000,
-        freelancer: null,
-        progress: 0,
-        deadline: "2024-03-20",
-        createdAt: "2024-01-05",
-        category: "Mobile Development",
-        proposals: 7,
-        milestones: 0
-      },
-      {
-        id: 3,
-        title: "E-commerce Platform",
-        description: "Full-featured online store with payment integration",
-        status: "completed",
-        budget: 8000,
-        freelancer: "Sarah Mkenya",
-        progress: 100,
-        deadline: "2024-01-30",
-        createdAt: "2023-12-15",
-        category: "Web Development",
-        proposals: 5,
-        milestones: 6
-      },
-      {
-        id: 4,
-        title: "Brand Identity Design",
-        description: "Complete brand identity including logo, colors, and guidelines",
-        status: "draft",
-        budget: 2500,
-        freelancer: null,
-        progress: 0,
-        deadline: "2024-02-28",
-        createdAt: "2024-01-10",
-        category: "Design",
-        proposals: 0,
-        milestones: 0
+    // TODO: Replace with actual API call to fetch projects
+    const fetchProjects = async () => {
+      try {
+        // const response = await api.get('/projects');
+        // setProjects(response.data);
+        setProjects([]); // Empty state until API is implemented
+      } catch (error) {
+        console.error('Failed to fetch projects:', error);
+        setProjects([]);
       }
-    ];
+    };
 
-    setProjects(mockProjects);
+    fetchProjects();
   }, []);
 
   const filteredProjects = projects.filter(project => {

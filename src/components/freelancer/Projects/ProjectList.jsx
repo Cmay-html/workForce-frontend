@@ -47,83 +47,21 @@ const FreelancerProjectList = () => {
   const categories = ["All", "Web Development", "Mobile Development", "Design", "Content Writing", "Data Science", "DevOps"];
 
   useEffect(() => {
-    const mockProjects = [
-      {
-        id: 1,
-        title: "E-commerce Website Development",
-        description: "Build a full-stack e-commerce platform with React, Node.js, and MongoDB. Features include user authentication, payment integration, inventory management, and admin dashboard.",
-        budget: 5000,
-        deadline: "2024-12-31",
-        category: "Web Development",
-        skills: ["React", "Node.js", "MongoDB", "Stripe"],
-        postedDate: "2024-01-15",
-        client: "TechCorp Inc",
-        status: "open"
-      },
-      {
-        id: 2,
-        title: "Mobile App UI/UX Design",
-        description: "Design a comprehensive UI/UX for a fitness tracking mobile application. Create wireframes, mockups, and prototypes for iOS and Android platforms.",
-        budget: 3000,
-        deadline: "2024-12-15",
-        category: "Design",
-        skills: ["Figma", "Adobe XD", "UI/UX Design", "Mobile Design"],
-        postedDate: "2024-01-20",
-        client: "FitLife Apps",
-        status: "open"
-      },
-      {
-        id: 3,
-        title: "API Development & Integration",
-        description: "Develop RESTful APIs for a logistics management system. Integrate with third-party services and ensure scalability and security.",
-        budget: 4000,
-        deadline: "2024-11-30",
-        category: "Web Development",
-        skills: ["Node.js", "Express", "MongoDB", "JWT"],
-        postedDate: "2024-01-10",
-        client: "LogiTech Solutions",
-        status: "open"
-      },
-      {
-        id: 4,
-        title: "Content Management System",
-        description: "Build a custom CMS for a publishing company. Include features like article management, user roles, SEO optimization, and analytics dashboard.",
-        budget: 6000,
-        deadline: "2025-01-15",
-        category: "Web Development",
-        skills: ["React", "Node.js", "PostgreSQL", "SEO"],
-        postedDate: "2024-01-25",
-        client: "PublishPro Media",
-        status: "open"
-      },
-      {
-        id: 5,
-        title: "Data Visualization Dashboard",
-        description: "Create an interactive dashboard for business analytics. Include charts, graphs, real-time data updates, and export functionality.",
-        budget: 3500,
-        deadline: "2024-11-20",
-        category: "Data Science",
-        skills: ["React", "D3.js", "Python", "Data Analysis"],
-        postedDate: "2024-01-18",
-        client: "Analytics Corp",
-        status: "open"
-      },
-      {
-        id: 6,
-        title: "DevOps Infrastructure Setup",
-        description: "Set up CI/CD pipelines, container orchestration, and cloud infrastructure for a microservices architecture.",
-        budget: 4500,
-        deadline: "2024-12-10",
-        category: "DevOps",
-        skills: ["Docker", "Kubernetes", "AWS", "Jenkins"],
-        postedDate: "2024-01-22",
-        client: "CloudTech Systems",
-        status: "open"
+    // TODO: Replace with actual API call to fetch projects
+    const fetchProjects = async () => {
+      try {
+        // const response = await api.get('/freelancer/projects');
+        // setProjects(response.data);
+        setProjects([]); // Empty state until API is implemented
+      } catch (error) {
+        console.error('Failed to fetch projects:', error);
+        setProjects([]);
+      } finally {
+        setLoadingProjects(false);
       }
-    ];
+    };
 
-    setProjects(mockProjects);
-    setLoadingProjects(false);
+    fetchProjects();
   }, []);
 
   // Filter and sort projects

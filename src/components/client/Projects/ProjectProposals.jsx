@@ -13,52 +13,19 @@ const ProjectProposals = ({ projectId }) => {
     const fetchProposals = async () => {
       try {
         setLoading(true);
-        // Replace with actual API call
-        const mockProposals = [
-          {
-            id: 1,
-            freelancerName: 'John Doe',
-            freelancerId: 'freelancer_1',
-            coverLetter: 'I have extensive experience in React development and have built similar websites before. I can deliver high-quality code with proper testing and documentation.',
-            proposedBudget: 4500,
-            estimatedTimeline: 30,
-            relevantExperience: '5 years of React development, 10+ successful projects',
-            portfolioUrl: 'https://johndoe-portfolio.com',
-            rating: 4.8,
-            completedProjects: 24,
-            status: 'pending',
-            submittedDate: '2024-01-15'
+        // TODO: Replace with actual API call to fetch project proposals
+        const response = await fetch(`/api/client/projects/${projectId}/proposals`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           },
-          {
-            id: 2,
-            freelancerName: 'Jane Smith',
-            freelancerId: 'freelancer_2',
-            coverLetter: 'I specialize in responsive web design and modern frontend development. My focus is on creating user-friendly interfaces with optimal performance.',
-            proposedBudget: 4800,
-            estimatedTimeline: 25,
-            relevantExperience: '3 years of frontend development, UI/UX expertise',
-            portfolioUrl: 'https://janesmith-design.com',
-            rating: 4.9,
-            completedProjects: 18,
-            status: 'pending',
-            submittedDate: '2024-01-14'
-          },
-          {
-            id: 3,
-            freelancerName: 'Mike Johnson',
-            freelancerId: 'freelancer_3',
-            coverLetter: 'Full-stack developer with expertise in React, Node.js, and database design. I can handle both frontend and backend development for your project.',
-            proposedBudget: 5200,
-            estimatedTimeline: 35,
-            relevantExperience: '4 years full-stack development, e-commerce specialist',
-            portfolioUrl: 'https://mikejohnson-dev.com',
-            rating: 4.7,
-            completedProjects: 32,
-            status: 'pending',
-            submittedDate: '2024-01-16'
-          }
-        ];
-        setProposals(mockProposals);
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch proposals');
+        }
+
+        const data = await response.json();
+        setProposals(data.proposals || []);
       } catch (err) {
         setError('Failed to load proposals');
       } finally {
@@ -78,22 +45,30 @@ const ProjectProposals = ({ projectId }) => {
 
   const confirmHire = async () => {
     try {
-      // API call to update proposal status and create contract
+      // TODO: Replace with actual API call to hire freelancer
+      const response = await fetch(`/api/client/projects/${projectId}/hire`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+        },
+        body: JSON.stringify({
+          proposalId: selectedProposal.id,
+          freelancerId: selectedProposal.freelancerId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to hire freelancer');
+      }
+
+      // Update local state
       setProposals(proposals.map(proposal =>
         proposal.id === selectedProposal.id
           ? { ...proposal, status: 'hired' }
           : { ...proposal, status: 'rejected' }
       ));
 
-      const contractData = {
-        proposalId: selectedProposal.id,
-        freelancerId: selectedProposal.freelancerId,
-        projectId: projectId
-      };
-      
-      // Here you would make the actual API call
-      // await api.hireFreelancer(selectedProposal.id, projectId);
-      
       setShowHireModal(false);
       setSelectedProposal(null);
     } catch (err) {
@@ -103,13 +78,24 @@ const ProjectProposals = ({ projectId }) => {
 
   const handleReject = async (proposalId) => {
     try {
-      setProposals(proposals.map(proposal => 
-        proposal.id === proposalId 
+      // TODO: Replace with actual API call to reject proposal
+      const response = await fetch(`/api/client/proposals/${proposalId}/reject`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to reject proposal');
+      }
+
+      // Update local state
+      setProposals(proposals.map(proposal =>
+        proposal.id === proposalId
           ? { ...proposal, status: 'rejected' }
           : proposal
       ));
-      
-      // await api.rejectProposal(proposalId);
     } catch (err) {
       setError('Failed to reject proposal');
     }

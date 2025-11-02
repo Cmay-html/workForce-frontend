@@ -17,35 +17,32 @@ const MilestoneSubmission = () => {
   });
 
   useEffect(() => {
-    const mockMilestones = [
-      {
-        id: 1,
-        title: 'Project Planning & Setup',
-        description: 'Initial project setup and planning phase',
-        dueDate: '2024-02-10',
-        amount: 1000,
-        status: 'completed'
-      },
-      {
-        id: 2,
-        title: 'UI/UX Design Completion',
-        description: 'Complete all design mockups and user flows',
-        dueDate: '2024-02-20',
-        amount: 1500,
-        status: 'in-progress'
-      },
-      {
-        id: 3,
-        title: 'Development Phase 1',
-        description: 'Backend API development and basic frontend structure',
-        dueDate: '2024-02-28',
-        amount: 1500,
-        status: 'pending'
-      }
-    ];
+    const loadMilestones = async () => {
+      try {
+        // TODO: Replace with actual API call to fetch project milestones
+        const response = await fetch(`/api/freelancer/projects/${projectId}/milestones`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
 
-    setMilestones(mockMilestones);
-    setLoadingMilestones(false);
+        if (!response.ok) {
+          throw new Error('Failed to fetch milestones');
+        }
+
+        const data = await response.json();
+        setMilestones(data.milestones || []);
+      } catch (error) {
+        console.error('Error loading milestones:', error);
+        setMilestones([]);
+      } finally {
+        setLoadingMilestones(false);
+      }
+    };
+
+    if (projectId) {
+      loadMilestones();
+    }
   }, [projectId]);
 
   const handleFileSelect = (e) => {
@@ -63,11 +60,37 @@ const MilestoneSubmission = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // API call to submit milestone work
-    setSelectedMilestone(null);
-    setSubmissionData({ description: '', files: [], notes: '' });
+    try {
+      // TODO: Replace with actual API call to submit milestone work
+      const formData = new FormData();
+      formData.append('milestoneId', selectedMilestone.id);
+      formData.append('description', submissionData.description);
+      formData.append('notes', submissionData.notes);
+
+      submissionData.files.forEach((file, index) => {
+        formData.append(`files[${index}]`, file);
+      });
+
+      const response = await fetch(`/api/freelancer/milestones/${selectedMilestone.id}/submit`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit milestone');
+      }
+
+      // Reset form on success
+      setSelectedMilestone(null);
+      setSubmissionData({ description: '', files: [], notes: '' });
+    } catch (error) {
+      console.error('Error submitting milestone:', error);
+    }
   };
 
   const getStatusColor = (status) => {

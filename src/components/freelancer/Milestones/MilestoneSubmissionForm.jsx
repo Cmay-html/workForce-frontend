@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,16 +8,37 @@ const MilestoneSubmissionForm = () => {
   const navigate = useNavigate();
   const { projectId, milestoneId } = useParams();
   const [files, setFiles] = useState([]);
+  const [milestone, setMilestone] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Mock milestone data - would come from API
-  const milestone = {
-    id: milestoneId,
-    title: "Design Phase Completion",
-    description: "Complete all design mockups and get client approval",
-    dueDate: "2024-02-15",
-    amount: 1500,
-    deliverables: ["Wireframes for all pages", "UI mockups", "Style guide"],
-  };
+  useEffect(() => {
+    const loadMilestone = async () => {
+      try {
+        // TODO: Replace with actual API call to fetch milestone details
+        const response = await fetch(`/api/freelancer/milestones/${milestoneId}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch milestone');
+        }
+
+        const data = await response.json();
+        setMilestone(data.milestone);
+      } catch (error) {
+        console.error('Error loading milestone:', error);
+        setMilestone(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (milestoneId) {
+      loadMilestone();
+    }
+  }, [milestoneId]);
 
   const formik = useFormik({
     initialValues: {
@@ -32,14 +53,28 @@ const MilestoneSubmissionForm = () => {
     }),
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
-        const submissionData = {
-          projectId,
-          milestoneId,
-          ...values,
-          files,
-        };
+        const formData = new FormData();
+        formData.append('projectId', projectId);
+        formData.append('milestoneId', milestoneId);
+        formData.append('description', values.description);
+        formData.append('notes', values.notes);
 
-        await new Promise((resolve) => setTimeout(resolve, 1500));
+        files.forEach((file, index) => {
+          formData.append(`files[${index}]`, file);
+        });
+
+        // TODO: Replace with actual API call to submit milestone
+        const response = await fetch('/api/freelancer/milestones/submit', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          },
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to submit milestone');
+        }
 
         setStatus({ success: "Milestone submitted successfully!" });
         setTimeout(() => navigate(`/freelancer/projects/${projectId}`), 1500);
@@ -92,6 +127,46 @@ const MilestoneSubmissionForm = () => {
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   };
+
+  if (loading) {
+    return (
+      <div className="main-content" style={{ minWidth: '1024px' }}>
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/4 mb-8"></div>
+          <div className="bg-white p-6 rounded-lg shadow-md mb-8 border border-gray-200">
+            <div className="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {[1, 2, 3].map(i => (
+                <div key={i} className="h-16 bg-gray-200 rounded"></div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+            <div className="h-6 bg-gray-200 rounded w-1/4 mb-4"></div>
+            <div className="h-32 bg-gray-200 rounded mb-4"></div>
+            <div className="h-24 bg-gray-200 rounded"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!milestone) {
+    return (
+      <div className="main-content" style={{ minWidth: '1024px' }}>
+        <div className="text-center py-12">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Milestone Not Found</h2>
+          <p className="text-gray-600 mb-4">The milestone you're looking for doesn't exist.</p>
+          <button
+            onClick={() => navigate(-1)}
+            className="bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+          >
+            Go Back
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="main-content" style={{ minWidth: '1024px' }}>
