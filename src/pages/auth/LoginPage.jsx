@@ -422,6 +422,7 @@ const keyframes = `
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-20px); }
 }
+
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -432,6 +433,7 @@ const keyframes = `
     transform: translateY(0);
   }
 }
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -440,7 +442,11 @@ const keyframes = `
 
 // Inject keyframes
 if (styleSheet) {
-  styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+  try {
+    styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+  } catch (e) {
+    console.warn('Failed to inject keyframes:', e);
+  }
 }
 
 // Also add hover effects
