@@ -1,27 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { vi } from 'vitest';
 
-// Mock the AuthContext module
-vi.mock('../contexts/AuthContext', () => ({
-  AuthProvider: ({ children }) => <div data-testid="auth-provider">{children}</div>,
-  useAuth: vi.fn(),
-}));
-
-import { AuthContext } from '../contexts/AuthContext';
-
-// Custom render function that includes necessary providers
-export const renderWithProviders = (
-  ui,
-  {
-    authState = {},
-    route = '/',
-    ...renderOptions
-  } = {}
-) => {
-  // Mock the useAuth hook to return the authState
-  const { useAuth } = require('../contexts/AuthContext');
-  useAuth.mockReturnValue({
+// Mock Auth Context Provider for testing
+export const MockAuthProvider = ({ children, authState = {} }) => {
+  const defaultAuthState = {
     user: null,
     loading: false,
     isAuthenticated: false,
@@ -34,11 +18,50 @@ export const renderWithProviders = (
     registerFreelancer: vi.fn(),
     verifyEmail: vi.fn(),
     ...authState
-  });
+  };
+
+  // Create a context with the mock provider
+  const AuthContext = React.createContext();
+
+  return (
+    <AuthContext.Provider value={defaultAuthState}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+// Custom render function that includes necessary providers
+export const renderWithProviders = (
+  ui,
+  {
+    authState = {},
+    route = '/',
+    ...renderOptions
+  } = {}
+) => {
+  // Mock the useAuth hook globally
+  vi.mock('../hooks/useAuth', () => ({
+    useAuth: () => ({
+      user: null,
+      loading: false,
+      isAuthenticated: false,
+      isClient: false,
+      isFreelancer: false,
+      isAdmin: false,
+      login: vi.fn(),
+      logout: vi.fn(),
+      registerClient: vi.fn(),
+      registerFreelancer: vi.fn(),
+      verifyEmail: vi.fn(),
+      ...authState
+    })
+  }));
 
   const Wrapper = ({ children }) => (
     <BrowserRouter>
-      {children}
+      <MockAuthProvider authState={authState}>
+        {children}
+      </MockAuthProvider>
     </BrowserRouter>
   );
 

@@ -51,7 +51,7 @@ const ConversationItem = ({ conversation, isActive, currentUserId, onClick, proj
       onClick={onClick}
       className={`p-4 cursor-pointer hover:bg-gray-50 transition-all duration-200 ${
         isActive
-          ? 'bg-blue-50 border-r-4 border-blue-500 shadow-sm'
+          ? 'bg-blue-50 border-r-4 border-primary-500 shadow-sm'
           : 'border-r-4 border-transparent'
       }`}
     >

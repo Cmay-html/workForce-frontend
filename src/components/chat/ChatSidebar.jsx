@@ -44,7 +44,7 @@ const ChatSidebar = ({
             placeholder="Search conversations..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-3 py-2 pl-10 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+            className="w-full px-3 py-2 pl-10 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent shadow-sm"
           />
           <svg
             className="absolute left-3 top-2.5 h-4 w-4 text-gray-400"
@@ -135,7 +135,7 @@ const ChatSidebar = ({
           </div>
         </div>
 
-        <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md">
+        <button className="w-full bg-primary-500 text-white py-2 px-4 rounded-lg hover:bg-primary-600 text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md">
           <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>

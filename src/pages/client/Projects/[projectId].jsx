@@ -156,7 +156,7 @@ const ProjectDetailsPage = () => {
               <p className="text-gray-600 mb-4">The project you're looking for doesn't exist.</p>
               <button
                 onClick={() => navigate('/dashboard')}
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                className="bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"
               >
                 Back to Dashboard
               </button>
@@ -276,7 +276,7 @@ const ProjectDetailsPage = () => {
                 <div className="bg-white border border-gray-200 overflow-hidden rounded-lg p-5 shadow-sm">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
-                      <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold">{project.progress || 0}%</span>
                       </div>
                     </div>
@@ -346,7 +346,7 @@ const ProjectDetailsPage = () => {
                       onClick={() => setActiveTab('overview')}
                       className={`py-4 px-6 text-sm font-medium border-b-2 ${
                         activeTab === 'overview'
-                          ? 'border-blue-500 text-blue-600'
+                          ? 'border-primary-500 text-primary-600'
                           : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                       }`}
                     >
@@ -356,7 +356,7 @@ const ProjectDetailsPage = () => {
                       onClick={() => setActiveTab('milestones')}
                       className={`py-4 px-6 text-sm font-medium border-b-2 ${
                         activeTab === 'milestones'
-                          ? 'border-blue-500 text-blue-600'
+                          ? 'border-primary-500 text-primary-600'
                           : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                       }`}
                     >
@@ -366,7 +366,7 @@ const ProjectDetailsPage = () => {
                       onClick={() => setActiveTab('files')}
                       className={`py-4 px-6 text-sm font-medium border-b-2 ${
                         activeTab === 'files'
-                          ? 'border-blue-500 text-blue-600'
+                          ? 'border-primary-500 text-primary-600'
                           : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                       }`}
                     >
@@ -443,7 +443,7 @@ const ProjectDetailsPage = () => {
                         <h3 className="text-lg font-medium text-gray-900">Project Milestones</h3>
                         <button
                           onClick={() => navigate(`/client/milestones/${project.id}/create`)}
-                          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                          className="bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"
                         >
                           + Add Milestone
                         </button>
@@ -475,7 +475,7 @@ const ProjectDetailsPage = () => {
                           <div className="mt-6">
                             <button
                               onClick={() => navigate(`/client/milestones/${project.id}/create`)}
-                              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                              className="bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg transition-colors"
                             >
                               Add Milestone
                             </button>
@@ -506,7 +506,7 @@ const ProjectDetailsPage = () => {
                 {project.freelancer && (
                   <button
                     onClick={() => navigate(`/projects/${project.id}/chat`)}
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+                    className="bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-6 rounded-lg transition-colors"
                   >
                     Message Freelancer
                   </button>

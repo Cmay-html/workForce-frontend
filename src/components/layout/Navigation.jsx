@@ -11,23 +11,23 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" className="text-xl font-bold text-blue-600">WorkForceFlow</Link>
+            <Link to="/" className="text-xl font-bold text-primary-600">WorkForceFlow</Link>
           </div>
 
           {/* Navigation Links */}
           <div className="flex space-x-8">
             {isClient && (
               <>
-                <Link to="/client/dashboard" className="text-gray-700 hover:text-blue-600 transition-colors">
+                <Link to="/client/dashboard" className="text-gray-700 hover:text-primary-600 transition-colors">
                   Dashboard
                 </Link>
-                <Link to="/client/projects" className="text-gray-700 hover:text-blue-600 transition-colors">
+                <Link to="/client/projects" className="text-gray-700 hover:text-primary-600 transition-colors">
                   My Projects
                 </Link>
-                <Link to="/client/projects/create" className="text-gray-700 hover:text-blue-600 transition-colors">
+                <Link to="/client/projects/create" className="text-gray-700 hover:text-primary-600 transition-colors">
                   Create Project
                 </Link>
-                <Link to="/freelancers" className="text-gray-700 hover:text-blue-600 transition-colors">
+                <Link to="/freelancers" className="text-gray-700 hover:text-primary-600 transition-colors">
                   Browse Freelancers
                 </Link>
               </>
@@ -35,16 +35,16 @@ const Navigation = () => {
 
             {isFreelancer && (
               <>
-                <Link to="/freelancer/dashboard" className="text-gray-700 hover:text-blue-600 transition-colors">
+                <Link to="/freelancer/dashboard" className="text-gray-700 hover:text-primary-600 transition-colors">
                   Dashboard
                 </Link>
-                <Link to="/freelancer/projects" className="text-gray-700 hover:text-blue-600 transition-colors">
+                <Link to="/freelancer/projects" className="text-gray-700 hover:text-primary-600 transition-colors">
                   Find Work
                 </Link>
-                <Link to="/freelancer/proposals" className="text-gray-700 hover:text-blue-600 transition-colors">
+                <Link to="/freelancer/proposals" className="text-gray-700 hover:text-primary-600 transition-colors">
                   My Proposals
                 </Link>
-                <Link to="/freelancer/active-projects" className="text-gray-700 hover:text-blue-600 transition-colors">
+                <Link to="/freelancer/active-projects" className="text-gray-700 hover:text-primary-600 transition-colors">
                   Active Projects
                 </Link>
               </>

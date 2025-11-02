@@ -253,8 +253,21 @@ const Navbar = () => {
             </div>
             <button
               onClick={() => {
+                // Clear authentication data from localStorage
+                localStorage.removeItem('authToken');
+                localStorage.removeItem('userData');
+                localStorage.removeItem('pendingUserData');
+                localStorage.removeItem('userProjects');
+                localStorage.removeItem('proposals');
+
+                // Call context logout to reset state
                 logout();
-                navigate('/login');
+
+                // Redirect to landing page
+                navigate('/');
+
+                // Optional: Show logout confirmation
+                alert('Logged out successfully!');
               }}
               style={{
                 background: '#dc2626',

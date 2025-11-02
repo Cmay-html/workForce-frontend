@@ -243,7 +243,7 @@ const ClientDashboard = () => {
                 Here's your project overview and recent activity.
               </p>
             </div>
-            <button className="bg-white text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+            <button className="bg-white text-primary-600 hover:bg-blue-50 px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
               + New Project
             </button>
           </div>
@@ -329,7 +329,7 @@ const ClientDashboard = () => {
               <h2 className="text-xl font-bold text-gray-900">My Projects</h2>
               <Link
                 to="/client/projects"
-                className="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center space-x-1"
+                className="text-primary-600 hover:text-blue-700 font-medium text-sm flex items-center space-x-1"
               >
                 <span>View All</span>
                 <svg
@@ -407,7 +407,7 @@ const ClientDashboard = () => {
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
-                      <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">
+                      <button className="p-2 text-gray-400 hover:text-primary-600 hover:bg-blue-50 rounded-lg transition-colors">
                         <svg
                           className="w-5 h-5"
                           fill="none"

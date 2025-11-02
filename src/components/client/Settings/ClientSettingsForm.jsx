@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -64,109 +63,70 @@ const ClientSettingsForm = () => {
       case "security":
         return (
           <div>
-            <h3
-              style={{
-                fontSize: "18px",
-                fontWeight: "600",
-                marginBottom: "20px",
-              }}
-            >
+            <h3 className="text-xl font-bold text-gray-900 mb-5">
               Security Settings
             </h3>
 
-            <div style={{ marginBottom: "24px" }}>
-              <label className="form-label">Current Password</label>
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-800 mb-2">
+                Current Password
+              </label>
               <input
                 type="password"
                 name="currentPassword"
-                className="form-input"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                 placeholder="Enter current password"
                 value={formik.values.currentPassword}
                 onChange={formik.handleChange}
               />
             </div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "20px",
-                marginBottom: "24px",
-              }}
-            >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
               <div>
-                <label className="form-label">New Password</label>
+                <label className="block text-sm font-medium text-gray-800 mb-2">
+                  New Password
+                </label>
                 <input
                   type="password"
                   name="newPassword"
-                  className="form-input"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                   placeholder="Enter new password"
                   value={formik.values.newPassword}
                   onChange={formik.handleChange}
                 />
                 {formik.touched.newPassword && formik.errors.newPassword && (
-                  <div
-                    style={{
-                      color: "#dc2626",
-                      fontSize: "14px",
-                      marginTop: "4px",
-                    }}
-                  >
+                  <div className="mt-1 text-sm text-red-600">
                     {formik.errors.newPassword}
                   </div>
                 )}
               </div>
 
               <div>
-                <label className="form-label">Confirm New Password</label>
+                <label className="block text-sm font-medium text-gray-800 mb-2">
+                  Confirm New Password
+                </label>
                 <input
                   type="password"
                   name="confirmPassword"
-                  className="form-input"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                   placeholder="Confirm new password"
                   value={formik.values.confirmPassword}
                   onChange={formik.handleChange}
                 />
                 {formik.touched.confirmPassword &&
                   formik.errors.confirmPassword && (
-                    <div
-                      style={{
-                        color: "#dc2626",
-                        fontSize: "14px",
-                        marginTop: "4px",
-                      }}
-                    >
+                    <div className="mt-1 text-sm text-red-600">
                       {formik.errors.confirmPassword}
                     </div>
                   )}
               </div>
             </div>
 
-            <div
-              style={{
-                background: "#f0f9ff",
-                padding: "16px",
-                borderRadius: "var(--radius-sm)",
-                border: "1px solid #bae6fd",
-              }}
-            >
-              <h4
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "600",
-                  marginBottom: "8px",
-                }}
-              >
+            <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
+              <h4 className="text-sm font-semibold text-gray-900 mb-2">
                 Password Requirements
               </h4>
-              <ul
-                style={{
-                  fontSize: "14px",
-                  color: "#0369a1",
-                  margin: 0,
-                  paddingLeft: "20px",
-                }}
-              >
+              <ul className="text-sm text-blue-800 space-y-1">
                 <li>Minimum 8 characters</li>
                 <li>At least one uppercase letter</li>
                 <li>At least one lowercase letter</li>
@@ -179,49 +139,33 @@ const ClientSettingsForm = () => {
       case "privacy":
         return (
           <div>
-            <h3
-              style={{
-                fontSize: "18px",
-                fontWeight: "600",
-                marginBottom: "20px",
-              }}
-            >
+            <h3 className="text-xl font-bold text-gray-900 mb-5">
               Privacy Settings
             </h3>
 
-            <div style={{ marginBottom: "24px" }}>
-              <label className="form-label">Profile Visibility</label>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "12px",
-                  marginTop: "8px",
-                }}
-              >
-                <label
-                  style={{ display: "flex", alignItems: "center", gap: "12px" }}
-                >
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-gray-800 mb-3">
+                Profile Visibility
+              </label>
+              <div className="space-y-3">
+                <label className="flex items-start gap-3 cursor-pointer">
                   <input
                     type="radio"
                     name="profileVisibility"
                     value="public"
                     checked={formik.values.profileVisibility === "public"}
                     onChange={formik.handleChange}
+                    className="mt-1 text-primary-600 focus:ring-primary-500"
                   />
                   <div>
-                    <div style={{ fontWeight: "500" }}>Public</div>
-                    <div
-                      style={{ fontSize: "14px", color: "var(--text-light)" }}
-                    >
+                    <div className="font-medium text-gray-900">Public</div>
+                    <div className="text-sm text-gray-600">
                       Anyone can see your profile and project history
                     </div>
                   </div>
                 </label>
 
-                <label
-                  style={{ display: "flex", alignItems: "center", gap: "12px" }}
-                >
+                <label className="flex items-start gap-3 cursor-pointer">
                   <input
                     type="radio"
                     name="profileVisibility"
@@ -230,32 +174,28 @@ const ClientSettingsForm = () => {
                       formik.values.profileVisibility === "freelancers_only"
                     }
                     onChange={formik.handleChange}
+                    className="mt-1 text-primary-600 focus:ring-primary-500"
                   />
                   <div>
-                    <div style={{ fontWeight: "500" }}>Freelancers Only</div>
-                    <div
-                      style={{ fontSize: "14px", color: "var(--text-light)" }}
-                    >
+                    <div className="font-medium text-gray-900">Freelancers Only</div>
+                    <div className="text-sm text-gray-600">
                       Only registered freelancers can see your profile
                     </div>
                   </div>
                 </label>
 
-                <label
-                  style={{ display: "flex", alignItems: "center", gap: "12px" }}
-                >
+                <label className="flex items-start gap-3 cursor-pointer">
                   <input
                     type="radio"
                     name="profileVisibility"
                     value="private"
                     checked={formik.values.profileVisibility === "private"}
                     onChange={formik.handleChange}
+                    className="mt-1 text-primary-600 focus:ring-primary-500"
                   />
                   <div>
-                    <div style={{ fontWeight: "500" }}>Private</div>
-                    <div
-                      style={{ fontSize: "14px", color: "var(--text-light)" }}
-                    >
+                    <div className="font-medium text-gray-900">Private</div>
+                    <div className="text-sm text-gray-600">
                       Only you can see your profile details
                     </div>
                   </div>
@@ -263,41 +203,27 @@ const ClientSettingsForm = () => {
               </div>
             </div>
 
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "16px" }}
-            >
-              <label
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  cursor: "pointer",
-                }}
-              >
+            <div className="space-y-4">
+              <label className="flex items-center gap-3 cursor-pointer">
                 <input
                   type="checkbox"
                   name="showEarnings"
                   checked={formik.values.showEarnings}
                   onChange={formik.handleChange}
+                  className="text-primary-600 focus:ring-primary-500"
                 />
-                Show project budget ranges on my public profile
+                <span className="text-gray-900">Show project budget ranges on my public profile</span>
               </label>
 
-              <label
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  cursor: "pointer",
-                }}
-              >
+              <label className="flex items-center gap-3 cursor-pointer">
                 <input
                   type="checkbox"
                   name="allowMessages"
                   checked={formik.values.allowMessages}
                   onChange={formik.handleChange}
+                  className="text-primary-600 focus:ring-primary-500"
                 />
-                Allow freelancers to message me directly
+                <span className="text-gray-900">Allow freelancers to message me directly</span>
               </label>
             </div>
           </div>
@@ -306,119 +232,69 @@ const ClientSettingsForm = () => {
       case "notifications":
         return (
           <div>
-            <h3
-              style={{
-                fontSize: "18px",
-                fontWeight: "600",
-                marginBottom: "20px",
-              }}
-            >
+            <h3 className="text-xl font-bold text-gray-900 mb-5">
               Notification Settings
             </h3>
 
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "20px" }}
-            >
+            <div className="space-y-5">
               <div>
-                <h4
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    marginBottom: "12px",
-                  }}
-                >
+                <h4 className="text-lg font-semibold text-gray-900 mb-3">
                   Email Notifications
                 </h4>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "12px",
-                  }}
-                >
-                  <label
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
-                      cursor: "pointer",
-                    }}
-                  >
+                <div className="space-y-3">
+                  <label className="flex items-center gap-3 cursor-pointer">
                     <input
                       type="checkbox"
                       name="emailNotifications"
                       checked={formik.values.emailNotifications}
                       onChange={formik.handleChange}
+                      className="text-primary-600 focus:ring-primary-500"
                     />
-                    Enable all email notifications
+                    <span className="text-gray-900">Enable all email notifications</span>
                   </label>
 
-                  <label
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
-                      cursor: "pointer",
-                    }}
-                  >
+                  <label className="flex items-center gap-3 cursor-pointer">
                     <input
                       type="checkbox"
                       name="proposalAlerts"
                       checked={formik.values.proposalAlerts}
                       onChange={formik.handleChange}
+                      className="text-primary-600 focus:ring-primary-500"
                     />
-                    New proposal alerts
+                    <span className="text-gray-900">New proposal alerts</span>
                   </label>
 
-                  <label
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
-                      cursor: "pointer",
-                    }}
-                  >
+                  <label className="flex items-center gap-3 cursor-pointer">
                     <input
                       type="checkbox"
                       name="milestoneUpdates"
                       checked={formik.values.milestoneUpdates}
                       onChange={formik.handleChange}
+                      className="text-primary-600 focus:ring-primary-500"
                     />
-                    Milestone submission updates
+                    <span className="text-gray-900">Milestone submission updates</span>
                   </label>
 
-                  <label
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
-                      cursor: "pointer",
-                    }}
-                  >
+                  <label className="flex items-center gap-3 cursor-pointer">
                     <input
                       type="checkbox"
                       name="paymentReceipts"
                       checked={formik.values.paymentReceipts}
                       onChange={formik.handleChange}
+                      className="text-primary-600 focus:ring-primary-500"
                     />
-                    Payment receipts and invoices
+                    <span className="text-gray-900">Payment receipts and invoices</span>
                   </label>
 
-                  <label
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
-                      cursor: "pointer",
-                    }}
-                  >
+                  <label className="flex items-center gap-3 cursor-pointer">
                     <input
                       type="checkbox"
                       name="marketingEmails"
                       checked={formik.values.marketingEmails}
                       onChange={formik.handleChange}
+                      className="text-primary-600 focus:ring-primary-500"
                     />
-                    Marketing and promotional emails
+                    <span className="text-gray-900">Marketing and promotional emails</span>
                   </label>
                 </div>
               </div>
@@ -449,50 +325,24 @@ const ClientSettingsForm = () => {
         <p className="text-gray-600">Manage your account preferences and security</p>
       </div>
 
-      <div style={{ display: "flex", gap: "24px" }}>
+      <div className="flex gap-6">
         {/* Sidebar Navigation */}
-        <div
-          style={{
-            width: "250px",
-            background: "#ffffff",
-            borderRadius: "12px",
-            border: "1px solid #e5e7eb",
-            padding: "20px",
-            boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
-          }}
-        >
+        <div className="w-64 bg-white rounded-lg border border-gray-200 p-5 shadow-sm">
           <nav>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            <ul className="space-y-2">
               {[
                 { id: "security", label: "Security" },
                 { id: "privacy", label: "Privacy" },
                 { id: "notifications", label: "Notifications" },
               ].map((tab) => (
-                <li key={tab.id} style={{ marginBottom: "8px" }}>
+                <li key={tab.id}>
                   <button
                     onClick={() => setActiveTab(tab.id)}
-                    style={{
-                      width: "100%",
-                      textAlign: "left",
-                      padding: "12px 16px",
-                      background:
-                        activeTab === tab.id
-                          ? "#f3f4f6"
-                          : "transparent",
-                      border: "none",
-                      borderRadius: "8px",
-                      cursor: "pointer",
-                      fontSize: "14px",
-                      fontWeight: activeTab === tab.id ? "600" : "400",
-                      color:
-                        activeTab === tab.id
-                          ? "#3b82f6"
-                          : "#1f2937",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
-                      transition: "all 0.2s ease",
-                    }}
+                    className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-200 ${
+                      activeTab === tab.id
+                        ? "bg-white text-primary-600 font-semibold"
+                        : "text-gray-700 hover:bg-white hover:text-gray-900"
+                    }`}
                   >
                     {tab.label}
                   </button>
@@ -503,34 +353,16 @@ const ClientSettingsForm = () => {
         </div>
 
         {/* Settings Content */}
-        <div style={{ flex: 1 }}>
+        <div className="flex-1">
           <div className="chart-card">
             {formik.status?.success && (
-              <div
-                style={{
-                  background: "#f0fdf4",
-                  border: "1px solid #bbf7d0",
-                  color: "#166534",
-                  padding: "12px 16px",
-                  borderRadius: "var(--radius-sm)",
-                  marginBottom: "20px",
-                }}
-              >
+              <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-md mb-5">
                 {formik.status.success}
               </div>
             )}
 
             {formik.status?.error && (
-              <div
-                style={{
-                  background: "#fef2f2",
-                  border: "1px solid #fecaca",
-                  color: "#dc2626",
-                  padding: "12px 16px",
-                  borderRadius: "var(--radius-sm)",
-                  marginBottom: "20px",
-                }}
-              >
+              <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-md mb-5">
                 {formik.status.error}
               </div>
             )}
@@ -538,36 +370,17 @@ const ClientSettingsForm = () => {
             <form onSubmit={formik.handleSubmit}>
               <TabContent />
 
-              <div
-                style={{
-                  display: "flex",
-                  gap: "12px",
-                  justifyContent: "flex-end",
-                  paddingTop: "24px",
-                  marginTop: "24px",
-                  borderTop: "1px solid var(--border-light)",
-                }}
-              >
+              <div className="flex justify-end gap-3 pt-6 mt-6 border-t border-gray-200">
                 <button
                   type="button"
                   onClick={() => navigate('/dashboard')}
-                  style={{
-                    background: "var(--secondary-white)",
-                    color: "var(--text-primary)",
-                    border: "1px solid var(--border-light)",
-                    borderRadius: "var(--radius-sm)",
-                    padding: "12px 24px",
-                    fontSize: "16px",
-                    fontWeight: "500",
-                    cursor: "pointer",
-                  }}
+                  className="px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors duration-200"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="login-btn"
-                  style={{ padding: "12px 32px", margin: 0 }}
+                  className="login-btn px-8 py-3"
                   disabled={formik.isSubmitting}
                 >
                   {formik.isSubmitting ? "Saving..." : "Save Changes"}

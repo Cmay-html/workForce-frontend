@@ -78,7 +78,7 @@ const MilestonesOverviewPage = () => {
 
   const getProgressColor = (progress) => {
     if (progress === 100) return 'bg-green-500';
-    if (progress >= 50) return 'bg-blue-500';
+    if (progress >= 50) return 'bg-primary-500';
     if (progress > 0) return 'bg-yellow-500';
     return 'bg-gray-300';
   };
@@ -108,7 +108,7 @@ const MilestonesOverviewPage = () => {
         <div className="bg-white border border-gray-200 overflow-hidden rounded-lg p-5 shadow-sm">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold">{milestones.length}</span>
               </div>
             </div>
@@ -140,7 +140,7 @@ const MilestonesOverviewPage = () => {
         <div className="bg-white border border-gray-200 overflow-hidden rounded-lg p-5 shadow-sm">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+              <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
                 <span className="text-white font-bold">{milestones.filter(m => m.status === 'in_progress').length}</span>
               </div>
             </div>
@@ -180,7 +180,7 @@ const MilestonesOverviewPage = () => {
             </div>
             <button
               onClick={() => navigate('/client/projects')}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
+              className="bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200"
             >
               + Add Milestone
             </button>
@@ -203,7 +203,7 @@ const MilestonesOverviewPage = () => {
                   <div className="flex-1">
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
-                        <h4 className="text-lg font-medium text-blue-600 truncate">
+                        <h4 className="text-lg font-medium text-primary-600 truncate">
                           {milestone.title}
                         </h4>
                         <p className="text-sm text-gray-600 mt-1">{milestone.projectTitle}</p>
@@ -254,15 +254,15 @@ const MilestonesOverviewPage = () => {
                 <div className="mt-4 flex space-x-3">
                   <button
                     onClick={() => handleViewProject(milestone.projectId)}
-                    className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="inline-flex items-center px-3 py-2 border border-gray-300 shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                   >
                     View Project
                   </button>
-                  <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                  <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                     Update Progress
                   </button>
                   {milestone.status !== 'completed' && (
-                    <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <button className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
                       Mark Complete
                     </button>
                   )}

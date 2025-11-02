@@ -39,6 +39,7 @@ import FreelancersList from "./components/client/FreelancersList";
 import CreateMilestone from "./components/client/Milestones/CreateMilestone";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import AnalyticsDashboard from "./pages/admin/AnalyticsDashboard";
 
 // Protected Route component (requires authentication)
 const ProtectedRoute = ({ children }) => {
@@ -47,12 +48,35 @@ const ProtectedRoute = ({ children }) => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
       </div>
     );
   }
 
   return isAuthenticated ? children : <Navigate to="/login" replace />;
+};
+
+// Admin Route component (requires admin role)
+const AdminRoute = ({ children }) => {
+  const { isAuthenticated, isAdmin, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (!isAdmin) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
+  return children;
 };
 
 // Client Route component (requires client role)
@@ -62,7 +86,7 @@ const ClientRoute = ({ children }) => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
       </div>
     );
   }
@@ -86,7 +110,7 @@ const FreelancerRoute = ({ children }) => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
       </div>
     );
   }
@@ -110,7 +134,7 @@ const PublicRoute = ({ children }) => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
       </div>
     );
   }
@@ -131,7 +155,7 @@ const RootRedirect = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
       </div>
     );
   }
@@ -185,6 +209,16 @@ function App() {
             <Route
               path="/verify-email"
               element={<EmailVerification />}
+            />
+
+            {/* Admin Routes */}
+            <Route
+              path="/admin/analytics"
+              element={
+                <AdminRoute>
+                  <AnalyticsDashboard />
+                </AdminRoute>
+              }
             />
 
             {/* Client Dashboard - Main dashboard route */}

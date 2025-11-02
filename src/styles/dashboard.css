@@ -2,8 +2,9 @@
 :root {
   --primary-white: #ffffff;
   --secondary-white: #f8fafc;
-  --accent-blue: #0066ff;
-  --accent-purple: #8b5cf6;
+  --accent-green: #10b981;
+  --accent-green-light: #34d399;
+  --accent-green-dark: #059669;
   --accent-green: #10b981;
   --accent-orange: #f59e0b;
   --accent-red: #ef4444;
@@ -83,7 +84,7 @@ body {
 .logo-icon {
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light));
   border-radius: var(--radius-md);
   display: flex;
   align-items: center;
@@ -124,7 +125,7 @@ body {
   top: 0;
   height: 100%;
   width: 3px;
-  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light));
   transform: scaleY(0);
   transition: transform var(--transition-base);
 }
@@ -140,7 +141,7 @@ body {
 }
 
 .nav-link.active {
-  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light));
   color: white;
   box-shadow: var(--shadow-md);
   transform: translateX(0);
@@ -204,8 +205,8 @@ body {
 }
 
 .search-bar:focus-within {
-  border-color: var(--accent-blue);
-  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+  border-color: var(--accent-green);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
   transform: translateY(-1px);
 }
 
@@ -233,7 +234,7 @@ body {
   width: 44px;
   height: 44px;
   border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -284,7 +285,7 @@ body {
   padding: 28px;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
-  border-left: 6px solid var(--accent-blue);
+  border-left: 6px solid var(--accent-green);
   transition: all var(--transition-base);
   position: relative;
   overflow: hidden;
@@ -313,13 +314,13 @@ body {
 }
 
 .stat-card:nth-child(1) {
-  border-left-color: var(--accent-blue);
+  border-left-color: var(--accent-green);
 }
 .stat-card:nth-child(2) {
-  border-left-color: var(--accent-purple);
+  border-left-color: var(--accent-green-light);
 }
 .stat-card:nth-child(3) {
-  border-left-color: var(--accent-green);
+  border-left-color: var(--accent-green-dark);
 }
 .stat-card:nth-child(4) {
   border-left-color: var(--accent-orange);
@@ -329,7 +330,7 @@ body {
   font-size: 42px;
   font-weight: 800;
   margin-bottom: 8px;
-  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -442,7 +443,7 @@ body {
   width: 40px;
   height: 40px;
   border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -504,7 +505,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  background: linear-gradient(135deg, var(--accent-green), var(--accent-green-light));
   opacity: 0;
   transition: opacity var(--transition-base);
 }
@@ -624,19 +625,19 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-blue);
+  background: var(--accent-green);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-purple);
+  background: var(--accent-green-light);
 }
 
 /* Focus States */
 button:focus-visible,
 .nav-link:focus-visible,
 .action-btn:focus-visible {
-  outline: 2px solid var(--accent-blue);
+  outline: 2px solid var(--accent-green);
   outline-offset: 2px;
 }
 

@@ -231,7 +231,7 @@ const PaymentTracking = () => {
               <input
                 type="text"
                 placeholder="Search payments..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -301,7 +301,7 @@ const PaymentTracking = () => {
                 <div className="bg-white border border-gray-200 overflow-hidden rounded-lg p-5 shadow-sm">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
-                      <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center">
                         <span className="text-white font-bold">📅</span>
                       </div>
                     </div>
@@ -397,7 +397,7 @@ const PaymentTracking = () => {
                       <div className="flex justify-between items-center p-3 border border-gray-200 rounded-lg">
                         <div className="flex items-center">
                           <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                            <span className="text-blue-600 font-bold text-sm">P</span>
+                            <span className="text-primary-600 font-bold text-sm">P</span>
                           </div>
                           <div>
                             <p className="font-medium text-gray-900">PayPal</p>
@@ -416,7 +416,7 @@ const PaymentTracking = () => {
                             <p className="text-sm text-gray-600">****1234</p>
                           </div>
                         </div>
-                        <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">Edit</button>
+                        <button className="text-primary-600 hover:text-primary-700 text-sm font-medium">Edit</button>
                       </div>
                       <div className="flex justify-between items-center p-3 border border-gray-200 rounded-lg">
                         <div className="flex items-center">
@@ -428,10 +428,10 @@ const PaymentTracking = () => {
                             <p className="text-sm text-gray-600">+1 (555) 123-4567</p>
                           </div>
                         </div>
-                        <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">Edit</button>
+                        <button className="text-primary-600 hover:text-primary-700 text-sm font-medium">Edit</button>
                       </div>
                     </div>
-                    <button className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
+                    <button className="w-full mt-4 bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                       </svg>

@@ -150,7 +150,7 @@ const MilestoneSubmissionForm = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
               <div className="text-sm font-medium text-gray-500 mb-1">Amount</div>
-              <div className="text-xl font-bold text-blue-600">
+              <div className="text-xl font-bold text-primary-600">
                 ${milestone.amount.toLocaleString()}
               </div>
             </div>
@@ -194,7 +194,7 @@ const MilestoneSubmissionForm = () => {
             <textarea
               name="description"
               rows="6"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-vertical"
               placeholder="Describe the work you've completed for this milestone. Include details about what was delivered, any challenges faced, and how you addressed them..."
               value={formik.values.description}
               onChange={formik.handleChange}
@@ -213,7 +213,7 @@ const MilestoneSubmissionForm = () => {
             <textarea
               name="notes"
               rows="4"
-              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical"
+              className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent resize-vertical"
               placeholder="Any additional information for the client, questions, or next steps..."
               value={formik.values.notes}
               onChange={formik.handleChange}
@@ -302,7 +302,7 @@ const MilestoneSubmissionForm = () => {
             </button>
             <button
               type="submit"
-              className="px-8 py-3 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              className="px-8 py-3 bg-primary-500 text-white rounded-md font-medium hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
               disabled={formik.isSubmitting}
             >
               {formik.isSubmitting ? "Submitting..." : "Submit Milestone"}

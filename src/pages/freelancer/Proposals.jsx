@@ -241,7 +241,7 @@ const FreelancerProposals = () => {
               <input
                 type="text"
                 placeholder="Search proposals..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -284,7 +284,7 @@ const FreelancerProposals = () => {
                         onClick={() => setFilter(tab)}
                         className={`py-4 px-6 text-sm font-medium border-b-2 ${
                           filter === tab
-                            ? "border-blue-500 text-blue-600"
+                            ? "border-primary-500 text-primary-600"
                             : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                         }`}
                       >
@@ -342,7 +342,7 @@ const FreelancerProposals = () => {
                         <div className="mt-6">
                           <button
                             onClick={() => navigate("/freelancer/projects")}
-                            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
                           >
                             Browse Projects
                           </button>
@@ -396,7 +396,7 @@ const FreelancerProposals = () => {
                           </div>
 
                           <div className="flex justify-between items-center pt-4 border-t border-gray-200">
-                            <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                            <button className="text-primary-600 hover:text-primary-700 text-sm font-medium">
                               View Project Details
                             </button>
                             {proposal.status === "under-review" && (

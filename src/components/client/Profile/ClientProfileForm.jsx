@@ -130,7 +130,7 @@ const ClientProfileForm = () => {
         <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
           {/* Success/Error Messages */}
           {formik.status?.success && (
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6">
+            <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6">
               {formik.status.success}
             </div>
           )}
@@ -144,8 +144,8 @@ const ClientProfileForm = () => {
           <form onSubmit={formik.handleSubmit} className="space-y-8">
             {/* Profile Picture Section */}
             <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
-              <h3 className="text-xl font-semibold text-blue-800 mb-6 flex items-center">
-                <span className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+                <span className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
                   1
                 </span>
                 Profile Picture
@@ -170,7 +170,7 @@ const ClientProfileForm = () => {
                     onChange={handleAvatarChange}
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer rounded-full"
                   />
-                  <div className="absolute bottom-2 right-2 w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg">
+                  <div className="absolute bottom-2 right-2 w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-white shadow-lg">
                     <svg
                       className="w-4 h-4"
                       fill="none"
@@ -204,7 +204,7 @@ const ClientProfileForm = () => {
 
             {/* Personal Information */}
             <div className="bg-green-50 p-6 rounded-lg border border-green-200">
-              <h3 className="text-xl font-semibold text-green-800 mb-6 flex items-center">
+              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
                 <span className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
                   2
                 </span>
@@ -213,70 +213,70 @@ const ClientProfileForm = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name *
+                  <label className="block text-sm font-medium text-gray-800 mb-2">
+                    First Name <span className="text-red-600">*</span>
                   </label>
                   <input
                     type="text"
                     name="firstName"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                     value={formik.values.firstName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
                   {formik.touched.firstName && formik.errors.firstName && (
-                    <p className="mt-2 text-sm text-red-600">
+                    <p className="mt-1 text-sm text-red-600">
                       {formik.errors.firstName}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name *
+                  <label className="block text-sm font-medium text-gray-800 mb-2">
+                    Last Name <span className="text-red-600">*</span>
                   </label>
                   <input
                     type="text"
                     name="lastName"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                     value={formik.values.lastName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
                   {formik.touched.lastName && formik.errors.lastName && (
-                    <p className="mt-2 text-sm text-red-600">
+                    <p className="mt-1 text-sm text-red-600">
                       {formik.errors.lastName}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address *
+                  <label className="block text-sm font-medium text-gray-800 mb-2">
+                    Email Address <span className="text-red-600">*</span>
                   </label>
                   <input
                     type="email"
                     name="email"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
                   {formik.touched.email && formik.errors.email && (
-                    <p className="mt-2 text-sm text-red-600">
+                    <p className="mt-1 text-sm text-red-600">
                       {formik.errors.email}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-800 mb-2">
                     Phone Number
                   </label>
                   <input
                     type="tel"
                     name="phone"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                     value={formik.values.phone}
                     onChange={formik.handleChange}
                   />
@@ -286,7 +286,7 @@ const ClientProfileForm = () => {
 
             {/* Company Information */}
             <div className="bg-purple-50 p-6 rounded-lg border border-purple-200">
-              <h3 className="text-xl font-semibold text-purple-800 mb-6 flex items-center">
+              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
                 <span className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
                   3
                 </span>
@@ -295,32 +295,32 @@ const ClientProfileForm = () => {
 
               <div className="space-y-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Company Name *
+                  <label className="block text-sm font-medium text-gray-800 mb-2">
+                    Company Name <span className="text-red-600">*</span>
                   </label>
                   <input
                     type="text"
                     name="companyName"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                     value={formik.values.companyName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                   />
                   {formik.touched.companyName && formik.errors.companyName && (
-                    <p className="mt-2 text-sm text-red-600">
+                    <p className="mt-1 text-sm text-red-600">
                       {formik.errors.companyName}
                     </p>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-800 mb-2">
                     Company Website
                   </label>
                   <input
                     type="url"
                     name="companyWebsite"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                     placeholder="https://example.com"
                     value={formik.values.companyWebsite}
                     onChange={formik.handleChange}
@@ -329,51 +329,51 @@ const ClientProfileForm = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Industry *
+                    <label className="block text-sm font-medium text-gray-800 mb-2">
+                      Industry <span className="text-red-600">*</span>
                     </label>
                     <select
                       name="industry"
-                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black"
                       value={formik.values.industry}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                     >
-                      <option value="">Select Industry</option>
+                      <option value="" className="text-gray-500">Select Industry</option>
                       {industries.map((industry) => (
-                        <option key={industry} value={industry}>
+                        <option key={industry} value={industry} className="text-black">
                           {industry}
                         </option>
                       ))}
                     </select>
                     {formik.touched.industry && formik.errors.industry && (
-                      <p className="mt-2 text-sm text-red-600">
+                      <p className="mt-1 text-sm text-red-600">
                         {formik.errors.industry}
                       </p>
                     )}
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Company Size *
+                    <label className="block text-sm font-medium text-gray-800 mb-2">
+                      Company Size <span className="text-red-600">*</span>
                     </label>
                     <select
                       name="companySize"
-                      className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black"
                       value={formik.values.companySize}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                     >
-                      <option value="">Select Size</option>
+                      <option value="" className="text-gray-500">Select Size</option>
                       {companySizes.map((size) => (
-                        <option key={size} value={size}>
+                        <option key={size} value={size} className="text-black">
                           {size}
                         </option>
                       ))}
                     </select>
                     {formik.touched.companySize &&
                       formik.errors.companySize && (
-                        <p className="mt-2 text-sm text-red-600">
+                        <p className="mt-1 text-sm text-red-600">
                           {formik.errors.companySize}
                         </p>
                       )}
@@ -381,12 +381,12 @@ const ClientProfileForm = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-800 mb-2">
                     Company Description
                   </label>
                   <textarea
                     name="companyDescription"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200 resize-vertical"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500 resize-vertical"
                     rows="4"
                     placeholder="Brief description of your company and what you do..."
                     value={formik.values.companyDescription}
@@ -398,7 +398,7 @@ const ClientProfileForm = () => {
 
             {/* Location Information */}
             <div className="bg-orange-50 p-6 rounded-lg border border-orange-200">
-              <h3 className="text-xl font-semibold text-orange-800 mb-6 flex items-center">
+              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
                 <span className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
                   4
                 </span>
@@ -407,26 +407,26 @@ const ClientProfileForm = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-800 mb-2">
                     Country
                   </label>
                   <input
                     type="text"
                     name="country"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                     value={formik.values.country}
                     onChange={formik.handleChange}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-800 mb-2">
                     City
                   </label>
                   <input
                     type="text"
                     name="city"
-                    className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-200"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                     value={formik.values.city}
                     onChange={formik.handleChange}
                   />
@@ -436,7 +436,7 @@ const ClientProfileForm = () => {
 
             {/* Notification Preferences */}
             <div className="bg-indigo-50 p-6 rounded-lg border border-indigo-200">
-              <h3 className="text-xl font-semibold text-indigo-800 mb-6 flex items-center">
+              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
                 <span className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
                   5
                 </span>
@@ -450,7 +450,7 @@ const ClientProfileForm = () => {
                     name="notificationEmail"
                     checked={formik.values.notificationEmail}
                     onChange={formik.handleChange}
-                    className="w-5 h-5 text-blue-600 focus:ring-blue-500 rounded"
+                    className="w-5 h-5 text-primary-600 focus:ring-primary-500 rounded"
                   />
                   <div>
                     <div className="font-medium text-gray-900">
@@ -468,7 +468,7 @@ const ClientProfileForm = () => {
                     name="notificationSMS"
                     checked={formik.values.notificationSMS}
                     onChange={formik.handleChange}
-                    className="w-5 h-5 text-blue-600 focus:ring-blue-500 rounded"
+                    className="w-5 h-5 text-primary-600 focus:ring-primary-500 rounded"
                   />
                   <div>
                     <div className="font-medium text-gray-900">
@@ -486,7 +486,7 @@ const ClientProfileForm = () => {
                     name="monthlyNewsletter"
                     checked={formik.values.monthlyNewsletter}
                     onChange={formik.handleChange}
-                    className="w-5 h-5 text-blue-600 focus:ring-blue-500 rounded"
+                    className="w-5 h-5 text-primary-600 focus:ring-primary-500 rounded"
                   />
                   <div>
                     <div className="font-medium text-gray-900">
@@ -501,8 +501,8 @@ const ClientProfileForm = () => {
             </div>
 
             {/* Submit Buttons */}
-            <div className="bg-gray-50 p-6 rounded-lg border border-gray-200">
-              <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+            <div className="bg-white p-6 rounded-lg border border-gray-200">
+              <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
                 <span className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
                   6
                 </span>
@@ -513,14 +513,14 @@ const ClientProfileForm = () => {
                 <button
                   type="button"
                   onClick={() => navigate("/dashboard")}
-                  className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors duration-200"
+                  className="px-6 py-3 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors duration-200"
                 >
                   Cancel
                 </button>
 
                 <button
                   type="submit"
-                  className="px-8 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                  className="px-8 py-3 bg-primary-500 text-white rounded-md font-medium hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
                   disabled={formik.isSubmitting}
                 >
                   {formik.isSubmitting ? "Updating..." : "Update Profile"}
