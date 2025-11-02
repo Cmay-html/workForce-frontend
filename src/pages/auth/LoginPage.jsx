@@ -416,7 +416,6 @@ const styles = {
 };
 
 // Add these keyframes for animations
-const styleSheet = document.styleSheets[0];
 const keyframes = `
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
@@ -441,11 +440,14 @@ const keyframes = `
 `;
 
 // Inject keyframes
-if (styleSheet) {
-  try {
-    styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-  } catch (e) {
-    console.warn('Failed to inject keyframes:', e);
+if (typeof document !== 'undefined') {
+  const styleSheet = document.styleSheets[0];
+  if (styleSheet) {
+    try {
+      styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
+    } catch (e) {
+      console.warn('Failed to inject keyframes:', e);
+    }
   }
 }
 
