@@ -2,7 +2,8 @@
 export const authService = {
   login: async (credentials) => {
     // Implement login API call
-    return fetch('/api/auth/login', {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    return fetch(`${apiUrl}/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -12,7 +13,8 @@ export const authService = {
   },
   register: async (userData) => {
     // Implement register API call
-    return fetch('/api/auth/register', {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    return fetch(`${apiUrl}/api/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -22,7 +24,8 @@ export const authService = {
   },
   logout: async () => {
     // Implement logout API call
-    return fetch('/api/auth/logout', {
+    const apiUrl = import.meta.env.VITE_API_URL;
+    return fetch(`${apiUrl}/api/auth/logout`, {
       method: 'POST',
     });
   },
