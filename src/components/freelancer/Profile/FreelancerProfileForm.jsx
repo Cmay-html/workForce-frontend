@@ -148,204 +148,187 @@ const FreelancerProfileForm = () => {
   };
 
   return (
-    <div className="main-content">
-      <div className="top-bar">
-        <div>
-          <h1
-            style={{
-              fontSize: "24px",
-              fontWeight: "700",
-              color: "var(--text-primary)",
-            }}
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <div className="mb-6">
+          <button
+            onClick={() => navigate("/freelancer/dashboard")}
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors duration-200"
           >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            Back to Dashboard
+          </button>
+          <h1 className="text-4xl font-bold text-gray-900 mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Freelancer Profile
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginTop: "8px" }}>
+          <p className="text-lg text-gray-600">
             Manage your professional profile and portfolio
           </p>
         </div>
-      </div>
 
-      <div className="chart-card">
-        {formik.status?.success && (
-          <div
-            style={{
-              background: "#f0fdf4",
-              border: "1px solid #bbf7d0",
-              color: "#166534",
-              padding: "12px 16px",
-              borderRadius: "var(--radius-sm)",
-              marginBottom: "20px",
-            }}
-          >
-            {formik.status.success}
-          </div>
-        )}
+        <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
+          {/* Success/Error Messages */}
+          {formik.status?.success && (
+            <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6">
+              {formik.status.success}
+            </div>
+          )}
 
-        {formik.status?.error && (
-          <div
-            style={{
-              background: "#fef2f2",
-              border: "1px solid #fecaca",
-              color: "#dc2626",
-              padding: "12px 16px",
-              borderRadius: "var(--radius-sm)",
-              marginBottom: "20px",
-            }}
-          >
-            {formik.status.error}
-          </div>
-        )}
+          {formik.status?.error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+              {formik.status.error}
+            </div>
+          )}
 
         <form onSubmit={formik.handleSubmit}>
-          {/* Profile Picture */}
-          <div style={{ marginBottom: "32px", textAlign: "center" }}>
-            <div
-              style={{
-                width: "120px",
-                height: "120px",
-                borderRadius: "50%",
-                background: avatar
-                  ? `url(${avatar}) center/cover`
-                  : "linear-gradient(135deg, var(--accent-blue), var(--accent-purple))",
-                margin: "0 auto 16px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                color: "white",
-                fontSize: "36px",
-                fontWeight: "600",
-                position: "relative",
-                border: "4px solid var(--primary-white)",
-                boxShadow: "var(--shadow-sm)",
-              }}
-            >
-              {!avatar &&
-                (user?.firstName?.[0] || "F") + (user?.lastName?.[0] || "L")}
+          {/* Profile Picture Section */}
+          <div className="bg-blue-50 p-6 rounded-lg border border-blue-200">
+            <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+              <span className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                1
+              </span>
+              Profile Picture
+            </h3>
 
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleAvatarChange}
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  opacity: 0,
-                  cursor: "pointer",
-                }}
-              />
-            </div>
-            <div style={{ fontSize: "14px", color: "var(--text-light)" }}>
-              Click to upload profile picture
+            <div className="flex flex-col items-center">
+              <div className="relative mb-4">
+                <div
+                  className="w-32 h-32 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white text-2xl font-semibold shadow-lg"
+                  style={{
+                    background: avatar
+                      ? `url(${avatar}) center/cover`
+                      : undefined,
+                  }}
+                >
+                  {!avatar &&
+                    (user?.firstName?.[0] || "F") + (user?.lastName?.[0] || "L")}
+                </div>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleAvatarChange}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer rounded-full"
+                />
+                <div className="absolute bottom-2 right-2 w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center text-white shadow-lg">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <p className="text-sm text-gray-600 text-center">
+                Click the camera icon to upload a profile picture
+                <br />
+                <span className="text-xs text-gray-500">
+                  JPG, PNG, GIF • Max 5MB
+                </span>
+              </p>
             </div>
           </div>
 
           {/* Personal Information */}
-          <div style={{ marginBottom: "32px" }}>
-            <h2
-              style={{
-                fontSize: "20px",
-                fontWeight: "600",
-                marginBottom: "20px",
-              }}
-            >
+          <div className="bg-green-50 p-6 rounded-lg border border-green-200">
+            <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+              <span className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                2
+              </span>
               Personal Information
-            </h2>
+            </h3>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "20px",
-                marginBottom: "20px",
-              }}
-            >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="form-label">First Name *</label>
+                <label className="block text-sm font-medium text-gray-800 mb-2">
+                  First Name <span className="text-red-600">*</span>
+                </label>
                 <input
                   type="text"
                   name="firstName"
-                  className="form-input"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                   value={formik.values.firstName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.firstName && formik.errors.firstName && (
-                  <div
-                    style={{
-                      color: "#dc2626",
-                      fontSize: "14px",
-                      marginTop: "4px",
-                    }}
-                  >
+                  <p className="mt-1 text-sm text-red-600">
                     {formik.errors.firstName}
-                  </div>
+                  </p>
                 )}
               </div>
 
               <div>
-                <label className="form-label">Last Name *</label>
+                <label className="block text-sm font-medium text-gray-800 mb-2">
+                  Last Name <span className="text-red-600">*</span>
+                </label>
                 <input
                   type="text"
                   name="lastName"
-                  className="form-input"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                   value={formik.values.lastName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.lastName && formik.errors.lastName && (
-                  <div
-                    style={{
-                      color: "#dc2626",
-                      fontSize: "14px",
-                      marginTop: "4px",
-                    }}
-                  >
+                  <p className="mt-1 text-sm text-red-600">
                     {formik.errors.lastName}
-                  </div>
+                  </p>
                 )}
               </div>
-            </div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "20px",
-              }}
-            >
               <div>
-                <label className="form-label">Email Address *</label>
+                <label className="block text-sm font-medium text-gray-800 mb-2">
+                  Email Address <span className="text-red-600">*</span>
+                </label>
                 <input
                   type="email"
                   name="email"
-                  className="form-input"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                   value={formik.values.email}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.email && formik.errors.email && (
-                  <div
-                    style={{
-                      color: "#dc2626",
-                      fontSize: "14px",
-                      marginTop: "4px",
-                    }}
-                  >
+                  <p className="mt-1 text-sm text-red-600">
                     {formik.errors.email}
-                  </div>
+                  </p>
                 )}
               </div>
 
               <div>
-                <label className="form-label">Phone Number</label>
+                <label className="block text-sm font-medium text-gray-800 mb-2">
+                  Phone Number
+                </label>
                 <input
                   type="tel"
                   name="phone"
-                  className="form-input"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                   value={formik.values.phone}
                   onChange={formik.handleChange}
                 />
@@ -354,303 +337,219 @@ const FreelancerProfileForm = () => {
           </div>
 
           {/* Professional Information */}
-          <div style={{ marginBottom: "32px" }}>
-            <h2
-              style={{
-                fontSize: "20px",
-                fontWeight: "600",
-                marginBottom: "20px",
-              }}
-            >
+          <div className="bg-purple-50 p-6 rounded-lg border border-purple-200">
+            <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+              <span className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                3
+              </span>
               Professional Information
-            </h2>
+            </h3>
 
-            <div style={{ marginBottom: "20px" }}>
-              <label className="form-label">Professional Title *</label>
-              <input
-                type="text"
-                name="title"
-                className="form-input"
-                placeholder="e.g., Senior React Developer"
-                value={formik.values.title}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-              {formik.touched.title && formik.errors.title && (
-                <div
-                  style={{
-                    color: "#dc2626",
-                    fontSize: "14px",
-                    marginTop: "4px",
-                  }}
-                >
-                  {formik.errors.title}
-                </div>
-              )}
-            </div>
-
-            <div style={{ marginBottom: "20px" }}>
-              <label className="form-label">Professional Bio *</label>
-              <textarea
-                name="bio"
-                className="form-input"
-                rows="5"
-                placeholder="Describe your experience, skills, expertise, and what you can offer to clients..."
-                value={formik.values.bio}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-              {formik.touched.bio && formik.errors.bio && (
-                <div
-                  style={{
-                    color: "#dc2626",
-                    fontSize: "14px",
-                    marginTop: "4px",
-                  }}
-                >
-                  {formik.errors.bio}
-                </div>
-              )}
-              <div
-                style={{
-                  fontSize: "12px",
-                  color:
-                    formik.values.bio.length < 100
-                      ? "#dc2626"
-                      : "var(--text-light)",
-                  marginTop: "4px",
-                  textAlign: "right",
-                }}
-              >
-                {formik.values.bio.length}/1000 characters
-              </div>
-            </div>
-
-            <div style={{ marginBottom: "20px" }}>
-              <label className="form-label">Experience Level *</label>
-              <select
-                name="experienceLevel"
-                className="form-input"
-                value={formik.values.experienceLevel}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              >
-                <option value="">Select Experience Level</option>
-                {experienceLevels.map((level) => (
-                  <option key={level.value} value={level.value}>
-                    {level.label}
-                  </option>
-                ))}
-              </select>
-              {formik.touched.experienceLevel &&
-                formik.errors.experienceLevel && (
-                  <div
-                    style={{
-                      color: "#dc2626",
-                      fontSize: "14px",
-                      marginTop: "4px",
-                    }}
-                  >
-                    {formik.errors.experienceLevel}
-                  </div>
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-800 mb-2">
+                  Professional Title <span className="text-red-600">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                  placeholder="e.g., Senior React Developer"
+                  value={formik.values.title}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.title && formik.errors.title && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {formik.errors.title}
+                  </p>
                 )}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-800 mb-2">
+                  Professional Bio <span className="text-red-600">*</span>
+                </label>
+                <textarea
+                  name="bio"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500 resize-vertical"
+                  rows="5"
+                  placeholder="Describe your experience, skills, expertise, and what you can offer to clients..."
+                  value={formik.values.bio}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {formik.touched.bio && formik.errors.bio && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {formik.errors.bio}
+                  </p>
+                )}
+                <div className="text-xs text-gray-500 text-right mt-1">
+                  {formik.values.bio.length}/1000 characters
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-800 mb-2">
+                  Experience Level <span className="text-red-600">*</span>
+                </label>
+                <select
+                  name="experienceLevel"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black"
+                  value={formik.values.experienceLevel}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                >
+                  <option value="" className="text-gray-500">Select Experience Level</option>
+                  {experienceLevels.map((level) => (
+                    <option key={level.value} value={level.value} className="text-black">
+                      {level.label}
+                    </option>
+                  ))}
+                </select>
+                {formik.touched.experienceLevel &&
+                  formik.errors.experienceLevel && (
+                  <p className="mt-1 text-sm text-red-600">
+                    {formik.errors.experienceLevel}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Skills & Categories */}
-          <div style={{ marginBottom: "32px" }}>
-            <h2
-              style={{
-                fontSize: "20px",
-                fontWeight: "600",
-                marginBottom: "20px",
-              }}
-            >
+          <div className="bg-orange-50 p-6 rounded-lg border border-orange-200">
+            <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+              <span className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                4
+              </span>
               Skills & Specializations
-            </h2>
+            </h3>
 
-            <div style={{ marginBottom: "24px" }}>
-              <label className="form-label">Skills *</label>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-                  gap: "12px",
-                  marginTop: "12px",
-                }}
-              >
-                {skills.map((skill) => (
-                  <label
-                    key={skill}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "8px 12px",
-                      background: formik.values.skills.includes(skill)
-                        ? "var(--secondary-white)"
-                        : "transparent",
-                      border: `1px solid ${
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-800 mb-2">
+                  Skills <span className="text-red-600">*</span>
+                </label>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                  {skills.map((skill) => (
+                    <label
+                      key={skill}
+                      className={`flex items-center gap-2 p-3 border rounded-lg cursor-pointer transition-all duration-200 ${
                         formik.values.skills.includes(skill)
-                          ? "var(--accent-blue)"
-                          : "var(--border-light)"
-                      }`,
-                      borderRadius: "var(--radius-sm)",
-                      cursor: "pointer",
-                      fontSize: "14px",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={formik.values.skills.includes(skill)}
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          formik.setFieldValue("skills", [
-                            ...formik.values.skills,
-                            skill,
-                          ]);
-                        } else {
-                          formik.setFieldValue(
-                            "skills",
-                            formik.values.skills.filter((s) => s !== skill)
-                          );
-                        }
-                      }}
-                      style={{ display: "none" }}
-                    />
-                    {skill}
-                  </label>
-                ))}
-              </div>
-              {formik.touched.skills && formik.errors.skills && (
-                <div
-                  style={{
-                    color: "#dc2626",
-                    fontSize: "14px",
-                    marginTop: "8px",
-                  }}
-                >
-                  {formik.errors.skills}
+                          ? "bg-blue-100 border-blue-500 text-blue-900"
+                          : "bg-white border-gray-300 text-gray-700 hover:border-gray-400"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={formik.values.skills.includes(skill)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            formik.setFieldValue("skills", [
+                              ...formik.values.skills,
+                              skill,
+                            ]);
+                          } else {
+                            formik.setFieldValue(
+                              "skills",
+                              formik.values.skills.filter((s) => s !== skill)
+                            );
+                          }
+                        }}
+                        className="sr-only"
+                      />
+                      <span className="text-sm font-medium">{skill}</span>
+                    </label>
+                  ))}
                 </div>
-              )}
-            </div>
+                {formik.touched.skills && formik.errors.skills && (
+                  <p className="mt-2 text-sm text-red-600">
+                    {formik.errors.skills}
+                  </p>
+                )}
+              </div>
 
-            <div>
-              <label className="form-label">Categories *</label>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                  gap: "12px",
-                  marginTop: "12px",
-                }}
-              >
-                {categories.map((category) => (
-                  <label
-                    key={category}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "12px 16px",
-                      background: formik.values.categories.includes(category)
-                        ? "var(--secondary-white)"
-                        : "transparent",
-                      border: `1px solid ${
+              <div>
+                <label className="block text-sm font-medium text-gray-800 mb-2">
+                  Categories <span className="text-red-600">*</span>
+                </label>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {categories.map((category) => (
+                    <label
+                      key={category}
+                      className={`flex items-center gap-3 p-4 border rounded-lg cursor-pointer transition-all duration-200 ${
                         formik.values.categories.includes(category)
-                          ? "var(--accent-blue)"
-                          : "var(--border-light)"
-                      }`,
-                      borderRadius: "var(--radius-sm)",
-                      cursor: "pointer",
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      transition: "all 0.2s ease",
-                    }}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={formik.values.categories.includes(category)}
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          formik.setFieldValue("categories", [
-                            ...formik.values.categories,
-                            category,
-                          ]);
-                        } else {
-                          formik.setFieldValue(
-                            "categories",
-                            formik.values.categories.filter(
-                              (c) => c !== category
-                            )
-                          );
-                        }
-                      }}
-                      style={{ display: "none" }}
-                    />
-                    {category}
-                  </label>
-                ))}
-              </div>
-              {formik.touched.categories && formik.errors.categories && (
-                <div
-                  style={{
-                    color: "#dc2626",
-                    fontSize: "14px",
-                    marginTop: "8px",
-                  }}
-                >
-                  {formik.errors.categories}
+                          ? "bg-blue-100 border-blue-500 text-blue-900"
+                          : "bg-white border-gray-300 text-gray-700 hover:border-gray-400"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={formik.values.categories.includes(category)}
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            formik.setFieldValue("categories", [
+                              ...formik.values.categories,
+                              category,
+                            ]);
+                          } else {
+                            formik.setFieldValue(
+                              "categories",
+                              formik.values.categories.filter(
+                                (c) => c !== category
+                              )
+                            );
+                          }
+                        }}
+                        className="sr-only"
+                      />
+                      <span className="text-sm font-medium">{category}</span>
+                    </label>
+                  ))}
                 </div>
-              )}
+                {formik.touched.categories && formik.errors.categories && (
+                  <p className="mt-2 text-sm text-red-600">
+                    {formik.errors.categories}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Portfolio Links */}
-          <div style={{ marginBottom: "32px" }}>
-            <h2
-              style={{
-                fontSize: "20px",
-                fontWeight: "600",
-                marginBottom: "20px",
-              }}
-            >
+          <div className="bg-indigo-50 p-6 rounded-lg border border-indigo-200">
+            <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+              <span className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                5
+              </span>
               Portfolio & Links
-            </h2>
+            </h3>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr",
-                gap: "16px",
-              }}
-            >
+            <div className="space-y-4">
               <div>
-                <label className="form-label">Portfolio Website</label>
+                <label className="block text-sm font-medium text-gray-800 mb-2">
+                  Portfolio Website
+                </label>
                 <input
                   type="url"
                   name="portfolioUrl"
-                  className="form-input"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                   placeholder="https://yourportfolio.com"
                   value={formik.values.portfolioUrl}
                   onChange={formik.handleChange}
                 />
               </div>
 
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "16px",
-                }}
-              >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="form-label">GitHub URL</label>
+                  <label className="block text-sm font-medium text-gray-800 mb-2">
+                    GitHub URL
+                  </label>
                   <input
                     type="url"
                     name="githubUrl"
-                    className="form-input"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                     placeholder="https://github.com/username"
                     value={formik.values.githubUrl}
                     onChange={formik.handleChange}
@@ -658,11 +557,13 @@ const FreelancerProfileForm = () => {
                 </div>
 
                 <div>
-                  <label className="form-label">LinkedIn URL</label>
+                  <label className="block text-sm font-medium text-gray-800 mb-2">
+                    LinkedIn URL
+                  </label>
                   <input
                     type="url"
                     name="linkedinUrl"
-                    className="form-input"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                     placeholder="https://linkedin.com/in/username"
                     value={formik.values.linkedinUrl}
                     onChange={formik.handleChange}
@@ -671,13 +572,13 @@ const FreelancerProfileForm = () => {
               </div>
 
               <div>
-                <label className="form-label">
+                <label className="block text-sm font-medium text-gray-800 mb-2">
                   Behance/Dribbble (Designers)
                 </label>
                 <input
                   type="url"
                   name="behanceUrl"
-                  className="form-input"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
                   placeholder="https://behance.net/username"
                   value={formik.values.behanceUrl}
                   onChange={formik.handleChange}
@@ -687,117 +588,93 @@ const FreelancerProfileForm = () => {
           </div>
 
           {/* Location & Availability */}
-          <div style={{ marginBottom: "32px" }}>
-            <h2
-              style={{
-                fontSize: "20px",
-                fontWeight: "600",
-                marginBottom: "20px",
-              }}
-            >
+          <div className="bg-teal-50 p-6 rounded-lg border border-teal-200">
+            <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+              <span className="w-8 h-8 bg-teal-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                6
+              </span>
               Location & Availability
-            </h2>
+            </h3>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "20px",
-                marginBottom: "20px",
-              }}
-            >
-              <div>
-                <label className="form-label">Country</label>
-                <input
-                  type="text"
-                  name="country"
-                  className="form-input"
-                  value={formik.values.country}
-                  onChange={formik.handleChange}
-                />
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-800 mb-2">
+                    Country
+                  </label>
+                  <input
+                    type="text"
+                    name="country"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                    value={formik.values.country}
+                    onChange={formik.handleChange}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-800 mb-2">
+                    City
+                  </label>
+                  <input
+                    type="text"
+                    name="city"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                    value={formik.values.city}
+                    onChange={formik.handleChange}
+                  />
+                </div>
               </div>
 
               <div>
-                <label className="form-label">City</label>
-                <input
-                  type="text"
-                  name="city"
-                  className="form-input"
-                  value={formik.values.city}
+                <label className="block text-sm font-medium text-gray-800 mb-2">
+                  Average Response Time
+                </label>
+                <select
+                  name="responseTime"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black"
+                  value={formik.values.responseTime}
                   onChange={formik.handleChange}
-                />
+                >
+                  <option value="2 hours">Within 2 hours</option>
+                  <option value="6 hours">Within 6 hours</option>
+                  <option value="24 hours">Within 24 hours</option>
+                  <option value="48 hours">Within 48 hours</option>
+                </select>
               </div>
-            </div>
 
-            <div style={{ marginBottom: "20px" }}>
-              <label className="form-label">Average Response Time</label>
-              <select
-                name="responseTime"
-                className="form-input"
-                value={formik.values.responseTime}
-                onChange={formik.handleChange}
-              >
-                <option value="2 hours">Within 2 hours</option>
-                <option value="6 hours">Within 6 hours</option>
-                <option value="24 hours">Within 24 hours</option>
-                <option value="48 hours">Within 48 hours</option>
-              </select>
+              <label className="flex items-center gap-3 p-4 bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-colors duration-200 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="availableForWork"
+                  checked={formik.values.availableForWork}
+                  onChange={formik.handleChange}
+                  className="w-5 h-5 text-primary-600 focus:ring-primary-500 rounded"
+                />
+                <div>
+                  <div className="font-medium text-gray-900">
+                    Available for Work
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    I am currently available for new projects
+                  </div>
+                </div>
+              </label>
             </div>
-
-            <label
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                cursor: "pointer",
-              }}
-            >
-              <input
-                type="checkbox"
-                name="availableForWork"
-                checked={formik.values.availableForWork}
-                onChange={formik.handleChange}
-              />
-              I am currently available for new projects
-            </label>
           </div>
 
           {/* Payment Information */}
-          <div style={{ marginBottom: "32px" }}>
-            <h2
-              style={{
-                fontSize: "20px",
-                fontWeight: "600",
-                marginBottom: "20px",
-              }}
-            >
+          <div className="bg-cyan-50 p-6 rounded-lg border border-cyan-200">
+            <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+              <span className="w-8 h-8 bg-cyan-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                7
+              </span>
               Payment Information
-            </h2>
-            <div
-              style={{
-                background: "#f0f9ff",
-                padding: "20px",
-                borderRadius: "var(--radius-sm)",
-                border: "1px solid #bae6fd",
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: "16px",
-                  fontWeight: "600",
-                  marginBottom: "12px",
-                  color: "#0369a1",
-                }}
-              >
+            </h3>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+              <h4 className="text-lg font-semibold text-blue-900 mb-3">
                 Milestone-Based Payments
-              </h3>
-              <p
-                style={{
-                  fontSize: "14px",
-                  color: "#0369a1",
-                  lineHeight: "1.5",
-                }}
-              >
+              </h4>
+              <p className="text-blue-800 leading-relaxed">
                 All payments are milestone-based. You'll agree on project
                 milestones with clients, and payments are released when each
                 milestone is completed and approved. This ensures fair payment
@@ -807,41 +684,34 @@ const FreelancerProfileForm = () => {
           </div>
 
           {/* Submit Buttons */}
-          <div
-            style={{
-              display: "flex",
-              gap: "12px",
-              justifyContent: "flex-end",
-              paddingTop: "24px",
-              borderTop: "1px solid var(--border-light)",
-            }}
-          >
-            <button
-              type="button"
-              onClick={() => navigate("/freelancer/dashboard")}
-              style={{
-                background: "var(--secondary-white)",
-                color: "var(--text-primary)",
-                border: "1px solid var(--border-light)",
-                borderRadius: "var(--radius-sm)",
-                padding: "12px 24px",
-                fontSize: "16px",
-                fontWeight: "500",
-                cursor: "pointer",
-              }}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="login-btn"
-              style={{ padding: "12px 32px", margin: 0 }}
-              disabled={formik.isSubmitting}
-            >
-              {formik.isSubmitting ? "Updating..." : "Update Profile"}
-            </button>
+          <div className="bg-white p-6 rounded-lg border border-gray-200">
+            <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
+              <span className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                8
+              </span>
+              Save Changes
+            </h3>
+
+            <div className="flex justify-between items-center pt-6 border-t border-gray-200">
+              <button
+                type="button"
+                onClick={() => navigate("/freelancer/dashboard")}
+                className="px-6 py-3 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors duration-200"
+              >
+                Cancel
+              </button>
+
+              <button
+                type="submit"
+                className="px-8 py-3 bg-primary-500 text-white rounded-md font-medium hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+                disabled={formik.isSubmitting}
+              >
+                {formik.isSubmitting ? "Updating..." : "Update Profile"}
+              </button>
+            </div>
           </div>
         </form>
+        </div>
       </div>
     </div>
   );
