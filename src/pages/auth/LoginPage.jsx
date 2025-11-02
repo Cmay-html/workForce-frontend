@@ -441,14 +441,9 @@ const keyframes = `
 
 // Inject keyframes
 if (typeof document !== 'undefined') {
-  const styleSheet = document.styleSheets[0];
-  if (styleSheet) {
-    try {
-      styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-    } catch (e) {
-      console.warn('Failed to inject keyframes:', e);
-    }
-  }
+  const styleElement = document.createElement('style');
+  styleElement.textContent = keyframes;
+  document.head.appendChild(styleElement);
 }
 
 // Also add hover effects
