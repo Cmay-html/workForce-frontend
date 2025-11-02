@@ -74,7 +74,7 @@ const ClientSettingsForm = () => {
               <input
                 type="password"
                 name="currentPassword"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                 placeholder="Enter current password"
                 value={formik.values.currentPassword}
                 onChange={formik.handleChange}
@@ -89,7 +89,7 @@ const ClientSettingsForm = () => {
                 <input
                   type="password"
                   name="newPassword"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                   placeholder="Enter new password"
                   value={formik.values.newPassword}
                   onChange={formik.handleChange}
@@ -108,7 +108,7 @@ const ClientSettingsForm = () => {
                 <input
                   type="password"
                   name="confirmPassword"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                   placeholder="Confirm new password"
                   value={formik.values.confirmPassword}
                   onChange={formik.handleChange}

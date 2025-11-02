@@ -219,7 +219,7 @@ const ClientProfileForm = () => {
                   <input
                     type="text"
                     name="firstName"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                     value={formik.values.firstName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -238,7 +238,7 @@ const ClientProfileForm = () => {
                   <input
                     type="text"
                     name="lastName"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                     value={formik.values.lastName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -257,7 +257,7 @@ const ClientProfileForm = () => {
                   <input
                     type="email"
                     name="email"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                     value={formik.values.email}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -276,7 +276,7 @@ const ClientProfileForm = () => {
                   <input
                     type="tel"
                     name="phone"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                     value={formik.values.phone}
                     onChange={formik.handleChange}
                   />
@@ -301,7 +301,7 @@ const ClientProfileForm = () => {
                   <input
                     type="text"
                     name="companyName"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                     value={formik.values.companyName}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -320,7 +320,7 @@ const ClientProfileForm = () => {
                   <input
                     type="url"
                     name="companyWebsite"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                     placeholder="https://example.com"
                     value={formik.values.companyWebsite}
                     onChange={formik.handleChange}
@@ -334,7 +334,7 @@ const ClientProfileForm = () => {
                     </label>
                     <select
                       name="industry"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black"
                       value={formik.values.industry}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -359,7 +359,7 @@ const ClientProfileForm = () => {
                     </label>
                     <select
                       name="companySize"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black"
                       value={formik.values.companySize}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -386,7 +386,7 @@ const ClientProfileForm = () => {
                   </label>
                   <textarea
                     name="companyDescription"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500 resize-vertical"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500 resize-vertical"
                     rows="4"
                     placeholder="Brief description of your company and what you do..."
                     value={formik.values.companyDescription}
@@ -413,7 +413,7 @@ const ClientProfileForm = () => {
                   <input
                     type="text"
                     name="country"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                     value={formik.values.country}
                     onChange={formik.handleChange}
                   />
@@ -426,7 +426,7 @@ const ClientProfileForm = () => {
                   <input
                     type="text"
                     name="city"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                     value={formik.values.city}
                     onChange={formik.handleChange}
                   />
