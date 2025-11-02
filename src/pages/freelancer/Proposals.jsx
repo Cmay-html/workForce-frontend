@@ -15,42 +15,20 @@ const FreelancerProposals = () => {
       localStorage.getItem("proposals") || "[]"
     );
 
-    // If no stored proposals, show default mock data
+    // TODO: Replace with actual API call to fetch proposals
+    const fetchProposals = async () => {
+      try {
+        // const response = await api.get('/freelancer/proposals');
+        // setProposals(response.data);
+        setProposals([]); // Empty state until API is implemented
+      } catch (error) {
+        console.error('Failed to fetch proposals:', error);
+        setProposals([]);
+      }
+    };
+
     if (storedProposals.length === 0) {
-      const mockProposals = [
-        {
-          id: 1,
-          projectTitle: "E-commerce Website Development",
-          clientName: "TechCorp Inc",
-          proposedBudget: 5000,
-          proposedTimeline: 30,
-          submittedDate: "2024-01-15",
-          status: "pending", // pending, accepted, rejected
-          coverLetter:
-            "I have extensive experience in building e-commerce platforms...",
-        },
-        {
-          id: 2,
-          projectTitle: "Mobile App UI/UX Design",
-          clientName: "StartupXYZ",
-          proposedBudget: 3000,
-          proposedTimeline: 21,
-          submittedDate: "2024-01-10",
-          status: "accepted",
-          coverLetter: "As a UI/UX designer with 5 years of experience...",
-        },
-        {
-          id: 3,
-          projectTitle: "API Integration Service",
-          clientName: "DataSystems Ltd",
-          proposedBudget: 2000,
-          proposedTimeline: 14,
-          submittedDate: "2024-01-05",
-          status: "rejected",
-          coverLetter: "I specialize in API development and integration...",
-        },
-      ];
-      setProposals(mockProposals);
+      fetchProposals();
     } else {
       setProposals(storedProposals);
     }

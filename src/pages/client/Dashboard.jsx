@@ -13,111 +13,24 @@ const ClientDashboard = () => {
   const [filteredProjects, setFilteredProjects] = useState([]);
 
   useEffect(() => {
-    const loadProjects = () => {
+    const loadProjects = async () => {
       try {
-        // Check for user-created projects in localStorage first
-        const userProjects = JSON.parse(localStorage.getItem('userProjects') || '[]');
-        if (userProjects.length > 0) {
-          setProjects(userProjects);
-        } else {
-          // Fallback to mock data if no user projects
-          setProjects([
-            {
-              id: 1,
-              title: 'E-commerce Website',
-              status: 'in_progress',
-              freelancer: 'John Doe',
-              budget: 3500,
-              description: 'Full-stack e-commerce platform with payment integration',
-              deadline: '2024-02-15',
-              milestones: [
-                { id: 1, title: 'Planning & Design', status: 'completed', amount: 800 },
-                { id: 2, title: 'Frontend Development', status: 'in_progress', amount: 1500 },
-                { id: 3, title: 'Backend & Payment', status: 'pending', amount: 1000 },
-                { id: 4, title: 'Testing & Deployment', status: 'pending', amount: 200 }
-              ]
-            },
-            {
-              id: 2,
-              title: 'Mobile App Development',
-              status: 'open',
-              freelancer: null,
-              budget: 2800,
-              description: 'Cross-platform mobile app for task management',
-              deadline: '2024-03-01',
-              milestones: [
-                { id: 5, title: 'UI/UX Design', status: 'pending', amount: 600 },
-                { id: 6, title: 'iOS Development', status: 'pending', amount: 1200 },
-                { id: 7, title: 'Android Development', status: 'pending', amount: 800 },
-                { id: 8, title: 'Testing & Launch', status: 'pending', amount: 200 }
-              ]
-            },
-            {
-              id: 3,
-              title: 'Data Analytics Dashboard',
-              status: 'completed',
-              freelancer: 'Jane Smith',
-              budget: 1800,
-              description: 'Interactive dashboard for business analytics',
-              deadline: '2024-01-20',
-              milestones: [
-                { id: 9, title: 'Data Analysis', status: 'completed', amount: 500 },
-                { id: 10, title: 'Dashboard Design', status: 'completed', amount: 600 },
-                { id: 11, title: 'Implementation', status: 'completed', amount: 600 },
-                { id: 12, title: 'Final Review', status: 'completed', amount: 100 }
-              ]
-            }
-          ]);
+        // TODO: Replace with actual API call to fetch user's projects
+        const response = await fetch('/api/client/projects', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch projects');
         }
+
+        const data = await response.json();
+        setProjects(data.projects || []);
       } catch (error) {
-        // Final fallback to mock data
-        setProjects([
-          {
-            id: 1,
-            title: 'E-commerce Website',
-            status: 'in_progress',
-            freelancer: 'John Doe',
-            budget: 3500,
-            description: 'Full-stack e-commerce platform with payment integration',
-            deadline: '2024-02-15',
-            milestones: [
-              { id: 1, title: 'Planning & Design', status: 'completed', amount: 800 },
-              { id: 2, title: 'Frontend Development', status: 'in_progress', amount: 1500 },
-              { id: 3, title: 'Backend & Payment', status: 'pending', amount: 1000 },
-              { id: 4, title: 'Testing & Deployment', status: 'pending', amount: 200 }
-            ]
-          },
-          {
-            id: 2,
-            title: 'Mobile App Development',
-            status: 'open',
-            freelancer: null,
-            budget: 2800,
-            description: 'Cross-platform mobile app for task management',
-            deadline: '2024-03-01',
-            milestones: [
-              { id: 5, title: 'UI/UX Design', status: 'pending', amount: 600 },
-              { id: 6, title: 'iOS Development', status: 'pending', amount: 1200 },
-              { id: 7, title: 'Android Development', status: 'pending', amount: 800 },
-              { id: 8, title: 'Testing & Launch', status: 'pending', amount: 200 }
-            ]
-          },
-          {
-            id: 3,
-            title: 'Data Analytics Dashboard',
-            status: 'completed',
-            freelancer: 'Jane Smith',
-            budget: 1800,
-            description: 'Interactive dashboard for business analytics',
-            deadline: '2024-01-20',
-            milestones: [
-              { id: 9, title: 'Data Analysis', status: 'completed', amount: 500 },
-              { id: 10, title: 'Dashboard Design', status: 'completed', amount: 600 },
-              { id: 11, title: 'Implementation', status: 'completed', amount: 600 },
-              { id: 12, title: 'Final Review', status: 'completed', amount: 100 }
-            ]
-          }
-        ]);
+        console.error('Error loading projects:', error);
+        setProjects([]);
       } finally {
         setLoadingProjects(false);
       }
@@ -128,15 +41,21 @@ const ClientDashboard = () => {
 
   // Force refresh when navigating back to dashboard
   useEffect(() => {
-    const refreshProjects = () => {
+    const refreshProjects = async () => {
       try {
-        // Check for user-created projects in localStorage
-        const userProjects = JSON.parse(localStorage.getItem('userProjects') || '[]');
-        if (userProjects.length > 0) {
-          setProjects(userProjects);
+        // TODO: Replace with actual API call to refresh projects
+        const response = await fetch('/api/client/projects', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setProjects(data.projects || []);
         }
-        // If no user projects, keep existing mock data
       } catch (error) {
+        console.error('Error refreshing projects:', error);
       }
     };
 

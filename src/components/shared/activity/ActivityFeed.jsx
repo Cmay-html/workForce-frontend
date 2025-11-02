@@ -4,47 +4,23 @@ const ActivityFeed = ({ projectId }) => {
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
-    // Mock activities data - replace with actual API call
-    const mockActivities = [
-      {
-        id: 1,
-        type: 'milestone_completed',
-        user: 'John Freelancer',
-        action: 'completed milestone',
-        target: 'Project Planning & Setup',
-        timestamp: new Date(Date.now() - 300000).toISOString(),
-        projectId: projectId
-      },
-      {
-        id: 2,
-        type: 'message_sent',
-        user: 'You',
-        action: 'sent a message',
-        target: 'Project requirements',
-        timestamp: new Date(Date.now() - 600000).toISOString(),
-        projectId: projectId
-      },
-      {
-        id: 3,
-        type: 'proposal_accepted',
-        user: 'Client',
-        action: 'accepted proposal from',
-        target: 'John Freelancer',
-        timestamp: new Date(Date.now() - 1800000).toISOString(),
-        projectId: projectId
-      },
-      {
-        id: 4,
-        type: 'project_created',
-        user: 'You',
-        action: 'created project',
-        target: 'Website Development',
-        timestamp: new Date(Date.now() - 3600000).toISOString(),
-        projectId: projectId
+    // TODO: Replace with actual API call to fetch activities
+    const fetchActivities = async () => {
+      try {
+        // const response = await api.get(`/activities?projectId=${projectId}`);
+        // setActivities(response.data);
+        setActivities([]); // Empty state until API is implemented
+      } catch (error) {
+        console.error('Failed to fetch activities:', error);
+        setActivities([]);
       }
-    ];
+    };
 
-    setActivities(mockActivities);
+    if (projectId) {
+      fetchActivities();
+    } else {
+      setActivities([]);
+    }
   }, [projectId]);
 
   const getActivityColor = (type) => {

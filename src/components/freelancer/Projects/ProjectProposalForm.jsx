@@ -18,96 +18,62 @@ const ProjectProposalForm = () => {
   });
 
   useEffect(() => {
-    // Mock project data - replace with actual API call
-    const mockProjects = [
-      {
-        id: 1,
-        title: 'E-commerce Website Development',
-        description: 'Build a full-stack e-commerce platform with React, Node.js, and MongoDB.',
-        budget: 5000,
-        deadline: '2024-12-31',
-        category: 'Web Development',
-        skills: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-        client: 'TechCorp Inc'
-      },
-      {
-        id: 2,
-        title: 'Mobile App UI/UX Design',
-        description: 'Design a comprehensive UI/UX for a fitness tracking mobile application.',
-        budget: 3000,
-        deadline: '2024-12-15',
-        category: 'Design',
-        skills: ['Figma', 'Adobe XD', 'UI/UX Design', 'Mobile Design'],
-        client: 'FitLife Apps'
-      },
-      {
-        id: 3,
-        title: 'API Development & Integration',
-        description: 'Develop RESTful APIs for a logistics management system.',
-        budget: 4000,
-        deadline: '2024-11-30',
-        category: 'Web Development',
-        skills: ['Node.js', 'Express', 'MongoDB', 'JWT'],
-        client: 'LogiTech Solutions'
-      },
-      {
-        id: 4,
-        title: 'Content Management System',
-        description: 'Build a custom CMS for a publishing company.',
-        budget: 6000,
-        deadline: '2025-01-15',
-        category: 'Web Development',
-        skills: ['React', 'Node.js', 'PostgreSQL', 'SEO'],
-        client: 'PublishPro Media'
-      },
-      {
-        id: 5,
-        title: 'Data Visualization Dashboard',
-        description: 'Create an interactive dashboard for business analytics.',
-        budget: 3500,
-        deadline: '2024-11-20',
-        category: 'Data Science',
-        skills: ['React', 'D3.js', 'Python', 'Data Analysis'],
-        client: 'Analytics Corp'
-      },
-      {
-        id: 6,
-        title: 'DevOps Infrastructure Setup',
-        description: 'Set up CI/CD pipelines, container orchestration, and cloud infrastructure.',
-        budget: 4500,
-        deadline: '2024-12-10',
-        category: 'DevOps',
-        skills: ['Docker', 'Kubernetes', 'AWS', 'Jenkins'],
-        client: 'CloudTech Systems'
-      }
-    ];
+    const loadProject = async () => {
+      try {
+        // TODO: Replace with actual API call to fetch project details
+        const response = await fetch(`/api/freelancer/projects/${projectId}`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
 
-    const foundProject = mockProjects.find(p => p.id === parseInt(projectId));
-    setProject(foundProject);
-    setLoadingProject(false);
+        if (!response.ok) {
+          throw new Error('Failed to fetch project');
+        }
+
+        const data = await response.json();
+        setProject(data.project);
+      } catch (error) {
+        console.error('Error loading project:', error);
+        setProject(null);
+      } finally {
+        setLoadingProject(false);
+      }
+    };
+
+    if (projectId) {
+      loadProject();
+    }
   }, [projectId]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Add to pending proposals
-    const proposals = JSON.parse(localStorage.getItem('proposals') || '[]');
-    const newProposal = {
-      id: Date.now(),
-      projectId: project.id,
-      projectTitle: project.title,
-      clientName: project.client,
-      proposedBudget: parseInt(proposal.proposedBudget),
-      proposedTimeline: parseInt(proposal.estimatedTimeline),
-      submittedDate: new Date().toISOString().split('T')[0], // YYYY-MM-DD format
-      status: 'pending',
-      coverLetter: proposal.coverLetter
-    };
-    proposals.push(newProposal);
-    localStorage.setItem('proposals', JSON.stringify(proposals));
+    try {
+      // TODO: Replace with actual API call to submit proposal
+      const response = await fetch(`/api/freelancer/projects/${projectId}/proposals`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+        },
+        body: JSON.stringify({
+          coverLetter: proposal.coverLetter,
+          proposedBudget: parseInt(proposal.proposedBudget),
+          estimatedTimeline: parseInt(proposal.estimatedTimeline),
+          relevantExperience: proposal.relevantExperience,
+        }),
+      });
 
-    // Navigate to proposals page
-    navigate('/freelancer/proposals');
+      if (!response.ok) {
+        throw new Error('Failed to submit proposal');
+      }
+
+      // Navigate to proposals page
+      navigate('/freelancer/proposals');
+    } catch (error) {
+      console.error('Error submitting proposal:', error);
+    }
   };
 
   const handleChange = (e) => {

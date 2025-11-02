@@ -16,45 +16,23 @@ const ActiveProjects = () => {
     const storedProposals = JSON.parse(localStorage.getItem('proposals') || '[]');
     const acceptedProposals = storedProposals.filter(proposal => proposal.status === 'accepted');
 
-    // If no accepted proposals, show default mock data
+    // TODO: Replace with actual API call to fetch active projects
+    const fetchActiveProjects = async () => {
+      try {
+        // const response = await api.get('/freelancer/active-projects');
+        // setActiveProjects(response.data);
+        // setFilteredProjects(response.data);
+        setActiveProjects([]); // Empty state until API is implemented
+        setFilteredProjects([]);
+      } catch (error) {
+        console.error('Failed to fetch active projects:', error);
+        setActiveProjects([]);
+        setFilteredProjects([]);
+      }
+    };
+
     if (acceptedProposals.length === 0) {
-      const mockProjects = [
-        {
-          id: 1,
-          title: 'E-commerce Website Development',
-          client: 'TechCorp Inc',
-          budget: 5000,
-          deadline: '2024-02-28',
-          status: 'in-progress',
-          progress: 65,
-          currentMilestone: 'Payment Integration',
-          nextMilestoneDue: '2024-02-15'
-        },
-        {
-          id: 2,
-          title: 'Mobile App UI/UX Design',
-          client: 'StartupXYZ',
-          budget: 3000,
-          deadline: '2024-03-15',
-          status: 'in-progress',
-          progress: 30,
-          currentMilestone: 'Wireframe Design',
-          nextMilestoneDue: '2024-02-10'
-        },
-        {
-          id: 3,
-          title: 'API Integration Service',
-          client: 'DataSystems Ltd',
-          budget: 2000,
-          deadline: '2024-02-20',
-          status: 'on-hold',
-          progress: 80,
-          currentMilestone: 'Testing Phase',
-          nextMilestoneDue: '2024-02-05'
-        }
-      ];
-      setActiveProjects(mockProjects);
-      setFilteredProjects(mockProjects);
+      fetchActiveProjects();
     } else {
       // Transform accepted proposals to active projects format
       const formattedProjects = acceptedProposals.map(proposal => ({

@@ -6,6 +6,8 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  // Add timeout for database connections
+  timeout: 10000,
 });
 
 // Request interceptor to add auth token
@@ -31,6 +33,13 @@ api.interceptors.response.use(
       localStorage.removeItem('authToken');
       localStorage.removeItem('userData');
       window.location.href = '/login';
+    }
+    // Handle database connection errors
+    if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
+      console.error('Database connection timeout');
+    }
+    if (error.response?.status >= 500) {
+      console.error('Server error:', error.response.data);
     }
     return Promise.reject(error);
   }

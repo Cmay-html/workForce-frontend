@@ -57,28 +57,34 @@ const MessageInput = ({ onSendMessage, disabled, placeholder }) => {
   };
 
   const handleFileSelect = async (files) => {
-    for (const file of files) {
-      if (file.type.startsWith('image/')) {
-        // Handle image upload - create mock attachment
-        const attachment = {
-          id: `att-${Date.now()}`,
-          name: file.name,
-          type: 'image',
-          url: URL.createObjectURL(file), // Mock URL for demo
-          size: file.size
-        };
-        await onSendMessage('', 'image', [attachment]);
-      } else {
-        // Handle file upload - create mock attachment
-        const attachment = {
-          id: `att-${Date.now()}`,
-          name: file.name,
-          type: 'file',
-          url: URL.createObjectURL(file), // Mock URL for demo
-          size: file.size
-        };
-        await onSendMessage('', 'file', [attachment]);
+    try {
+      const formData = new FormData();
+      for (const file of files) {
+        formData.append('files', file);
       }
+
+      // TODO: Replace with actual API call to upload files
+      const response = await fetch('/api/chat/upload', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+        },
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload files');
+      }
+
+      const data = await response.json();
+
+      // Send message with uploaded file attachments
+      for (const attachment of data.attachments) {
+        const messageType = attachment.type.startsWith('image/') ? 'image' : 'file';
+        await onSendMessage('', messageType, [attachment]);
+      }
+    } catch (error) {
+      console.error('Error uploading files:', error);
     }
   };
 

@@ -6,59 +6,19 @@ const MilestonesOverviewPage = () => {
   const [milestones, setMilestones] = useState([]);
 
   useEffect(() => {
-    // Mock milestones data - replace with actual API call
-    const mockMilestones = [
-      {
-        id: 1,
-        projectId: 'proj1',
-        projectTitle: 'Website Development',
-        title: 'Project Planning & Setup',
-        description: 'Initial project setup, requirements gathering, and planning phase',
-        status: 'completed',
-        amount: 500,
-        dueDate: '2024-01-10',
-        freelancer: 'John Doe',
-        progress: 100
-      },
-      {
-        id: 2,
-        projectId: 'proj1',
-        projectTitle: 'Website Development',
-        title: 'Design Phase',
-        description: 'UI/UX design, wireframes, and mockups',
-        status: 'completed',
-        amount: 800,
-        dueDate: '2024-01-20',
-        freelancer: 'John Doe',
-        progress: 100
-      },
-      {
-        id: 3,
-        projectId: 'proj1',
-        projectTitle: 'Website Development',
-        title: 'Development Phase',
-        description: 'Frontend and backend development',
-        status: 'in_progress',
-        amount: 2000,
-        dueDate: '2024-02-15',
-        freelancer: 'John Doe',
-        progress: 65
-      },
-      {
-        id: 4,
-        projectId: 'proj2',
-        projectTitle: 'Mobile App Design',
-        title: 'Wireframes & User Flow',
-        description: 'Create wireframes and user flow diagrams',
-        status: 'pending',
-        amount: 400,
-        dueDate: '2024-02-01',
-        freelancer: 'Jane Smith',
-        progress: 0
+    // TODO: Replace with actual API call to fetch milestones
+    const fetchMilestones = async () => {
+      try {
+        // const response = await api.get('/milestones');
+        // setMilestones(response.data);
+        setMilestones([]); // Empty state until API is implemented
+      } catch (error) {
+        console.error('Failed to fetch milestones:', error);
+        setMilestones([]);
       }
-    ];
+    };
 
-    setMilestones(mockMilestones);
+    fetchMilestones();
   }, []);
 
   const getStatusColor = (status) => {

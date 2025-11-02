@@ -16,54 +16,42 @@ const PaymentTracking = () => {
   });
 
   useEffect(() => {
-    const mockPayments = [
-      {
-        id: 1,
-        project: 'E-commerce Website',
-        client: 'TechCorp Inc',
-        amount: 1500,
-        date: '2024-02-01',
-        status: 'completed',
-        type: 'milestone'
-      },
-      {
-        id: 2,
-        project: 'Mobile App Design',
-        client: 'StartupXYZ',
-        amount: 1000,
-        date: '2024-01-25',
-        status: 'completed',
-        type: 'milestone'
-      },
-      {
-        id: 3,
-        project: 'API Integration',
-        client: 'DataSystems Ltd',
-        amount: 2000,
-        date: '2024-02-15',
-        status: 'pending',
-        type: 'milestone'
-      },
-      {
-        id: 4,
-        project: 'Website Redesign',
-        client: 'Creative Agency',
-        amount: 1200,
-        date: '2024-01-20',
-        status: 'completed',
-        type: 'milestone'
+    const loadPayments = async () => {
+      try {
+        // TODO: Replace with actual API call to fetch payment data
+        const response = await fetch('/api/freelancer/payments', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch payments');
+        }
+
+        const data = await response.json();
+        setPayments(data.payments || []);
+        setEarningsStats(data.earningsStats || {
+          totalEarnings: 0,
+          pendingPayments: 0,
+          thisMonthEarnings: 0,
+          averageEarnings: 0
+        });
+      } catch (error) {
+        console.error('Error loading payments:', error);
+        setPayments([]);
+        setEarningsStats({
+          totalEarnings: 0,
+          pendingPayments: 0,
+          thisMonthEarnings: 0,
+          averageEarnings: 0
+        });
+      } finally {
+        setLoadingPayments(false);
       }
-    ];
+    };
 
-    setPayments(mockPayments);
-
-    setEarningsStats({
-      totalEarnings: 24500,
-      pendingPayments: 2000,
-      thisMonthEarnings: 3500,
-      averageEarnings: 2800
-    });
-    setLoadingPayments(false);
+    loadPayments();
   }, []);
 
   const getStatusColor = (status) => {

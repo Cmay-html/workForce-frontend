@@ -1,44 +1,41 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 const ProjectMilestonesPage = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
-  const [milestones, setMilestones] = useState([
-    {
-      id: 1,
-      title: "Project Planning & Setup",
-      description: "Initial project setup and planning phase",
-      dueDate: "2024-12-10",
-      amount: 1000,
-      status: "pending",
-    },
-    {
-      id: 2,
-      title: "UI/UX Design Completion",
-      description: "Complete all design mockups and user flows",
-      dueDate: "2024-12-20",
-      amount: 1500,
-      status: "pending",
-    },
-    {
-      id: 3,
-      title: "Development Phase 1",
-      description: "Backend API development and basic frontend structure",
-      dueDate: "2024-12-30",
-      amount: 1500,
-      status: "pending",
-    },
-    {
-      id: 4,
-      title: "Final Delivery & Testing",
-      description: "Complete development, testing, and project delivery",
-      dueDate: "2025-01-10",
-      amount: 1000,
-      status: "pending",
-    },
-  ]);
+  const [milestones, setMilestones] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadMilestones = async () => {
+      try {
+        // TODO: Replace with actual API call to fetch project milestones
+        const response = await fetch(`/api/client/projects/${projectId}/milestones`, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch milestones');
+        }
+
+        const data = await response.json();
+        setMilestones(data.milestones || []);
+      } catch (error) {
+        console.error('Error loading milestones:', error);
+        setMilestones([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (projectId) {
+      loadMilestones();
+    }
+  }, [projectId]);
 
   const [newMilestone, setNewMilestone] = useState({
     title: "",
@@ -47,25 +44,85 @@ const ProjectMilestonesPage = () => {
     amount: "",
   });
 
-  const handleAddMilestone = (e) => {
+  const handleAddMilestone = async (e) => {
     e.preventDefault();
-    const milestone = {
-      id: milestones.length + 1,
-      ...newMilestone,
-      amount: parseInt(newMilestone.amount),
-      status: "pending",
-    };
-    setMilestones([...milestones, milestone]);
-    setNewMilestone({ title: "", description: "", dueDate: "", amount: "" });
+    try {
+      // TODO: Replace with actual API call to create milestone
+      const response = await fetch(`/api/client/projects/${projectId}/milestones`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+        },
+        body: JSON.stringify({
+          ...newMilestone,
+          amount: parseInt(newMilestone.amount),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create milestone');
+      }
+
+      const data = await response.json();
+      setMilestones([...milestones, data.milestone]);
+      setNewMilestone({ title: "", description: "", dueDate: "", amount: "" });
+    } catch (error) {
+      console.error('Error creating milestone:', error);
+    }
   };
 
-  const handleMilestoneStatus = (milestoneId, status) => {
-    setMilestones(
-      milestones.map((milestone) =>
-        milestone.id === milestoneId ? { ...milestone, status } : milestone
-      )
-    );
+  const handleMilestoneStatus = async (milestoneId, status) => {
+    try {
+      // TODO: Replace with actual API call to update milestone status
+      const response = await fetch(`/api/client/milestones/${milestoneId}/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+        },
+        body: JSON.stringify({ status }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update milestone status');
+      }
+
+      // Update local state
+      setMilestones(
+        milestones.map((milestone) =>
+          milestone.id === milestoneId ? { ...milestone, status } : milestone
+        )
+      );
+    } catch (error) {
+      console.error('Error updating milestone status:', error);
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="max-w-6xl mx-auto py-8" style={{ minWidth: '1024px' }}>
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/4 mb-8"></div>
+          <div className="bg-white p-6 rounded-lg shadow-md mb-8 border border-gray-200">
+            <div className="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} className="h-12 bg-gray-200 rounded"></div>
+              ))}
+            </div>
+          </div>
+          {[1, 2, 3].map(i => (
+            <div key={i} className="bg-white p-6 rounded-lg shadow-md mb-6 border border-gray-200">
+              <div className="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>
+              <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-6xl mx-auto py-8" style={{ minWidth: '1024px' }}>
