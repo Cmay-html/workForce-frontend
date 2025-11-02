@@ -338,16 +338,7 @@ const FreelancerRegistrationForm = () => {
                 <input
                   type="text"
                   name="firstName"
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    border: "2px solid #e5e7eb",
-                    borderRadius: "8px",
-                    fontSize: "16px",
-                    outline: "none",
-                    transition: "border-color 0.2s",
-                    backgroundColor: "#ffffff"
-                  }}
+                  className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="John"
                   value={formik.values.firstName}
                   onChange={formik.handleChange}
@@ -375,16 +366,7 @@ const FreelancerRegistrationForm = () => {
                 <input
                   type="text"
                   name="lastName"
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    border: "2px solid #e5e7eb",
-                    borderRadius: "8px",
-                    fontSize: "16px",
-                    outline: "none",
-                    transition: "border-color 0.2s",
-                    backgroundColor: "#ffffff"
-                  }}
+                  className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="Doe"
                   value={formik.values.lastName}
                   onChange={formik.handleChange}
@@ -413,16 +395,7 @@ const FreelancerRegistrationForm = () => {
               <input
                 type="email"
                 name="email"
-                style={{
-                  width: "100%",
-                  padding: "12px 16px",
-                  border: "2px solid #e5e7eb",
-                  borderRadius: "8px",
-                  fontSize: "16px",
-                  outline: "none",
-                  transition: "border-color 0.2s",
-                  backgroundColor: "#ffffff"
-                }}
+                className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors"
                 placeholder="john.doe@example.com"
                 value={formik.values.email}
                 onChange={formik.handleChange}
@@ -460,16 +433,7 @@ const FreelancerRegistrationForm = () => {
                 <input
                   type="password"
                   name="password"
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    border: "2px solid #e5e7eb",
-                    borderRadius: "8px",
-                    fontSize: "16px",
-                    outline: "none",
-                    transition: "border-color 0.2s",
-                    backgroundColor: "#ffffff"
-                  }}
+                  className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="Create a password"
                   value={formik.values.password}
                   onChange={formik.handleChange}
@@ -499,16 +463,7 @@ const FreelancerRegistrationForm = () => {
                 <input
                   type="password"
                   name="confirmPassword"
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    border: "2px solid #e5e7eb",
-                    borderRadius: "8px",
-                    fontSize: "16px",
-                    outline: "none",
-                    transition: "border-color 0.2s",
-                    backgroundColor: "#ffffff"
-                  }}
+                  className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="Confirm your password"
                   value={formik.values.confirmPassword}
                   onChange={formik.handleChange}
@@ -539,16 +494,7 @@ const FreelancerRegistrationForm = () => {
               <input
                 type="tel"
                 name="phone"
-                style={{
-                  width: "100%",
-                  padding: "12px 16px",
-                  border: "2px solid #e5e7eb",
-                  borderRadius: "8px",
-                  fontSize: "16px",
-                  outline: "none",
-                  transition: "border-color 0.2s",
-                  backgroundColor: "#ffffff"
-                }}
+                className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors"
                 placeholder="+1 (555) 123-4567"
                 value={formik.values.phone}
                 onChange={formik.handleChange}
@@ -579,16 +525,7 @@ const FreelancerRegistrationForm = () => {
               <input
                 type="text"
                 name="title"
-                style={{
-                  width: "100%",
-                  padding: "12px 16px",
-                  border: "2px solid #e5e7eb",
-                  borderRadius: "8px",
-                  fontSize: "16px",
-                  outline: "none",
-                  transition: "border-color 0.2s",
-                  backgroundColor: "#ffffff"
-                }}
+                className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors"
                 placeholder="e.g., Senior React Developer, UI/UX Designer"
                 value={formik.values.title}
                 onChange={formik.handleChange}
@@ -617,17 +554,7 @@ const FreelancerRegistrationForm = () => {
               }}>Professional Bio *</label>
               <textarea
                 name="bio"
-                style={{
-                  width: "100%",
-                  padding: "12px 16px",
-                  border: "2px solid #e5e7eb",
-                  borderRadius: "8px",
-                  fontSize: "16px",
-                  outline: "none",
-                  transition: "border-color 0.2s",
-                  backgroundColor: "#ffffff",
-                  resize: "vertical"
-                }}
+                className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors resize-vertical"
                 rows="5"
                 placeholder="Describe your experience, skills, expertise, and what you can offer to clients. Include your background, achievements, and what makes you unique..."
                 value={formik.values.bio}
@@ -672,17 +599,7 @@ const FreelancerRegistrationForm = () => {
               }}>Experience Level *</label>
               <select
                 name="experienceLevel"
-                style={{
-                  width: "100%",
-                  padding: "12px 16px",
-                  border: "2px solid #e5e7eb",
-                  borderRadius: "8px",
-                  fontSize: "16px",
-                  outline: "none",
-                  transition: "border-color 0.2s",
-                  backgroundColor: "#ffffff",
-                  color: "#374151"
-                }}
+                className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors"
                 value={formik.values.experienceLevel}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -929,16 +846,7 @@ const FreelancerRegistrationForm = () => {
                 <input
                   type="url"
                   name="portfolioUrl"
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    border: "2px solid #e5e7eb",
-                    borderRadius: "8px",
-                    fontSize: "16px",
-                    outline: "none",
-                    transition: "border-color 0.2s",
-                    backgroundColor: "#ffffff"
-                  }}
+                  className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="https://yourportfolio.com"
                   value={formik.values.portfolioUrl}
                   onChange={formik.handleChange}
@@ -963,16 +871,7 @@ const FreelancerRegistrationForm = () => {
                   <input
                     type="url"
                     name="githubUrl"
-                    style={{
-                      width: "100%",
-                      padding: "12px 16px",
-                      border: "2px solid #e5e7eb",
-                      borderRadius: "8px",
-                      fontSize: "16px",
-                      outline: "none",
-                      transition: "border-color 0.2s",
-                      backgroundColor: "#ffffff"
-                    }}
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors"
                     placeholder="https://github.com/username"
                     value={formik.values.githubUrl}
                     onChange={formik.handleChange}
@@ -990,16 +889,7 @@ const FreelancerRegistrationForm = () => {
                   <input
                     type="url"
                     name="linkedinUrl"
-                    style={{
-                      width: "100%",
-                      padding: "12px 16px",
-                      border: "2px solid #e5e7eb",
-                      borderRadius: "8px",
-                      fontSize: "16px",
-                      outline: "none",
-                      transition: "border-color 0.2s",
-                      backgroundColor: "#ffffff"
-                    }}
+                    className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors"
                     placeholder="https://linkedin.com/in/username"
                     value={formik.values.linkedinUrl}
                     onChange={formik.handleChange}
@@ -1020,16 +910,7 @@ const FreelancerRegistrationForm = () => {
                 <input
                   type="url"
                   name="behanceUrl"
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    border: "2px solid #e5e7eb",
-                    borderRadius: "8px",
-                    fontSize: "16px",
-                    outline: "none",
-                    transition: "border-color 0.2s",
-                    backgroundColor: "#ffffff"
-                  }}
+                  className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="https://behance.net/username"
                   value={formik.values.behanceUrl}
                   onChange={formik.handleChange}
@@ -1069,16 +950,7 @@ const FreelancerRegistrationForm = () => {
                 <input
                   type="text"
                   name="country"
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    border: "2px solid #e5e7eb",
-                    borderRadius: "8px",
-                    fontSize: "16px",
-                    outline: "none",
-                    transition: "border-color 0.2s",
-                    backgroundColor: "#ffffff"
-                  }}
+                  className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="United States"
                   value={formik.values.country}
                   onChange={formik.handleChange}
@@ -1096,16 +968,7 @@ const FreelancerRegistrationForm = () => {
                 <input
                   type="text"
                   name="city"
-                  style={{
-                    width: "100%",
-                    padding: "12px 16px",
-                    border: "2px solid #e5e7eb",
-                    borderRadius: "8px",
-                    fontSize: "16px",
-                    outline: "none",
-                    transition: "border-color 0.2s",
-                    backgroundColor: "#ffffff"
-                  }}
+                  className="w-full p-3 border-2 border-gray-300 rounded-lg bg-white text-black text-base focus:outline-none focus:border-blue-500 transition-colors"
                   placeholder="New York"
                   value={formik.values.city}
                   onChange={formik.handleChange}

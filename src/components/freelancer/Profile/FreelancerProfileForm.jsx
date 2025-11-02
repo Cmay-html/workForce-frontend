@@ -271,7 +271,7 @@ const FreelancerProfileForm = () => {
                 <input
                   type="text"
                   name="firstName"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                   value={formik.values.firstName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -290,7 +290,7 @@ const FreelancerProfileForm = () => {
                 <input
                   type="text"
                   name="lastName"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                   value={formik.values.lastName}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -309,7 +309,7 @@ const FreelancerProfileForm = () => {
                 <input
                   type="email"
                   name="email"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                   value={formik.values.email}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -328,7 +328,7 @@ const FreelancerProfileForm = () => {
                 <input
                   type="tel"
                   name="phone"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                   value={formik.values.phone}
                   onChange={formik.handleChange}
                 />
@@ -353,7 +353,7 @@ const FreelancerProfileForm = () => {
                 <input
                   type="text"
                   name="title"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                   placeholder="e.g., Senior React Developer"
                   value={formik.values.title}
                   onChange={formik.handleChange}
@@ -372,7 +372,7 @@ const FreelancerProfileForm = () => {
                 </label>
                 <textarea
                   name="bio"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500 resize-vertical"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500 resize-vertical"
                   rows="5"
                   placeholder="Describe your experience, skills, expertise, and what you can offer to clients..."
                   value={formik.values.bio}
@@ -395,7 +395,7 @@ const FreelancerProfileForm = () => {
                 </label>
                 <select
                   name="experienceLevel"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black"
                   value={formik.values.experienceLevel}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -534,7 +534,7 @@ const FreelancerProfileForm = () => {
                 <input
                   type="url"
                   name="portfolioUrl"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                   placeholder="https://yourportfolio.com"
                   value={formik.values.portfolioUrl}
                   onChange={formik.handleChange}
@@ -549,7 +549,7 @@ const FreelancerProfileForm = () => {
                   <input
                     type="url"
                     name="githubUrl"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                     placeholder="https://github.com/username"
                     value={formik.values.githubUrl}
                     onChange={formik.handleChange}
@@ -563,7 +563,7 @@ const FreelancerProfileForm = () => {
                   <input
                     type="url"
                     name="linkedinUrl"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                     placeholder="https://linkedin.com/in/username"
                     value={formik.values.linkedinUrl}
                     onChange={formik.handleChange}
@@ -578,7 +578,7 @@ const FreelancerProfileForm = () => {
                 <input
                   type="url"
                   name="behanceUrl"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                   placeholder="https://behance.net/username"
                   value={formik.values.behanceUrl}
                   onChange={formik.handleChange}
@@ -605,7 +605,7 @@ const FreelancerProfileForm = () => {
                   <input
                     type="text"
                     name="country"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                     value={formik.values.country}
                     onChange={formik.handleChange}
                   />
@@ -618,7 +618,7 @@ const FreelancerProfileForm = () => {
                   <input
                     type="text"
                     name="city"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black placeholder:text-gray-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black placeholder:text-gray-500"
                     value={formik.values.city}
                     onChange={formik.handleChange}
                   />
@@ -631,7 +631,7 @@ const FreelancerProfileForm = () => {
                 </label>
                 <select
                   name="responseTime"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-black"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 bg-white text-black"
                   value={formik.values.responseTime}
                   onChange={formik.handleChange}
                 >

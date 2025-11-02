@@ -253,8 +253,8 @@ const ClientRegistrationForm = () => {
                   <input
                     type="text"
                     name="firstName"
-                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
-                      formik.touched.firstName && formik.errors.firstName ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
+                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg text-black focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
+                      formik.touched.firstName && formik.errors.firstName ? 'border-red-400 bg-red-50' : 'border-blue-200'
                     }`}
                     placeholder="John"
                     value={formik.values.firstName}
@@ -278,8 +278,8 @@ const ClientRegistrationForm = () => {
                   <input
                     type="text"
                     name="lastName"
-                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
-                      formik.touched.lastName && formik.errors.lastName ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
+                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg text-black focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
+                      formik.touched.lastName && formik.errors.lastName ? 'border-red-400 bg-red-50' : 'border-blue-200'
                     }`}
                     placeholder="Doe"
                     value={formik.values.lastName}
@@ -303,8 +303,8 @@ const ClientRegistrationForm = () => {
                   <input
                     type="email"
                     name="email"
-                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
-                      formik.touched.email && formik.errors.email ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
+                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg text-black focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors ${
+                      formik.touched.email && formik.errors.email ? 'border-red-400 bg-red-50' : 'border-blue-200'
                     }`}
                     placeholder="john.doe@company.com"
                     value={formik.values.email}
@@ -330,8 +330,8 @@ const ClientRegistrationForm = () => {
                     <input
                       type={showPassword ? "text" : "password"}
                       name="password"
-                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors pr-12 ${
-                        formik.touched.password && formik.errors.password ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
+                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg text-black focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors pr-12 ${
+                        formik.touched.password && formik.errors.password ? 'border-red-400 bg-red-50' : 'border-blue-200'
                       }`}
                       placeholder="Create a password"
                       value={formik.values.password}
@@ -374,8 +374,8 @@ const ClientRegistrationForm = () => {
                     <input
                       type={showConfirmPassword ? "text" : "password"}
                       name="confirmPassword"
-                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors pr-12 ${
-                        formik.touched.confirmPassword && formik.errors.confirmPassword ? 'border-red-400 bg-red-50' : 'border-blue-200 bg-white'
+                      className={`w-full border-2 rounded-xl px-5 py-4 text-lg text-black focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors pr-12 ${
+                        formik.touched.confirmPassword && formik.errors.confirmPassword ? 'border-red-400 bg-red-50' : 'border-blue-200'
                       }`}
                       placeholder="Confirm your password"
                       value={formik.values.confirmPassword}
@@ -416,7 +416,7 @@ const ClientRegistrationForm = () => {
                   <input
                     type="tel"
                     name="phone"
-                    className="w-full border-2 border-blue-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors bg-white"
+                    className="w-full border-2 border-blue-200 rounded-xl px-5 py-4 text-lg text-black focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors"
                     placeholder="+1 (555) 123-4567"
                     value={formik.values.phone}
                     onChange={formik.handleChange}
@@ -445,8 +445,8 @@ const ClientRegistrationForm = () => {
                   <input
                     type="text"
                     name="companyName"
-                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
-                      formik.touched.companyName && formik.errors.companyName ? 'border-red-400 bg-red-50' : 'border-purple-200 bg-white'
+                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg text-black focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
+                      formik.touched.companyName && formik.errors.companyName ? 'border-red-400 bg-red-50' : 'border-purple-200'
                     }`}
                     placeholder="Acme Corporation"
                     value={formik.values.companyName}
@@ -471,7 +471,7 @@ const ClientRegistrationForm = () => {
                     <select
                       name="industry"
                       className={`w-full border-2 rounded-xl px-5 py-4 text-lg text-gray-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
-                        formik.touched.industry && formik.errors.industry ? 'border-red-400 bg-red-50' : 'border-purple-200 bg-white'
+                        formik.touched.industry && formik.errors.industry ? 'border-red-400 bg-red-50' : 'border-purple-200'
                       }`}
                       value={formik.values.industry}
                       onChange={formik.handleChange}
@@ -501,7 +501,7 @@ const ClientRegistrationForm = () => {
                     <select
                       name="companySize"
                       className={`w-full border-2 rounded-xl px-5 py-4 text-lg text-gray-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors ${
-                        formik.touched.companySize && formik.errors.companySize ? 'border-red-400 bg-red-50' : 'border-purple-200 bg-white'
+                        formik.touched.companySize && formik.errors.companySize ? 'border-red-400 bg-red-50' : 'border-purple-200'
                       }`}
                       value={formik.values.companySize}
                       onChange={formik.handleChange}
@@ -532,7 +532,7 @@ const ClientRegistrationForm = () => {
                   <input
                     type="url"
                     name="website"
-                    className="w-full border-2 border-purple-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors bg-white"
+                    className="w-full border-2 border-purple-200 rounded-xl px-5 py-4 text-lg text-black focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors"
                     placeholder="https://www.company.com"
                     value={formik.values.website}
                     onChange={formik.handleChange}
@@ -545,8 +545,8 @@ const ClientRegistrationForm = () => {
                   </label>
                   <textarea
                     name="description"
-                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-vertical ${
-                      formik.touched.description && formik.errors.description ? 'border-red-400 bg-red-50' : 'border-purple-200 bg-white'
+                    className={`w-full border-2 rounded-xl px-5 py-4 text-lg text-black focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors resize-vertical ${
+                      formik.touched.description && formik.errors.description ? 'border-red-400 bg-red-50' : 'border-purple-200'
                     }`}
                     rows="5"
                     placeholder="Describe your company, its mission, and what type of projects you typically work on..."
@@ -641,7 +641,7 @@ const ClientRegistrationForm = () => {
                     </label>
                     <select
                       name="budgetRange"
-                      className="w-full border-2 border-green-200 rounded-xl px-5 py-4 text-lg text-gray-900 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white"
+                      className="w-full border-2 border-green-200 rounded-xl px-5 py-4 text-lg text-gray-900 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
                       value={formik.values.budgetRange}
                       onChange={formik.handleChange}
                     >
@@ -660,7 +660,7 @@ const ClientRegistrationForm = () => {
                     </label>
                     <select
                       name="timeline"
-                      className="w-full border-2 border-green-200 rounded-xl px-5 py-4 text-lg text-gray-900 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors bg-white"
+                      className="w-full border-2 border-green-200 rounded-xl px-5 py-4 text-lg text-gray-900 focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors"
                       value={formik.values.timeline}
                       onChange={formik.handleChange}
                     >
@@ -696,7 +696,7 @@ const ClientRegistrationForm = () => {
                   <input
                     type="text"
                     name="country"
-                    className="w-full border-2 border-orange-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors bg-white"
+                    className="w-full border-2 border-orange-200 rounded-xl px-5 py-4 text-lg text-black focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors"
                     placeholder="United States"
                     value={formik.values.country}
                     onChange={formik.handleChange}
@@ -710,7 +710,7 @@ const ClientRegistrationForm = () => {
                   <input
                     type="text"
                     name="city"
-                    className="w-full border-2 border-orange-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors bg-white"
+                    className="w-full border-2 border-orange-200 rounded-xl px-5 py-4 text-lg text-black focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors"
                     placeholder="New York"
                     value={formik.values.city}
                     onChange={formik.handleChange}
@@ -724,7 +724,7 @@ const ClientRegistrationForm = () => {
                   <input
                     type="text"
                     name="timezone"
-                    className="w-full border-2 border-orange-200 rounded-xl px-5 py-4 text-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors bg-white"
+                    className="w-full border-2 border-orange-200 rounded-xl px-5 py-4 text-lg text-black focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-colors"
                     placeholder="EST (UTC-5)"
                     value={formik.values.timezone}
                     onChange={formik.handleChange}

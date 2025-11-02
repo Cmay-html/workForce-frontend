@@ -359,7 +359,7 @@ const ProjectEditForm = () => {
                   <input
                     type="text"
                     name="title"
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-black placeholder:text-gray-500 bg-white"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-black placeholder:text-gray-500"
                     placeholder="Enter a clear, descriptive project title"
                     maxLength="100"
                     value={formik.values.title}
@@ -378,7 +378,7 @@ const ProjectEditForm = () => {
                   <label className="block text-sm font-medium text-black mb-2">Category *</label>
                   <select
                     name="category"
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-black bg-white"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-black"
                     value={formik.values.category}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
@@ -407,7 +407,7 @@ const ProjectEditForm = () => {
                 <textarea
                   name="description"
                   rows="6"
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent resize-vertical text-black placeholder:text-gray-500 bg-white"
+                  className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-green-500 focus:border-transparent resize-vertical bg-white text-black placeholder:text-gray-500"
                   placeholder="Describe your project in detail. Include specific requirements, deliverables, and any technical specifications..."
                   value={formik.values.description}
                   onChange={formik.handleChange}
@@ -435,7 +435,7 @@ const ProjectEditForm = () => {
                     <input
                       type="number"
                       name="budget"
-                      className="w-full border border-gray-300 rounded-md pl-8 pr-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-black placeholder:text-gray-500 bg-white"
+                      className="w-full border border-gray-300 rounded-md pl-8 pr-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-black placeholder:text-gray-500"
                       placeholder="5000"
                       min="50"
                       max="100000"
@@ -455,7 +455,7 @@ const ProjectEditForm = () => {
                   <input
                     type="date"
                     name="deadline"
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-black bg-white"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-black"
                     min={new Date().toISOString().split('T')[0]}
                     value={formik.values.deadline}
                     onChange={formik.handleChange}
@@ -471,7 +471,7 @@ const ProjectEditForm = () => {
                   <label className="block text-sm font-medium text-black mb-2">Duration *</label>
                   <select
                     name="duration"
-                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent text-black bg-white"
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white text-black"
                     value={formik.values.duration}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
