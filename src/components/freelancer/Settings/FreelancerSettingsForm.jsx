@@ -410,148 +410,102 @@ const FreelancerSettingsForm = () => {
   };
 
   return (
-    <div className="main-content">
-      <div className="top-bar">
-        <div>
-          <h1
-            style={{
-              fontSize: "24px",
-              fontWeight: "700",
-              color: "var(--text-primary)",
-            }}
+    <div className="min-h-screen bg-gray-50 p-6">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="mb-6">
+          <button
+            onClick={() => navigate("/freelancer/dashboard")}
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors duration-200"
           >
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M15 19l-7-7 7-7"
+              />
+            </svg>
+            Back to Dashboard
+          </button>
+          <h1 className="text-4xl font-bold text-gray-900 mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Freelancer Settings
           </h1>
-          <p style={{ color: "var(--text-secondary)", marginTop: "8px" }}>
+          <p className="text-lg text-gray-600">
             Manage your account preferences and security
           </p>
         </div>
-      </div>
 
-      <div style={{ display: "flex", gap: "24px" }}>
-        {/* Sidebar Navigation */}
-        <div
-          style={{
-            width: "250px",
-            background: "var(--primary-white)",
-            borderRadius: "var(--radius-md)",
-            border: "1px solid var(--border-light)",
-            padding: "20px",
-          }}
-        >
-          <nav>
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-              {[
-                { id: "notifications", label: "Notifications", icon: "🔔" },
-                { id: "privacy", label: "Privacy", icon: "👁️" },
-                { id: "security", label: "Security", icon: "🔒" },
-              ].map((tab) => (
-                <li key={tab.id} style={{ marginBottom: "8px" }}>
+        <div className="flex gap-6">
+          {/* Sidebar Navigation */}
+          <div className="w-64 bg-white rounded-lg border border-gray-200 p-5 shadow-sm">
+            <nav>
+              <ul className="space-y-2">
+                {[
+                  { id: "notifications", label: "Notifications", icon: "🔔" },
+                  { id: "privacy", label: "Privacy", icon: "👁️" },
+                  { id: "security", label: "Security", icon: "🔒" },
+                ].map((tab) => (
+                  <li key={tab.id}>
+                    <button
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`w-full text-left px-4 py-3 rounded-lg transition-all duration-200 ${
+                        activeTab === tab.id
+                          ? "bg-white text-primary-600 font-semibold"
+                          : "text-gray-700 hover:bg-white hover:text-gray-900"
+                      }`}
+                    >
+                      <span className="mr-3">{tab.icon}</span>
+                      {tab.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+
+          {/* Settings Content */}
+          <div className="flex-1">
+            <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
+              {/* Success/Error Messages */}
+              {formik.status?.success && (
+                <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6">
+                  {formik.status.success}
+                </div>
+              )}
+
+              {formik.status?.error && (
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+                  {formik.status.error}
+                </div>
+              )}
+
+              <form onSubmit={formik.handleSubmit}>
+                <TabContent />
+
+                <div className="flex justify-end gap-3 pt-6 mt-6 border-t border-gray-200">
                   <button
-                    onClick={() => setActiveTab(tab.id)}
-                    style={{
-                      width: "100%",
-                      textAlign: "left",
-                      padding: "12px 16px",
-                      background:
-                        activeTab === tab.id
-                          ? "var(--secondary-white)"
-                          : "transparent",
-                      border: "none",
-                      borderRadius: "var(--radius-sm)",
-                      cursor: "pointer",
-                      fontSize: "14px",
-                      fontWeight: activeTab === tab.id ? "600" : "400",
-                      color:
-                        activeTab === tab.id
-                          ? "var(--accent-blue)"
-                          : "var(--text-primary)",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "12px",
-                    }}
+                    type="button"
+                    onClick={() => navigate("/freelancer/dashboard")}
+                    className="px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors duration-200"
                   >
-                    <span>{tab.icon}</span>
-                    {tab.label}
+                    Cancel
                   </button>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-
-        {/* Settings Content */}
-        <div style={{ flex: 1 }}>
-          <div className="chart-card">
-            {formik.status?.success && (
-              <div
-                style={{
-                  background: "#f0fdf4",
-                  border: "1px solid #bbf7d0",
-                  color: "#166534",
-                  padding: "12px 16px",
-                  borderRadius: "var(--radius-sm)",
-                  marginBottom: "20px",
-                }}
-              >
-                {formik.status.success}
-              </div>
-            )}
-
-            {formik.status?.error && (
-              <div
-                style={{
-                  background: "#fef2f2",
-                  border: "1px solid #fecaca",
-                  color: "#dc2626",
-                  padding: "12px 16px",
-                  borderRadius: "var(--radius-sm)",
-                  marginBottom: "20px",
-                }}
-              >
-                {formik.status.error}
-              </div>
-            )}
-
-            <form onSubmit={formik.handleSubmit}>
-              <TabContent />
-
-              <div
-                style={{
-                  display: "flex",
-                  gap: "12px",
-                  justifyContent: "flex-end",
-                  paddingTop: "24px",
-                  marginTop: "24px",
-                  borderTop: "1px solid var(--border-light)",
-                }}
-              >
-                <button
-                  type="button"
-                  onClick={() => navigate("/freelancer/dashboard")}
-                  style={{
-                    background: "var(--secondary-white)",
-                    color: "var(--text-primary)",
-                    border: "1px solid var(--border-light)",
-                    borderRadius: "var(--radius-sm)",
-                    padding: "12px 24px",
-                    fontSize: "16px",
-                    fontWeight: "500",
-                    cursor: "pointer",
-                  }}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="login-btn"
-                  style={{ padding: "12px 32px", margin: 0 }}
-                  disabled={formik.isSubmitting}
-                >
-                  {formik.isSubmitting ? "Saving..." : "Save Changes"}
-                </button>
-              </div>
-            </form>
+                  <button
+                    type="submit"
+                    className="login-btn px-8 py-3"
+                    disabled={formik.isSubmitting}
+                  >
+                    {formik.isSubmitting ? "Saving..." : "Save Changes"}
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
