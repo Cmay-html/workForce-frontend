@@ -222,7 +222,7 @@ const ClientDashboard = () => {
             <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
               K
             </div>
-            <span className="text-xl font-bold text-orange-600">Kaziflow</span>
+            <span className="text-xl font-bold text-orange-600">WorkforceFlow</span>
           </div>
           <div className="bg-gray-50 rounded-lg p-3">
             <p className="text-sm font-semibold text-gray-900 mb-1">
@@ -318,7 +318,7 @@ const ClientDashboard = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <div className="flex items-center">
-                <h1 className="text-2xl font-bold text-primary-600">Kaziflow</h1>
+              <h1 className="text-2xl font-bold text-primary-600">WorkforceFlow</h1>
                 <span className="ml-3 text-sm text-gray-500">Client Portal</span>
               </div>
               <div className="text-xs text-gray-500">

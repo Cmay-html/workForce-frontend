@@ -49,8 +49,8 @@ const LoginPage = () => {
             {/* Header */}
             <div style={styles.header}>
               <div style={styles.logo}>
-                <img src="/logo.svg" alt="Kazi Flow Logo" style={styles.logoIcon} />
-                <h1 style={styles.title}>Kazi Flow</h1>
+                <img src="/logo.svg" alt="WorkforceFlow Logo" style={styles.logoIcon} />
+                <h1 style={styles.title}>WorkforceFlow</h1>
               </div>
               <p style={styles.description}>Welcome back! Please login to your account</p>
             </div>
