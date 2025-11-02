@@ -17,7 +17,7 @@ const RegistrationPage = () => {
             </div>
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-3">
-            Join Kaziflow
+            Join WorkforceFlow
           </h1>
           <p className="text-gray-600 text-lg font-medium">
             Choose your account type to get started

@@ -230,7 +230,7 @@ const ClientLayout = () => {
                 <span className="text-white text-xs font-bold">KF</span>
               </div>
               <p className="text-sm text-gray-600">
-                © 2024 KaziFlow. All rights reserved.
+                © 2024 WorkforceFlow. All rights reserved.
               </p>
             </div>
 
