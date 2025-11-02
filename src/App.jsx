@@ -37,6 +37,8 @@ import ProjectProposals from "./components/client/Projects/ProjectProposals";
 import MilestonesOverviewPage from "./components/client/Milestones/index";
 import FreelancersList from "./components/client/FreelancersList";
 import CreateMilestone from "./components/client/Milestones/CreateMilestone";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 
 // Protected Route component (requires authentication)
 const ProtectedRoute = ({ children }) => {
@@ -410,6 +412,10 @@ function App() {
 
             {/* Landing Page */}
             <Route path="/" element={<LandingPage />} />
+
+            {/* Privacy Policy and Terms of Service */}
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
 
             {/* Smart root redirect for authenticated users */}
             <Route path="/dashboard" element={<RootRedirect />} />
