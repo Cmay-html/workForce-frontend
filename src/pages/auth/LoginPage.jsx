@@ -307,6 +307,7 @@ const styles = {
     borderRadius: "12px",
     outline: "none",
     backgroundColor: "#ffffff",
+    color: "#000000",
     boxShadow: "0 1px 3px rgba(0, 0, 0, 0.05)",
     transition: "all 0.2s ease",
     boxSizing: "border-box",
@@ -417,24 +418,24 @@ const styles = {
 // Add these keyframes for animations
 const styleSheet = document.styleSheets[0];
 const keyframes = `
-  @keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(180deg); }
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 `;
 
 // Inject keyframes
