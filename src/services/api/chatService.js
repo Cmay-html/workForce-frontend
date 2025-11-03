@@ -1,40 +1,27 @@
+import api from './index.js';
+
 // Chat-related API services
 export const chatService = {
   // Conversations
   getConversations: async (projectId = null) => {
-    const url = projectId
-      ? `/api/chat/conversations?projectId=${projectId}`
-      : '/api/chat/conversations';
-    return fetch(url);
+    return api.get('/chat/conversations', { params: projectId ? { projectId } : {} });
   },
 
   createConversation: async (conversationData) => {
-    return fetch('/api/chat/conversations', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(conversationData),
-    });
+    return api.post('/chat/conversations', conversationData);
   },
 
   // Messages
   getMessages: async (conversationId, beforeMessageId = null, limit = 20) => {
-    const params = new URLSearchParams({ limit: limit.toString() });
+    const params = { limit };
     if (beforeMessageId) {
-      params.append('before', beforeMessageId);
+      params.before = beforeMessageId;
     }
-    return fetch(`/api/chat/conversations/${conversationId}/messages?${params}`);
+    return api.get(`/chat/conversations/${conversationId}/messages`, { params });
   },
 
   sendMessage: async (conversationId, messageData) => {
-    return fetch(`/api/chat/conversations/${conversationId}/messages`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(messageData),
-    });
+    return api.post(`/chat/conversations/${conversationId}/messages`, messageData);
   },
 
   // File uploads
@@ -45,9 +32,10 @@ export const chatService = {
       formData.append('conversationId', conversationId);
     }
 
-    return fetch('/api/chat/upload', {
-      method: 'POST',
-      body: formData,
+    return api.post('/chat/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     });
   },
 
@@ -64,31 +52,16 @@ export const chatService = {
 
   // Typing indicators
   sendTypingIndicator: async (conversationId, isTyping) => {
-    return fetch(`/api/chat/conversations/${conversationId}/typing`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ isTyping }),
-    });
+    return api.post(`/chat/conversations/${conversationId}/typing`, { isTyping });
   },
 
   // Message status updates
   markMessagesAsRead: async (conversationId, messageIds) => {
-    return fetch(`/api/chat/conversations/${conversationId}/read`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ messageIds }),
-    });
+    return api.post(`/chat/conversations/${conversationId}/read`, { messageIds });
   },
 
   // User presence/online status
   getOnlineUsers: async (projectId = null) => {
-    const url = projectId
-      ? `/api/chat/online?projectId=${projectId}`
-      : '/api/chat/online';
-    return fetch(url);
+    return api.get('/chat/online', { params: projectId ? { projectId } : {} });
   },
 };
