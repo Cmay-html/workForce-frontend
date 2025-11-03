@@ -1,7 +1,7 @@
 // src/Pages/admin/UserManagement.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuth } from '../../Context/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 const UserManagement = () => {
   const [users, setUsers] = useState([]);
