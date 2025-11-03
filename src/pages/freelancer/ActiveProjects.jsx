@@ -1,416 +1,284 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
-import { Navigate } from 'react-router-dom';
-import Navbar from '../../components/shared/dashboard/Navbar';
+import FreelancerLayout from '../../components/layouts/FreelancerLayout';
 
-const ActiveProjects = () => {
+const FreelancerActiveProjects = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, user, loading } = useAuth();
-  const [activeProjects, setActiveProjects] = useState([]);
-  const [filteredProjects, setFilteredProjects] = useState([]);
-  const [loadingProjects, setLoadingProjects] = useState(true);
+  const { user } = useAuth();
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Load active projects from accepted proposals in localStorage
-    const storedProposals = JSON.parse(localStorage.getItem('proposals') || '[]');
-    const acceptedProposals = storedProposals.filter(proposal => proposal.status === 'accepted');
-
-    // TODO: Replace with actual API call to fetch active projects
-    const fetchActiveProjects = async () => {
-      try {
-        // const response = await api.get('/freelancer/active-projects');
-        // setActiveProjects(response.data);
-        // setFilteredProjects(response.data);
-        setActiveProjects([]); // Empty state until API is implemented
-        setFilteredProjects([]);
-      } catch (error) {
-        console.error('Failed to fetch active projects:', error);
-        setActiveProjects([]);
-        setFilteredProjects([]);
+    // Mock active projects data
+    const mockProjects = [
+      {
+        id: 1,
+        title: "E-commerce Website Development",
+        client: "TechCorp Inc.",
+        startDate: "2024-01-20",
+        deadline: "2024-03-15",
+        budget: 4800,
+        progress: 65,
+        status: "in_progress",
+        milestones: [
+          { id: 1, title: "Project Setup", status: "completed", amount: 1200 },
+          { id: 2, title: "Frontend Development", status: "in_progress", amount: 2000 },
+          { id: 3, title: "Backend Integration", status: "pending", amount: 1600 }
+        ],
+        lastActivity: "2024-01-25"
+      },
+      {
+        id: 2,
+        title: "Mobile App UI/UX Design",
+        client: "FitLife Solutions",
+        startDate: "2024-01-22",
+        deadline: "2024-02-28",
+        budget: 2800,
+        progress: 40,
+        status: "in_progress",
+        milestones: [
+          { id: 1, title: "Research & Wireframes", status: "completed", amount: 800 },
+          { id: 2, title: "UI Design", status: "in_progress", amount: 1200 },
+          { id: 3, title: "Prototype", status: "pending", amount: 800 }
+        ],
+        lastActivity: "2024-01-24"
       }
-    };
-
-    if (acceptedProposals.length === 0) {
-      fetchActiveProjects();
-    } else {
-      // Transform accepted proposals to active projects format
-      const formattedProjects = acceptedProposals.map(proposal => ({
-        id: proposal.id,
-        title: proposal.projectTitle,
-        client: proposal.clientName,
-        budget: proposal.proposedBudget,
-        deadline: new Date(Date.now() + proposal.proposedTimeline * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // Timeline from now
-        status: 'in-progress',
-        progress: 10,
-        currentMilestone: 'Initial Setup',
-        nextMilestoneDue: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0] // 7 days from now
-      }));
-      setActiveProjects(formattedProjects);
-      setFilteredProjects(formattedProjects);
-    }
-
-    setLoadingProjects(false);
+    ];
+    
+    setTimeout(() => {
+      setProjects(mockProjects);
+      setLoading(false);
+    }, 1000);
   }, []);
-
-  // Filter projects based on search query
-  useEffect(() => {
-    const handleSearch = (event) => {
-      const query = event.detail;
-      if (query === 'all' || query.trim() === '') {
-        setFilteredProjects(activeProjects);
-      } else if (query === 'projects') {
-        setFilteredProjects(activeProjects);
-      } else if (query === 'milestones') {
-        const filtered = activeProjects.filter(project =>
-          project.currentMilestone.toLowerCase().includes('milestone')
-        );
-        setFilteredProjects(filtered);
-      } else {
-        const filtered = activeProjects.filter(project =>
-          project.title.toLowerCase().includes(query.toLowerCase()) ||
-          project.client.toLowerCase().includes(query.toLowerCase()) ||
-          project.status.toLowerCase().includes(query.toLowerCase()) ||
-          project.currentMilestone.toLowerCase().includes(query.toLowerCase())
-        );
-        setFilteredProjects(filtered);
-      }
-    };
-
-    window.addEventListener('dashboardSearch', handleSearch);
-
-    return () => {
-      window.removeEventListener('dashboardSearch', handleSearch);
-    };
-  }, [activeProjects]);
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'in-progress': return 'bg-blue-100 text-blue-800';
-      case 'on-hold': return 'bg-yellow-100 text-yellow-800';
-      case 'completed': return 'bg-green-100 text-green-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'completed':
+        return 'bg-green-100 text-green-800';
+      case 'in_progress':
+        return 'bg-blue-100 text-blue-800';
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'on_hold':
+        return 'bg-red-100 text-red-800';
+      default:
+        return 'bg-gray-100 text-gray-800';
     }
   };
 
-  const getStatusText = (status) => {
+  const getMilestoneStatusColor = (status) => {
     switch (status) {
-      case 'in-progress': return 'In Progress';
-      case 'on-hold': return 'On Hold';
-      case 'completed': return 'Completed';
-      default: return status;
+      case 'completed':
+        return 'bg-green-500';
+      case 'in_progress':
+        return 'bg-blue-500';
+      case 'pending':
+        return 'bg-gray-300';
+      default:
+        return 'bg-gray-300';
     }
   };
 
-  const handleLogout = () => {
-    // Clear authentication and navigate to login
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('user');
-    localStorage.removeItem('role');
-    localStorage.removeItem('userProjects');
-    localStorage.removeItem('proposals');
-    navigate('/login');
-  };
-
-  if (loading || loadingProjects) {
+  if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
-      </div>
+      <FreelancerLayout>
+        <div className="flex items-center justify-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
+        </div>
+      </FreelancerLayout>
     );
   }
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <div className="flex" style={{ minWidth: '1024px' }}>
-        {/* Sidebar */}
-        <div className="w-64 bg-white border-r border-gray-200 flex flex-col fixed left-0 top-0 h-full z-10">
-        <div className="p-6 border-b border-gray-200">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center text-white font-bold">
-              K
-            </div>
-            <span className="text-xl font-bold text-orange-600">WorkForceFlow</span>
-          </div>
-          <div className="bg-gray-50 rounded-lg p-3">
-            <p className="text-sm font-semibold text-gray-900 mb-1">
-              {user?.firstName} {user?.lastName}
-            </p>
-            <p className="text-xs text-gray-500">
-              Freelancer Account
-            </p>
-          </div>
+    <FreelancerLayout>
+      <div className="p-8">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            Active Projects
+          </h1>
+          <p className="text-gray-600">
+            Manage your ongoing projects and track progress
+          </p>
         </div>
 
-        <nav className="flex-1 px-4 py-6">
-          <ul className="space-y-1">
-            <li>
-              <button
-                onClick={() => navigate('/freelancer/dashboard')}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
-              >
-                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">D</span>
-                <div className="flex-1">
-                  <div className="font-medium">Dashboard</div>
-                  <div className="text-xs text-gray-500 mt-0.5">Business overview</div>
-                </div>
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => navigate('/freelancer/projects')}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
-              >
-                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">P</span>
-                <div className="flex-1">
-                  <div className="font-medium">Browse Projects</div>
-                  <div className="text-xs text-gray-500 mt-0.5">Find new opportunities</div>
-                </div>
-              </button>
-            </li>
-            <li>
-              <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left bg-orange-50 text-orange-700 border-r-2 border-orange-700 transition-all duration-200 ease-in-out">
-                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">A</span>
-                <div className="flex-1">
-                  <div className="font-medium">Active Projects</div>
-                  <div className="text-xs text-gray-500 mt-0.5">Current work</div>
-                </div>
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => navigate('/freelancer/proposals')}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
-              >
-                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">R</span>
-                <div className="flex-1">
-                  <div className="font-medium">My Proposals</div>
-                  <div className="text-xs text-gray-500 mt-0.5">Track submissions</div>
-                </div>
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => navigate('/chat')}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
-              >
-                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">M</span>
-                <div className="flex-1">
-                  <div className="font-medium">Messages</div>
-                  <div className="text-xs text-gray-500 mt-0.5">Chat with clients</div>
-                </div>
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => navigate('/freelancer/payments')}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all duration-200 ease-in-out"
-              >
-                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">$</span>
-                <div className="flex-1">
-                  <div className="font-medium">Payments</div>
-                  <div className="text-xs text-gray-500 mt-0.5">Earnings & history</div>
-                </div>
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => navigate('/freelancer/profile')}
-                className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium w-full text-left text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
-              >
-                <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">P</span>
-                <div className="flex-1">
-                  <div className="font-medium">Profile</div>
-                  <div className="text-xs text-gray-500 mt-0.5">Portfolio & settings</div>
-                </div>
-              </button>
-            </li>
-          </ul>
-
-          {/* Logout Button */}
-          <div className="mt-auto pt-6 border-t border-gray-200">
-            <button
-              onClick={() => {
-                localStorage.removeItem('authToken');
-                localStorage.removeItem('user');
-                localStorage.removeItem('role');
-                navigate('/login');
-              }}
-              className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-lg transition-all duration-200 ease-in-out"
-            >
-              <span className="w-5 h-5 flex items-center justify-center text-xs font-bold">L</span>
-              <div className="flex-1 text-left">
-                <div className="font-medium">Logout</div>
-                <div className="text-xs text-gray-500 mt-0.5">Sign out of account</div>
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                </svg>
               </div>
-            </button>
-          </div>
-        </nav>
-      </div>
-
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-h-screen ml-64">
-        {/* Top Bar */}
-        <div className="bg-white border-b border-gray-200 px-6 py-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 fixed top-0 right-0 left-64 z-20">
-          <div className="flex items-center gap-4 flex-1 max-w-md">
-            <div className="relative flex-1">
-              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-              <input
-                type="text"
-                placeholder="Search active projects..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              />
-            </div>
-          </div>
-
-          <div className="flex items-center gap-4">
-            <div className="text-right hidden sm:block">
-              <div className="text-sm font-semibold text-gray-900">
-                {user?.firstName} {user?.lastName}
-              </div>
-              <div className="text-xs text-gray-500">
-                Freelancer
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">Active Projects</p>
+                <p className="text-2xl font-bold text-gray-900">{projects.length}</p>
               </div>
             </div>
-            <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white font-semibold">
-              {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
-            </div>
           </div>
-        </div>
-
-        {/* Page Content */}
-        <main className="flex-1 bg-gray-50 overflow-auto pt-20">
-          <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-            <div className="px-4 py-6 sm:px-0">
-              <div className="mb-8">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                  Active Projects
-                </h1>
-                <p className="text-gray-600">
-                  Manage your ongoing projects and deliverables.
+          
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                </svg>
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">Total Value</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  ${projects.reduce((sum, p) => sum + p.budget, 0).toLocaleString()}
                 </p>
               </div>
+            </div>
+          </div>
+          
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">Avg Progress</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {projects.length > 0 ? Math.round(projects.reduce((sum, p) => sum + p.progress, 0) / projects.length) : 0}%
+                </p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center">
+                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              </div>
+              <div className="ml-4">
+                <p className="text-sm font-medium text-gray-500">Milestones</p>
+                <p className="text-2xl font-bold text-gray-900">
+                  {projects.reduce((sum, p) => sum + p.milestones.filter(m => m.status === 'completed').length, 0)}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-              {/* Projects Grid */}
-              <div className="space-y-6">
-                {activeProjects.length === 0 ? (
-                  <div className="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200">
-                    <div className="px-4 py-5 sm:px-6 text-center">
-                      <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                      </svg>
-                      <h3 className="mt-2 text-sm font-medium text-gray-900">No active projects</h3>
-                      <p className="mt-1 text-sm text-gray-500">Get started by browsing available projects.</p>
-                      <div className="mt-6">
-                        <button
-                          onClick={() => navigate('/freelancer/projects')}
-                          className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-                        >
-                          Browse Projects
-                        </button>
+        {/* Projects List */}
+        <div className="space-y-6">
+          {projects.length === 0 ? (
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
+              <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">No active projects</h3>
+              <p className="text-gray-500 mb-4">You don't have any active projects at the moment.</p>
+              <button
+                onClick={() => navigate('/freelancer/projects')}
+                className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200"
+              >
+                Browse Projects
+              </button>
+            </div>
+          ) : (
+            projects.map((project) => (
+              <div key={project.id} className="bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-all duration-200 p-6">
+                <div className="flex justify-between items-start mb-6">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-xl font-semibold text-gray-900">{project.title}</h3>
+                      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(project.status)}`}>
+                        {project.status.replace('_', ' ').charAt(0).toUpperCase() + project.status.replace('_', ' ').slice(1)}
+                      </span>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-500 mb-4">
+                      <div>
+                        <span className="font-medium">Client:</span>
+                        <div className="text-gray-900">{project.client}</div>
+                      </div>
+                      <div>
+                        <span className="font-medium">Budget:</span>
+                        <div className="text-lg font-bold text-green-600">${project.budget.toLocaleString()}</div>
+                      </div>
+                      <div>
+                        <span className="font-medium">Deadline:</span>
+                        <div className="text-gray-900">{new Date(project.deadline).toLocaleDateString()}</div>
+                      </div>
+                      <div>
+                        <span className="font-medium">Progress:</span>
+                        <div className="text-gray-900">{project.progress}%</div>
+                      </div>
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div className="mb-4">
+                      <div className="flex justify-between text-sm text-gray-600 mb-1">
+                        <span>Overall Progress</span>
+                        <span>{project.progress}%</span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-2">
+                        <div 
+                          className="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full transition-all duration-300"
+                          style={{ width: `${project.progress}%` }}
+                        ></div>
+                      </div>
+                    </div>
+
+                    {/* Milestones */}
+                    <div>
+                      <h4 className="text-sm font-medium text-gray-700 mb-3">Milestones</h4>
+                      <div className="space-y-2">
+                        {project.milestones.map((milestone) => (
+                          <div key={milestone.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                            <div className="flex items-center gap-3">
+                              <div className={`w-3 h-3 rounded-full ${getMilestoneStatusColor(milestone.status)}`}></div>
+                              <span className="text-sm font-medium text-gray-900">{milestone.title}</span>
+                            </div>
+                            <div className="flex items-center gap-4">
+                              <span className="text-sm font-bold text-green-600">${milestone.amount.toLocaleString()}</span>
+                              <span className={`text-xs px-2 py-1 rounded-full ${getStatusColor(milestone.status)}`}>
+                                {milestone.status.replace('_', ' ')}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
-                ) : (
-                  filteredProjects.map(project => (
-                    <div key={project.id} className="bg-white shadow overflow-hidden sm:rounded-lg border border-gray-200">
-                      <div className="px-4 py-5 sm:px-6">
-                        <div className="flex justify-between items-start mb-4">
-                          <div>
-                            <h3 className="text-xl font-semibold text-gray-900">{project.title}</h3>
-                            <p className="text-gray-600 mt-1">Client: {project.client}</p>
-                          </div>
-                          <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(project.status)}`}>
-                            {getStatusText(project.status)}
-                          </span>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                          <div>
-                            <span className="text-sm text-gray-500">Budget:</span>
-                            <p className="font-semibold text-gray-900">${project.budget}</p>
-                          </div>
-                          <div>
-                            <span className="text-sm text-gray-500">Deadline:</span>
-                            <p className="font-semibold text-gray-900">{project.deadline}</p>
-                          </div>
-                          <div>
-                            <span className="text-sm text-gray-500">Current Milestone:</span>
-                            <p className="font-semibold text-gray-900">{project.currentMilestone}</p>
-                          </div>
-                          <div>
-                            <span className="text-sm text-gray-500">Next Due:</span>
-                            <p className="font-semibold text-gray-900">{project.nextMilestoneDue}</p>
-                          </div>
-                        </div>
-
-                        {/* Progress Bar */}
-                        <div className="mb-6">
-                          <div className="flex justify-between text-sm text-gray-600 mb-2">
-                            <span>Project Progress</span>
-                            <span>{project.progress}%</span>
-                          </div>
-                          <div className="w-full bg-gray-200 rounded-full h-3">
-                            <div
-                              className={`h-3 rounded-full ${
-                                project.status === 'on-hold' ? 'bg-yellow-500' :
-                                project.progress < 30 ? 'bg-orange-300' :
-                                project.progress < 70 ? 'bg-orange-400' : 'bg-orange-500'
-                              }`}
-                              style={{ width: `${project.progress}%` }}
-                            ></div>
-                          </div>
-                        </div>
-
-                        {/* Action Buttons */}
-                        <div className="flex flex-wrap gap-3">
-                          <button
-                            onClick={() => navigate(`/projects/${project.id}/chat`)}
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-400 hover:bg-primary-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-400"
-                          >
-                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                            </svg>
-                            Chat with Client
-                          </button>
-                          <button
-                            onClick={() => navigate(`/freelancer/projects/${project.id}/milestones`)}
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-400 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-400"
-                          >
-                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            Submit Work
-                          </button>
-                          <button
-                            onClick={() => navigate(`/freelancer/projects/${project.id}/time-tracking`)}
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-400 hover:bg-purple-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-400"
-                          >
-                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            Track Time
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))
-                )}
+                  
+                  <div className="ml-6 flex flex-col gap-2">
+                    <button
+                      onClick={() => navigate(`/freelancer/projects/${project.id}/workspace`)}
+                      className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-105"
+                    >
+                      Open Workspace
+                    </button>
+                    <button
+                      onClick={() => navigate(`/chat?project=${project.id}`)}
+                      className="border border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-2 rounded-lg font-medium transition-all duration-200"
+                    >
+                      Message Client
+                    </button>
+                    <button
+                      onClick={() => navigate(`/freelancer/projects/${project.id}`)}
+                      className="border border-gray-300 text-gray-700 hover:bg-gray-50 px-6 py-2 rounded-lg font-medium transition-all duration-200"
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </main>
+            ))
+          )}
         </div>
       </div>
-    </div>
+    </FreelancerLayout>
   );
 };
 
-export default ActiveProjects;
+export default FreelancerActiveProjects;

@@ -8,6 +8,8 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { useAuth } from "./hooks/useAuth";
 import LoginPage from "./pages/auth/LoginPage";
 import RegistrationPage from "./pages/auth/RegistrationPage";
+import ClientRegistrationPage from "./pages/auth/ClientRegistrationPage";
+import FreelancerRegistrationPage from "./pages/auth/FreelancerRegistrationPage";
 import LandingPage from "./pages/LandingPage";
 import ClientDashboard from "./pages/client/Dashboard";
 import AuthForm from "./components/shared/auth/AuthForm";
@@ -198,6 +200,22 @@ function App() {
                 </PublicRoute>
               }
             />
+            <Route
+              path="/register/client"
+              element={
+                <PublicRoute>
+                  <ClientRegistrationPage />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/register/freelancer"
+              element={
+                <PublicRoute>
+                  <FreelancerRegistrationPage />
+                </PublicRoute>
+              }
+            />
 
             {/* Admin routes */}
             <Route path="/admin-login" element={<AdminLogin />} />
@@ -246,7 +264,9 @@ function App() {
               path="/client/projects"
               element={
                 <ClientRoute>
-                  <ClientProjectsPage />
+                  <ClientLayout>
+                    <ClientProjectsPage />
+                  </ClientLayout>
                 </ClientRoute>
               }
             />
@@ -254,7 +274,9 @@ function App() {
               path="/client/projects/create"
               element={
                 <ClientRoute>
-                  <CreateProjectPage />
+                  <ClientLayout>
+                    <CreateProjectPage />
+                  </ClientLayout>
                 </ClientRoute>
               }
             />
@@ -262,7 +284,9 @@ function App() {
               path="/client/projects/:projectId"
               element={
                 <ClientRoute>
-                  <ProjectDetailsPage />
+                  <ClientLayout>
+                    <ProjectDetailsPage />
+                  </ClientLayout>
                 </ClientRoute>
               }
             />
@@ -288,7 +312,9 @@ function App() {
               path="/client/milestones"
               element={
                 <ClientRoute>
-                  <MilestonesOverviewPage />
+                  <ClientLayout>
+                    <MilestonesOverviewPage />
+                  </ClientLayout>
                 </ClientRoute>
               }
             />
@@ -324,7 +350,9 @@ function App() {
               path="/client/profile"
               element={
                 <ClientRoute>
-                  <ClientProfileForm />
+                  <ClientLayout>
+                    <ClientProfileForm />
+                  </ClientLayout>
                 </ClientRoute>
               }
             />

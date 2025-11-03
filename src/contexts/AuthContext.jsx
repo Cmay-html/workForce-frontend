@@ -7,28 +7,35 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Check for existing auth on mount
   useEffect(() => {
-    // Check for existing authentication token on app load
     const token = localStorage.getItem('authToken');
     const userData = localStorage.getItem('userData');
-
-    console.log('Auth check:', {
-      token: !!token,
-      userData: !!userData,
-      tokenValue: token,
-      userDataValue: userData
-    });
+    const pendingUserData = localStorage.getItem('pendingUserData');
 
     if (token && userData) {
       try {
         const parsedUser = JSON.parse(userData);
         setUser(parsedUser);
       } catch (error) {
+        console.error('Error parsing stored user data:', error);
         localStorage.removeItem('authToken');
         localStorage.removeItem('userData');
       }
-    } else {
+    } else if (pendingUserData) {
+      // Handle newly registered user
+      try {
+        const parsedUser = JSON.parse(pendingUserData);
+        setUser(parsedUser);
+        localStorage.setItem('userData', pendingUserData);
+        localStorage.setItem('authToken', 'temp_token_' + Date.now());
+        localStorage.removeItem('pendingUserData');
+      } catch (error) {
+        console.error('Error parsing pending user data:', error);
+        localStorage.removeItem('pendingUserData');
+      }
     }
+
     setLoading(false);
   }, []);
 
@@ -70,25 +77,15 @@ export const AuthProvider = ({ children }) => {
 
       // TODO: Replace with actual API call to backend
       const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await fetch(`${apiUrl}/api/auth/register/client`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(clientData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Registration failed');
-      }
-
-      const data = await response.json();
+      
+      // Simulate successful registration
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       return {
         success: true,
-        verificationRequired: data.verificationRequired,
+        verificationRequired: false,
         email: clientData.email,
-        message: data.message
+        message: "Client registration successful"
       };
 
     } catch (error) {
@@ -104,25 +101,15 @@ export const AuthProvider = ({ children }) => {
 
       // TODO: Replace with actual API call to backend
       const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await fetch(`${apiUrl}/api/auth/register/freelancer`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(freelancerData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Registration failed');
-      }
-
-      const data = await response.json();
+      
+      // Simulate successful registration
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       return {
         success: true,
-        verificationRequired: data.verificationRequired,
+        verificationRequired: false,
         email: freelancerData.email,
-        message: data.message
+        message: "Freelancer registration successful"
       };
 
     } catch (error) {
