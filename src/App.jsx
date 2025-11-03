@@ -40,6 +40,9 @@ import CreateMilestone from "./components/client/Milestones/CreateMilestone";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import AnalyticsDashboard from "./pages/admin/AnalyticsDashboard";
+import AdminDashboard from './pages/AdminDashboard';
+import UserManagement from './pages/admin/UserManagement';
+import AdminLogin from './pages/AdminLogin';
 
 // Protected Route component (requires authentication)
 const ProtectedRoute = ({ children }) => {
@@ -58,7 +61,7 @@ const ProtectedRoute = ({ children }) => {
 
 // Admin Route component (requires admin role)
 const AdminRoute = ({ children }) => {
-  const { isAuthenticated, isAdmin, loading } = useAuth();
+  const { isAuthenticated, isAdmin, user, loading } = useAuth();
 
   if (loading) {
     return (
@@ -69,11 +72,11 @@ const AdminRoute = ({ children }) => {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/admin-login" replace />;
   }
 
-  if (!isAdmin) {
-    return <Navigate to="/dashboard" replace />;
+  if (!isAdmin && user?.role !== 'admin') {
+    return <Navigate to="/unauthorized" replace />;
   }
 
   return children;
@@ -194,6 +197,12 @@ function App() {
                 </PublicRoute>
               }
             />
+
+            {/* Admin routes */}
+            <Route path="/admin-login" element={<AdminLogin />} />
+            <Route path="/admin" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
+            <Route path="/admin/users" element={<AdminRoute><UserManagement /></AdminRoute>} />
+            <Route path="/unauthorized" element={<h1>Unauthorized Access</h1>} />
 
             {/* Alternative auth route using AuthForm component */}
             <Route
