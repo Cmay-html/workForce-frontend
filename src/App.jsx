@@ -40,9 +40,9 @@ import CreateMilestone from "./components/client/Milestones/CreateMilestone";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import AnalyticsDashboard from "./pages/admin/AnalyticsDashboard";
-import AdminDashboard from './Pages/AdminDashboard';
-import UserManagement from './Pages/admin/UserManagement';
-import AdminLogin from './Pages/AdminLogin';
+import AdminDashboard from './pages/AdminDashboard';
+import UserManagement from './pages/admin/UserManagement';
+import AdminLogin from './pages/AdminLogin';
 
 // Protected Route component (requires authentication)
 const ProtectedRoute = ({ children }) => {
