@@ -40,9 +40,10 @@ import CreateMilestone from "./components/client/Milestones/CreateMilestone";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import AnalyticsDashboard from "./pages/admin/AnalyticsDashboard";
-import AdminDashboard from './pages/AdminDashboard';
+import AdminDashboard from './pages/admin/AdminDashboard';
 import UserManagement from './pages/admin/UserManagement';
-import AdminLogin from './pages/AdminLogin';
+import AdminLogin from './pages/admin/AdminLogin';
+import ChatWidget from './components/shared/ChatWidget';
 
 // Protected Route component (requires authentication)
 const ProtectedRoute = ({ children }) => {
@@ -465,6 +466,9 @@ function App() {
             {/* Catch-all redirect */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
+          
+          {/* Global Chat Widget - appears on all pages */}
+          <ChatWidget />
         </div>
       </AuthProvider>
     );
