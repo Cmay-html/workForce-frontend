@@ -35,35 +35,30 @@ const LoginPage = () => {
 
   return (
     <div style={styles.container}>
-      <div style={styles.background}>
-        {/* Animated background elements */}
-        <div style={styles.backgroundElements}>
+      <div style={styles.loginCard}>
+        {/* Left Side - Image/Branding */}
+        <div style={styles.leftSide}>
           <div style={styles.circle1}></div>
           <div style={styles.circle2}></div>
           <div style={styles.circle3}></div>
         </div>
 
-        <div style={styles.overlay}></div>
-        <div style={styles.content}>
-          <div style={styles.formCard}>
-            {/* Header */}
-            <div style={styles.header}>
-              <div style={styles.logo}>
-                <img src="/logo.svg" alt="WorkforceFlow Logo" style={styles.logoIcon} />
-                <h1 style={styles.title}>WorkforceFlow</h1>
-              </div>
-              <p style={styles.description}>Welcome back! Please login to your account</p>
+        {/* Right Side - Login Form */}
+        <div style={styles.rightSide}>
+          <div style={styles.formContainer}>
+            <div style={styles.formHeader}>
+              <h2 style={styles.formTitle}>Welcome Back</h2>
+              <p style={styles.formSubtitle}>
+                Sign in to your account to continue
+              </p>
             </div>
 
-            {/* Error Message */}
             {error && (
               <div style={styles.errorMessage}>
-                
                 {error}
               </div>
             )}
 
-            {/* Form */}
             <form onSubmit={handleSubmitForm} style={styles.form}>
               <div style={styles.inputGroup}>
                 <label style={styles.label}>Email Address</label>
@@ -100,8 +95,8 @@ const LoginPage = () => {
                 type="submit"
                 disabled={loadingState}
                 style={{
-                  ...styles.button,
-                  ...(loadingState ? styles.buttonLoading : {})
+                  ...styles.submitButton,
+                  ...(loadingState ? styles.submitButtonLoading : {})
                 }}
               >
                 {loadingState ? (
@@ -123,11 +118,11 @@ const LoginPage = () => {
             {/* Social Login */}
             <div style={styles.socialButtons}>
               <button style={styles.socialButton}>
-                <span style={styles.socialIcon}>🔵</span>
+                <span style={styles.socialIcon}>G</span>
                 Google
               </button>
               <button style={styles.socialButton}>
-                <span style={styles.socialIcon}>🔵</span>
+                <span style={styles.socialIcon}>G</span>
                 GitHub
               </button>
             </div>
@@ -135,14 +130,12 @@ const LoginPage = () => {
             {/* Sign up link */}
             <div style={styles.footer}>
               <p style={styles.switchText}>
-                Don't have an account?
+                Don't have an account?{' '}
                 <span
                   style={styles.switchLink}
                   onClick={() => navigate('/register')}
-                  onMouseEnter={(e) => e.target.style.transform = 'translateX(4px)'}
-                  onMouseLeave={(e) => e.target.style.transform = 'translateX(0)'}
                 >
-                  Sign up now
+                  Sign up for free
                 </span>
               </p>
             </div>
@@ -161,181 +154,185 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-    overflow: "hidden",
-    position: "fixed",
-    top: 0,
-    left: 0,
+    background: "linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%)",
+    padding: "2rem",
+    boxSizing: "border-box",
   },
-  background: {
-    position: "relative",
+
+  loginCard: {
+    display: "flex",
     width: "100%",
-    height: "100%",
-    background: "linear-gradient(135deg, #f97316 0%, #ea580c 50%, #dc2626 100%)",
+    maxWidth: "750px",
+    height: "70vh",
+    overflow: "hidden",
+    background: "#ffffff",
+    borderRadius: "24px",
+    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+  },
+
+  leftSide: {
+    flex: "0 0 45%",
+    background: `url('https://i.pinimg.com/1200x/9b/7f/a2/9b7fa25193e0b7efed42c0dc3f97061d.jpg') center/cover`,
+    position: "relative",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  },
-  backgroundElements: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
     overflow: "hidden",
   },
+
   circle1: {
     position: "absolute",
-    top: "10%",
-    left: "10%",
-    width: "200px",
-    height: "200px",
-    background: "rgba(255,255,255,0.1)",
+    top: "15%",
+    left: "15%",
+    width: "120px",
+    height: "120px",
+    background: "rgba(255, 255, 255, 0.05)",
     borderRadius: "50%",
     animation: "float 6s ease-in-out infinite",
   },
+
   circle2: {
     position: "absolute",
-    bottom: "15%",
+    bottom: "25%",
     right: "15%",
-    width: "150px",
-    height: "150px",
-    background: "rgba(255,255,255,0.08)",
+    width: "90px",
+    height: "90px",
+    background: "rgba(255, 255, 255, 0.04)",
     borderRadius: "50%",
     animation: "float 8s ease-in-out infinite 1s",
   },
+
   circle3: {
     position: "absolute",
-    top: "50%",
-    right: "20%",
-    width: "100px",
-    height: "100px",
-    background: "rgba(255,255,255,0.05)",
+    top: "65%",
+    right: "35%",
+    width: "60px",
+    height: "60px",
+    background: "rgba(255, 255, 255, 0.03)",
     borderRadius: "50%",
     animation: "float 5s ease-in-out infinite 0.5s",
   },
-  overlay: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: "rgba(0, 0, 0, 0.2)",
-    backdropFilter: "blur(4px)",
-  },
-  content: {
-    position: "relative",
-    zIndex: 1,
-    width: "100%",
-    maxWidth: "440px",
-    padding: "2rem",
-    animation: "slideUp 0.6s ease-out",
-  },
-  formCard: {
-    background: "rgba(255, 255, 255, 0.98)",
-    borderRadius: "24px",
-    padding: "3rem 2.5rem",
-    boxShadow: `
-      0 25px 50px -12px rgba(0, 0, 0, 0.25),
-      0 0 0 1px rgba(255, 255, 255, 0.1)
-    `,
-    border: "1px solid rgba(255, 255, 255, 0.3)",
-    backdropFilter: "blur(20px)",
-  },
-  header: {
-    textAlign: "center",
-    marginBottom: "2.5rem"
-  },
-  logo: {
+
+  rightSide: {
+    flex: "0 0 55%",
+    background: "#ffffff",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    gap: "0.75rem",
-    marginBottom: "1rem",
+    padding: "1.5rem",
+    borderTopRightRadius: "24px",
+    borderBottomRightRadius: "24px",
   },
-  logoIcon: {
-    width: "3rem",
-    height: "3rem",
+
+  formContainer: {
+    width: "100%",
+    maxWidth: "100%",
+    background: "#ffffff",
+    padding: "0",
+    borderRadius: "0",
+    border: "none",
+    boxShadow: "none",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    height: "100%",
   },
-  title: {
-    fontSize: "2.25rem",
-    fontWeight: "800",
-    color: "#1e293b",
+
+  formHeader: {
+    textAlign: "center",
+    marginBottom: "1.5rem",
+  },
+
+  formTitle: {
+    fontSize: "1.8rem",
+    fontWeight: "700",
+    color: "#1a202c",
+    margin: "0 0 0.5rem 0",
+    letterSpacing: "-0.02em",
+  },
+
+  formSubtitle: {
+    fontSize: "0.9rem",
+    color: "#718096",
     margin: 0,
-    background: "linear-gradient(135deg, #f97316 0%, #dc2626 100%)",
-    backgroundClip: "text",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
+    fontWeight: "400",
+    lineHeight: "1.4",
   },
-  description: {
-    color: "#64748b",
-    fontSize: "1rem",
-    lineHeight: "1.6",
-    margin: 0,
-  },
+
   form: {
     display: "flex",
     flexDirection: "column",
-    gap: "1.5rem"
+    gap: "1rem",
   },
+
   inputGroup: {
-    position: "relative"
+    display: "flex",
+    flexDirection: "column",
   },
+
   labelContainer: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: "0.5rem",
   },
+
   label: {
-    display: "block",
-    fontSize: "0.875rem",
+    fontSize: "0.85rem",
     fontWeight: "600",
-    color: "#374151",
+    color: "#2d3748",
     marginBottom: "0.5rem",
   },
+
   forgotLink: {
-    fontSize: "0.875rem",
+    fontSize: "0.85rem",
     color: "#f97316",
     fontWeight: "500",
     cursor: "pointer",
     textDecoration: "none",
     transition: "color 0.2s ease",
   },
+
   input: {
     width: "100%",
-    padding: "1rem 1.25rem",
-    fontSize: "1rem",
-    border: "2px solid #f1f5f9",
-    borderRadius: "12px",
+    padding: "12px 16px",
+    fontSize: "0.9rem",
+    border: "2px solid #e2e8f0",
+    borderRadius: "10px",
     outline: "none",
     backgroundColor: "#ffffff",
-    color: "#000000",
-    boxShadow: "0 1px 3px rgba(0, 0, 0, 0.05)",
-    transition: "all 0.2s ease",
+    color: "#2d3748",
+    transition: "all 0.3s ease",
     boxSizing: "border-box",
   },
-  button: {
-    marginTop: "0.5rem",
-    padding: "1rem 1.5rem",
-    fontSize: "1rem",
+
+  submitButton: {
+    width: "100%",
+    padding: "12px 20px",
+    fontSize: "0.9rem",
     fontWeight: "600",
-    background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+    background: "linear-gradient(135deg, #fed7aa 0%, #fb923c 50%, #f97316 100%)",
     border: "none",
-    borderRadius: "12px",
+    borderRadius: "10px",
     color: "#ffffff",
     cursor: "pointer",
-    transition: "all 0.2s ease",
-    boxShadow: "0 4px 12px rgba(249, 115, 22, 0.3)",
+    transition: "all 0.3s ease",
+    marginTop: "0.5rem",
+    boxShadow: "0 4px 15px rgba(249, 115, 22, 0.3)",
   },
-  buttonLoading: {
+
+  submitButtonLoading: {
     opacity: 0.8,
     cursor: "not-allowed",
-    transform: "scale(0.98)",
   },
+
   loadingContainer: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     gap: "0.5rem",
   },
+
   spinner: {
     width: "16px",
     height: "16px",
@@ -344,6 +341,7 @@ const styles = {
     borderRadius: "50%",
     animation: "spin 1s linear infinite",
   },
+
   errorMessage: {
     background: "#fef2f2",
     border: "1px solid #fecaca",
@@ -353,84 +351,73 @@ const styles = {
     marginBottom: "1rem",
     fontSize: "14px",
     fontWeight: "500",
-    display: "flex",
-    alignItems: "center",
-    gap: "0.5rem",
   },
-  errorIcon: {
-    fontSize: "16px",
-  },
+
   divider: {
     position: "relative",
     textAlign: "center",
-    margin: "2rem 0",
-    color: "#94a3b8",
-    fontSize: "0.875rem",
+    margin: "1rem 0",
+    color: "#a0aec0",
+    fontSize: "0.8rem",
   },
+
   dividerText: {
     background: "#ffffff",
     padding: "0 1rem",
-    display: "inline-block",
   },
+
   socialButtons: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "0.75rem",
-    marginBottom: "2rem",
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.6rem",
+    marginBottom: "1rem",
   },
+
   socialButton: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    gap: "0.5rem",
-    padding: "0.75rem 1rem",
+    gap: "0.6rem",
+    padding: "10px 14px",
     border: "2px solid #e2e8f0",
-    borderRadius: "8px",
+    borderRadius: "10px",
     background: "#ffffff",
-    color: "#374151",
-    fontSize: "0.875rem",
+    color: "#4a5568",
+    fontSize: "0.8rem",
     fontWeight: "500",
     cursor: "pointer",
-    transition: "all 0.2s ease",
+    transition: "all 0.3s ease",
   },
+
   socialIcon: {
     fontSize: "1rem",
+    fontWeight: "bold",
   },
+
   footer: {
-    marginTop: "2rem",
-    textAlign: "center"
+    textAlign: "center",
   },
+
   switchText: {
-    fontSize: "0.95rem",
-    color: "#64748b",
-    margin: 0
+    fontSize: "0.8rem",
+    color: "#718096",
+    margin: 0,
   },
+
   switchLink: {
     color: "#f97316",
     fontWeight: "600",
     cursor: "pointer",
-    marginLeft: "0.5rem",
-    transition: "all 0.2s ease",
-    display: "inline-block",
+    textDecoration: "none",
+    transition: "color 0.3s ease",
   },
 };
 
-// Add these keyframes for animations
+// Add keyframes for animations
 const keyframes = `
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-20px); }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @keyframes spin {
@@ -445,31 +432,5 @@ if (typeof document !== 'undefined') {
   styleElement.textContent = keyframes;
   document.head.appendChild(styleElement);
 }
-
-// Also add hover effects
-styles.input = {
-  ...styles.input,
-  ':focus': {
-    borderColor: '#f97316',
-    boxShadow: '0 0 0 3px rgba(249, 115, 22, 0.1)',
-    transform: 'translateY(-1px)',
-  }
-};
-
-styles.button = {
-  ...styles.button,
-  ':hover': {
-    transform: 'translateY(-2px)',
-    boxShadow: '0 6px 20px rgba(249, 115, 22, 0.4)',
-  }
-};
-
-styles.socialButton = {
-  ...styles.socialButton,
-  ':hover': {
-    borderColor: '#f97316',
-    transform: 'translateY(-1px)',
-  }
-};
 
 export default LoginPage;
