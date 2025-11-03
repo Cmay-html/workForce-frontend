@@ -8,8 +8,13 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [disputes, setDisputes] = useState([]);
+  const [projects, setProjects] = useState([]); 
   const [error, setError] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);
+  const [disputesPage, setDisputesPage] = useState(1);
+  const [disputesTotalPages, setDisputesTotalPages] = useState(1);
+  const [projectsPage, setProjectsPage] = useState(1);
+  const [projectsTotalPages, setProjectsTotalPages] = useState(1);
   const [formData, setFormData] = useState({ email: '', role: 'client', password: '' });
   const [disputeId, setDisputeId] = useState('');
   const [resolution, setResolution] = useState('');
