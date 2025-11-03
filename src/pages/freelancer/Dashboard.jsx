@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import FreelancerLayout from "../../components/layouts/FreelancerLayout";
-import PageWrapper from "../../components/shared/PageWrapper";
 
 const FreelancerDashboard = () => {
   const navigate = useNavigate();
@@ -12,16 +11,99 @@ const FreelancerDashboard = () => {
   const [proposals, setProposals] = useState([]);
   const [recentActivity, setRecentActivity] = useState([]);
   const [earnings, setEarnings] = useState({ thisMonth: 0, total: 0 });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredProjects, setFilteredProjects] = useState([]);
 
   // Calculate stats from user data
-  const stats = {
-    activeProjects: projects.filter(p => p.status === 'active').length,
-    pendingProposals: proposals.filter(p => p.status === 'pending').length,
-    completedProjects: projects.filter(p => p.status === 'completed').length,
-    totalEarnings: projects
-      .filter(p => p.status === 'completed')
-      .reduce((sum, p) => sum + (p.earnings || 0), 0)
-  };
+  const stats = [
+    {
+      value: projects.filter(p => p.status === 'active').length.toString(),
+      label: "Active Projects",
+      color: "blue",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      ),
+    },
+    {
+      value: proposals.filter(p => p.status === 'pending').length.toString(),
+      label: "Pending Proposals",
+      color: "yellow",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+    },
+    {
+      value: projects.filter(p => p.status === 'completed').length.toString(),
+      label: "Completed",
+      color: "green",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      ),
+    },
+    {
+      value: `$${earnings.total}`,
+      label: "Total Earnings",
+      color: "orange",
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+        </svg>
+      ),
+    },
+  ];
+
+  const quickActions = [
+    {
+      title: "Browse Projects",
+      description: "Find new opportunities",
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      ),
+      href: "/freelancer/projects",
+      color: "blue",
+    },
+    {
+      title: "Submit Proposal",
+      description: "Apply to projects",
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      ),
+      href: "/freelancer/proposals",
+      color: "green",
+    },
+    {
+      title: "Update Portfolio",
+      description: "Showcase your work",
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      ),
+      href: "/freelancer/profile",
+      color: "purple",
+    },
+    {
+      title: "Track Payments",
+      description: "Monitor earnings",
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      ),
+      href: "/freelancer/payments",
+      color: "orange",
+    },
+  ];
 
   useEffect(() => {
     if (user) {
@@ -34,7 +116,8 @@ const FreelancerDashboard = () => {
           earnings: 2400,
           client: "TechCorp Inc.",
           progress: 75,
-          deadline: "2024-02-15"
+          deadline: "2024-02-15",
+          description: "Building a modern e-commerce platform with React and Node.js. Features include user authentication, payment processing, and inventory management."
         },
         {
           id: 2,
@@ -43,16 +126,18 @@ const FreelancerDashboard = () => {
           earnings: 1800,
           client: "StartupXYZ",
           progress: 100,
-          deadline: "2024-01-20"
+          deadline: "2024-01-20",
+          description: "Designed a complete mobile app interface for a fitness tracking application with modern UI components and user-friendly navigation."
         },
         {
           id: 3,
-          title: "Logo Design & Branding",
+          title: "WordPress Blog Setup",
           status: "active",
           earnings: 800,
-          client: "Creative Agency",
-          progress: 50,
-          deadline: "2024-02-28"
+          client: "BlogCorp",
+          progress: 40,
+          deadline: "2024-02-28",
+          description: "Setting up a professional WordPress blog with custom theme, SEO optimization, and content management system."
         }
       ];
 
@@ -67,16 +152,9 @@ const FreelancerDashboard = () => {
         {
           id: 2,
           projectTitle: "Logo Design",
-          status: "accepted",
+          status: "pending",
           submittedDate: new Date(Date.now() - 86400000).toISOString(),
           budget: 500
-        },
-        {
-          id: 3,
-          projectTitle: "React Development",
-          status: "pending",
-          submittedDate: new Date(Date.now() - 172800000).toISOString(),
-          budget: 5000
         }
       ];
 
@@ -93,23 +171,8 @@ const FreelancerDashboard = () => {
           type: "milestone_approved",
           project: "Mobile App Design",
           client: "StartupXYZ",
-          amount: 800,
+          amount: 600,
           timestamp: new Date(Date.now() - 7200000).toISOString()
-        },
-        {
-          id: 3,
-          type: "new_message",
-          project: "Website Redesign",
-          client: "Digital Agency",
-          timestamp: new Date(Date.now() - 10800000).toISOString()
-        },
-        {
-          id: 4,
-          type: "payment_received",
-          project: "Logo Design",
-          client: "Creative Studio",
-          amount: 1200,
-          timestamp: new Date(Date.now() - 86400000).toISOString()
         }
       ];
 
@@ -119,6 +182,33 @@ const FreelancerDashboard = () => {
       setEarnings({ thisMonth: 2400, total: 8500 });
     }
   }, [user]);
+
+  // Filter projects based on search query
+  useEffect(() => {
+    const handleSearch = (event) => {
+      const query = event.detail;
+      setSearchQuery(query);
+    };
+
+    window.addEventListener('dashboardSearch', handleSearch);
+
+    return () => {
+      window.removeEventListener('dashboardSearch', handleSearch);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredProjects(projects);
+    } else {
+      const filtered = projects.filter(project =>
+        project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        project.client.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredProjects(filtered);
+    }
+  }, [searchQuery, projects]);
 
   if (loading) {
     return (
@@ -132,248 +222,315 @@ const FreelancerDashboard = () => {
     return <Navigate to="/login" replace />;
   }
 
-  const welcomeMessage = `Welcome back, ${user.firstName}!`;
+  const getStatusColor = (status) => {
+    const colors = {
+      "active": "bg-blue-100 text-blue-800 border-blue-200",
+      "completed": "bg-green-100 text-green-800 border-green-200",
+      "pending": "bg-yellow-100 text-yellow-800 border-yellow-200",
+    };
+    return colors[status] || "bg-gray-100 text-gray-800 border-gray-200";
+  };
 
-  const headerActions = [
-    <button
-      key="browse"
-      onClick={() => navigate("/freelancer/projects")}
-      className="bg-white text-orange-600 hover:bg-orange-50 px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg border border-orange-200"
-    >
-      Browse Projects
-    </button>,
-    <button
-      key="profile"
-      onClick={() => navigate("/freelancer/profile")}
-      className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg"
-    >
-      Update Profile
-    </button>
-  ];
+  const getStatusLabel = (status) => {
+    const labels = {
+      "active": "In Progress",
+      "completed": "Completed",
+      "pending": "Pending"
+    };
+    return labels[status] || status;
+  };
 
   return (
     <FreelancerLayout>
-      <PageWrapper 
-        title="Dashboard" 
-        subtitle={welcomeMessage}
-        headerActions={headerActions}
-      >
-        {/* Welcome Banner */}
-        <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl shadow-xl p-8 text-white">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold mb-2">{welcomeMessage}</h2>
-              <p className="text-orange-100 text-lg opacity-90">
-                Here's your business overview and recent activity.
-              </p>
-              <div className="mt-4 flex items-center gap-6">
-                <div className="text-orange-100">
-                  <span className="text-2xl font-bold">${earnings.thisMonth}</span>
-                  <p className="text-sm">This Month</p>
-                </div>
-                <div className="text-orange-100">
-                  <span className="text-2xl font-bold">{stats.activeProjects}</span>
-                  <p className="text-sm">Active Projects</p>
+      <div className="p-6 min-h-screen">
+        <div className="max-w-7xl mx-auto space-y-8">
+          {/* Welcome Header */}
+          <div className="bg-gradient-to-r from-orange-600 to-orange-700 rounded-2xl shadow-xl p-8 text-white">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+              <div className="flex-1">
+                <h1 className="text-3xl font-bold mb-2">Welcome back, {user.firstName}!</h1>
+                <p className="text-orange-100 text-lg opacity-90">
+                  Here's your freelance business overview and recent activity.
+                </p>
+                <div className="mt-4 flex items-center gap-6">
+                  <div className="text-orange-100">
+                    <span className="text-2xl font-bold">${earnings.thisMonth}</span>
+                    <p className="text-sm">This Month</p>
+                  </div>
+                  <div className="text-orange-100">
+                    <span className="text-2xl font-bold">{projects.filter(p => p.status === 'active').length}</span>
+                    <p className="text-sm">Active Projects</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white border border-gray-200 overflow-hidden rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                  </svg>
-                </div>
-              </div>
-              <div className="ml-5 w-0 flex-1">
-                <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Active Projects</dt>
-                  <dd className="text-2xl font-bold text-gray-900">{stats.activeProjects}</dd>
-                </dl>
-              </div>
+              <button 
+                onClick={() => navigate("/freelancer/projects")}
+                className="bg-white text-orange-600 hover:bg-orange-50 px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                + Browse Projects
+              </button>
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 overflow-hidden rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-yellow-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {stats.map((stat, index) => (
+              <div
+                key={stat.label}
+                className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <div className={`p-2 rounded-lg bg-${stat.color}-50`}>
+                    <div className={`text-${stat.color}-600`}>{stat.icon}</div>
+                  </div>
+                  <div className={`text-2xl font-bold text-${stat.color}-600`}>
+                    {stat.value}
+                  </div>
                 </div>
+                <h3 className="text-gray-600 font-medium text-sm uppercase tracking-wide">
+                  {stat.label}
+                </h3>
               </div>
-              <div className="ml-5 w-0 flex-1">
-                <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Pending Proposals</dt>
-                  <dd className="text-2xl font-bold text-gray-900">{stats.pendingProposals}</dd>
-                </dl>
-              </div>
-            </div>
+            ))}
           </div>
 
-          <div className="bg-white border border-gray-200 overflow-hidden rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
-                  </svg>
-                </div>
-              </div>
-              <div className="ml-5 w-0 flex-1">
-                <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Completed Projects</dt>
-                  <dd className="text-2xl font-bold text-gray-900">{stats.completedProjects}</dd>
-                </dl>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white border border-gray-200 overflow-hidden rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center shadow-lg">
-                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
-                  </svg>
-                </div>
-              </div>
-              <div className="ml-5 w-0 flex-1">
-                <dl>
-                  <dt className="text-sm font-medium text-gray-500 truncate">Total Earnings</dt>
-                  <dd className="text-2xl font-bold text-gray-900">${earnings.total.toLocaleString()}</dd>
-                </dl>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Active Projects */}
-          <div className="lg:col-span-2 bg-white shadow-sm overflow-hidden rounded-xl border border-gray-200">
-            <div className="px-6 py-5 border-b border-gray-200">
-              <h3 className="text-lg leading-6 font-semibold text-gray-900">Active Projects</h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">Your current ongoing work</p>
-            </div>
-            <div className="px-6 py-5">
-              {projects.filter(p => p.status === 'active').length === 0 ? (
-                <div className="text-center py-8">
-                  <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                  </svg>
-                  <h3 className="mt-2 text-sm font-medium text-gray-900">No active projects</h3>
-                  <p className="mt-1 text-sm text-gray-500">Start by browsing available projects.</p>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {projects.filter(p => p.status === 'active').map((project) => (
-                    <div key={project.id} className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
-                      <div className="flex items-center justify-between mb-3">
-                        <h4 className="text-lg font-medium text-gray-900">{project.title}</h4>
-                        <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">
-                          {project.progress}% Complete
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm text-gray-500 mb-3">
-                        <span>Client: {project.client}</span>
-                        <span>Due: {new Date(project.deadline).toLocaleDateString()}</span>
-                      </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div 
-                          className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
-                          style={{ width: `${project.progress}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Recent Activity & Quick Actions */}
-          <div className="space-y-8">
-            {/* Recent Activity */}
-            <div className="bg-white shadow-sm overflow-hidden rounded-xl border border-gray-200">
-              <div className="px-6 py-5 border-b border-gray-200">
-                <h3 className="text-lg leading-6 font-semibold text-gray-900">Recent Activity</h3>
-              </div>
-              <div className="px-6 py-5">
-                <div className="space-y-4">
-                  {recentActivity.slice(0, 4).map((activity) => (
-                    <div key={activity.id} className="flex items-start space-x-3">
-                      <div className="w-2 h-2 bg-orange-500 rounded-full mt-2"></div>
-                      <div className="flex-1">
-                        <p className="text-sm text-gray-800">
-                          {activity.type === "proposal_accepted" && (
-                            <>Your proposal for <strong>{activity.project}</strong> was accepted</>
-                          )}
-                          {activity.type === "milestone_approved" && (
-                            <>Milestone approved for <strong>{activity.project}</strong> +${activity.amount}</>
-                          )}
-                          {activity.type === "new_message" && (
-                            <>New message from {activity.client}</>
-                          )}
-                          {activity.type === "payment_received" && (
-                            <>Payment received: ${activity.amount}</>
-                          )}
-                        </p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {new Date(activity.timestamp).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Quick Actions */}
-            <div className="bg-white shadow-sm overflow-hidden rounded-xl border border-gray-200">
-              <div className="px-6 py-5 border-b border-gray-200">
-                <h3 className="text-lg leading-6 font-semibold text-gray-900">Quick Actions</h3>
+            <div className="lg:col-span-1">
+              <h2 className="text-xl font-bold text-gray-900 mb-6">
+                Quick Actions
+              </h2>
+              <div className="space-y-4">
+                {quickActions.map((action, index) => (
+                  <button
+                    key={action.title}
+                    onClick={() => navigate(action.href)}
+                    className="group bg-white rounded-xl shadow-sm border border-gray-200/60 p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 block w-full text-left"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <div
+                        className={`p-3 rounded-xl bg-${action.color}-50 group-hover:bg-${action.color}-100 transition-colors`}
+                      >
+                        <div
+                          className={`text-${action.color}-600 group-hover:text-${action.color}-700`}
+                        >
+                          {action.icon}
+                        </div>
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-gray-900 group-hover:text-gray-700">
+                          {action.title}
+                        </h3>
+                        <p className="text-gray-600 text-sm mt-1">
+                          {action.description}
+                        </p>
+                      </div>
+                      <div className="text-gray-400 group-hover:text-gray-600 transition-colors">
+                        <svg
+                          className="w-5 h-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5l7 7-7 7"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  </button>
+                ))}
               </div>
-              <div className="px-6 py-5 space-y-3">
+            </div>
+
+            {/* Active Projects */}
+            <div className="lg:col-span-2">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-bold text-gray-900">My Active Projects</h2>
                 <button
                   onClick={() => navigate("/freelancer/projects")}
-                  className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
+                  className="text-orange-600 hover:text-orange-700 font-medium text-sm flex items-center space-x-1"
                 >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                  <span>View All</span>
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
                   </svg>
-                  Browse Projects
                 </button>
-                <button
-                  onClick={() => navigate("/freelancer/proposals")}
-                  className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
-                >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                  </svg>
-                  My Proposals
-                </button>
-                <button
-                  onClick={() => navigate("/chat")}
-                  className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
-                >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20 2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h4l4 4 4-4h4c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
-                  </svg>
-                  Messages
-                </button>
+              </div>
+
+              <div className="space-y-4">
+                {filteredProjects.length === 0 ? (
+                  <div className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-8 text-center">
+                    <svg className="mx-auto h-12 w-12 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">No projects found</h3>
+                    <p className="text-gray-500 mb-4">Start browsing available projects to begin your freelance journey.</p>
+                    <button
+                      onClick={() => navigate("/freelancer/projects")}
+                      className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+                    >
+                      Browse Projects
+                    </button>
+                  </div>
+                ) : (
+                  filteredProjects.map((project, index) => (
+                    <div
+                      key={project.id}
+                      className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-6 hover:shadow-lg transition-all duration-300"
+                    >
+                      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-3 mb-3">
+                            <h3 className="font-bold text-gray-900 text-lg">
+                              {project.title}
+                            </h3>
+                            <span
+                              className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(
+                                project.status
+                              )}`}
+                            >
+                              {getStatusLabel(project.status)}
+                            </span>
+                          </div>
+                          <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                            {project.description}
+                          </p>
+                          <div className="flex items-center space-x-6 text-sm text-gray-500 mb-3">
+                            <div className="flex items-center space-x-2">
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                />
+                              </svg>
+                              <span>Client: {project.client}</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+                                />
+                              </svg>
+                              <span>Earnings: ${project.earnings}</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                />
+                              </svg>
+                              <span>Due: {new Date(project.deadline).toLocaleDateString()}</span>
+                            </div>
+                          </div>
+                          {project.status === 'active' && (
+                            <div className="w-full bg-gray-200 rounded-full h-2">
+                              <div 
+                                className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+                                style={{ width: `${project.progress}%` }}
+                              ></div>
+                              <p className="text-xs text-gray-500 mt-1">{project.progress}% Complete</p>
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <button className="p-2 text-gray-400 hover:text-orange-600 hover:bg-orange-50 rounded-lg transition-colors">
+                            <svg
+                              className="w-5 h-5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                              />
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                              />
+                            </svg>
+                          </button>
+                          <button className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors">
+                            <svg
+                              className="w-5 h-5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                              />
+                            </svg>
+                          </button>
+                          <button className="p-2 text-gray-400 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors">
+                            <svg
+                              className="w-5 h-5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           </div>
         </div>
-      </PageWrapper>
+      </div>
     </FreelancerLayout>
   );
 };
