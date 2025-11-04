@@ -74,7 +74,7 @@ const ChatWidget = () => {
         <div style={{ position: 'absolute', fontSize: '8px', top: 10, left: 12, animation: 'twinkle 2.5s infinite 0.5s' }}>⭐</div>
         <div style={{ position: 'absolute', fontSize: '9px', bottom: 14, right: 10, animation: 'twinkle 3.5s infinite 1s' }}>✨</div>
         
-        {/* AI Badge */}
+        {/* Chat Badge */}
         <div style={{
           background: 'rgba(255,255,255,0.9)',
           color: '#FF4D00',
@@ -84,7 +84,7 @@ const ChatWidget = () => {
           borderRadius: '12px',
           boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
         }}>
-          AI
+          Chat
         </div>
 
         {/* Pulse Glow */}
