@@ -50,6 +50,13 @@ export const chatService = {
     return new WebSocket(url);
   },
 
+  // Initiate a chat between current user and target user (e.g., freelancer)
+  initiateChat: async (targetUserId, projectId = null) => {
+    const payload = { targetUserId };
+    if (projectId) payload.projectId = projectId;
+    return api.post('/chat/initiate', payload);
+  },
+
   // Typing indicators
   sendTypingIndicator: async (conversationId, isTyping) => {
     return api.post(`/chat/conversations/${conversationId}/typing`, { isTyping });

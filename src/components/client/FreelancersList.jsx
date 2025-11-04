@@ -2,123 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { clientService } from '../../services/api/clientService';
+import { chatService } from '../../services/api/chatService';
 
 const FreelancersList = () => {
   const navigate = useNavigate();
-  const { isAuthenticated, user, loading } = useAuth();
+  const { user, loading } = useAuth();
   const [freelancers, setFreelancers] = useState([]);
   const [loadingFreelancers, setLoadingFreelancers] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSkills, setSelectedSkills] = useState([]);
 
   useEffect(() => {
-    setFreelancers([
-      {
-        id: 1,
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john.doe@example.com',
-        skills: ['React', 'Node.js', 'JavaScript', 'HTML', 'CSS'],
-        rating: 4.8,
-        completedProjects: 25,
-        bio: 'Full-stack developer with 5+ years of experience in web development.',
-        location: 'New York, USA',
-        profileImage: null,
-        availability: 'Available'
-      },
-      {
-        id: 2,
-        firstName: 'Jane',
-        lastName: 'Smith',
-        email: 'jane.smith@example.com',
-        skills: ['Python', 'Django', 'PostgreSQL', 'AWS'],
-        rating: 4.9,
-        completedProjects: 32,
-        bio: 'Backend developer specializing in Python and cloud solutions.',
-        location: 'San Francisco, USA',
-        profileImage: null,
-        availability: 'Available'
-      },
-      {
-        id: 3,
-        firstName: 'Mike',
-        lastName: 'Johnson',
-        email: 'mike.johnson@example.com',
-        skills: ['UI/UX Design', 'Figma', 'Adobe XD', 'Sketch'],
-        rating: 4.7,
-        completedProjects: 18,
-        bio: 'Creative UI/UX designer with a passion for user-centered design.',
-        location: 'Los Angeles, USA',
-        profileImage: null,
-        availability: 'Busy'
-      },
-      {
-        id: 4,
-        firstName: 'Sarah',
-        lastName: 'Williams',
-        email: 'sarah.williams@example.com',
-        skills: ['Mobile Development', 'React Native', 'iOS', 'Android'],
-        rating: 4.6,
-        completedProjects: 22,
-        bio: 'Mobile app developer experienced in cross-platform solutions.',
-        location: 'Austin, USA',
-        profileImage: null,
-        availability: 'Available'
-      },
-      {
-        id: 5,
-        firstName: 'Alex',
-        lastName: 'Chen',
-        email: 'alex.chen@example.com',
-        skills: ['DevOps', 'Docker', 'Kubernetes', 'AWS', 'CI/CD'],
-        rating: 4.9,
-        completedProjects: 28,
-        bio: 'DevOps engineer with expertise in cloud infrastructure and automation.',
-        location: 'Seattle, USA',
-        profileImage: null,
-        availability: 'Available'
-      },
-      {
-        id: 6,
-        firstName: 'Emma',
-        lastName: 'Davis',
-        email: 'emma.davis@example.com',
-        skills: ['Data Science', 'Python', 'Machine Learning', 'TensorFlow', 'SQL'],
-        rating: 4.7,
-        completedProjects: 20,
-        bio: 'Data scientist specializing in machine learning and predictive analytics.',
-        location: 'Boston, USA',
-        profileImage: null,
-        availability: 'Available'
-      },
-      {
-        id: 7,
-        firstName: 'David',
-        lastName: 'Brown',
-        email: 'david.brown@example.com',
-        skills: ['Blockchain', 'Solidity', 'Web3', 'Ethereum', 'Smart Contracts'],
-        rating: 4.5,
-        completedProjects: 15,
-        bio: 'Blockchain developer experienced in DeFi and NFT projects.',
-        location: 'Miami, USA',
-        profileImage: null,
-        availability: 'Busy'
-      },
-      {
-        id: 8,
-        firstName: 'Lisa',
-        lastName: 'Garcia',
-        email: 'lisa.garcia@example.com',
-        skills: ['QA Testing', 'Selenium', 'Cypress', 'Jest', 'Test Automation'],
-        rating: 4.6,
-        completedProjects: 35,
-        bio: 'Quality assurance engineer with expertise in automated testing.',
-        location: 'Denver, USA',
-        profileImage: null,
-        availability: 'Available'
+    const load = async () => {
+      try {
+        setLoadingFreelancers(true);
+        const res = await clientService.getFreelancers();
+        const data = res.data || [];
+        setFreelancers(Array.isArray(data) ? data : data.items || []);
+      } catch (e) {
+        console.error('Failed to load freelancers:', e);
+        setFreelancers([]);
+      } finally {
+        setLoadingFreelancers(false);
       }
-    ]);
-    setLoadingFreelancers(false);
+    };
+    load();
   }, []);
 
   const filteredFreelancers = freelancers.filter(freelancer => {
@@ -132,9 +40,20 @@ const FreelancersList = () => {
     return matchesSearch && matchesSkills;
   });
 
-  const handleContactFreelancer = (freelancerId) => {
-    // Navigate to a chat or contact page
-    navigate(`/freelancers/${freelancerId}/contact`);
+  const handleContactFreelancer = async (freelancerId) => {
+    try {
+      const res = await chatService.initiateChat(freelancerId);
+      const roomId = res.data?.room_id || res.data?.roomId || res.data?.id;
+      // Navigate to chat; if room route isn't parameterized, fall back to /chat
+      if (roomId) {
+        navigate(`/chat?room=${encodeURIComponent(roomId)}`);
+      } else {
+        navigate('/chat');
+      }
+    } catch (e) {
+      console.error('Failed to initiate chat:', e);
+      alert(e?.response?.data?.message || 'Failed to initiate chat');
+    }
   };
 
   const handleViewProfile = (freelancerId) => {

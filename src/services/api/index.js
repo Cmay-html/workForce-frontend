@@ -1,8 +1,12 @@
 import axios from 'axios';
 
+// Normalize base URL to always include '/api' suffix
+const rawBase = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const baseURL = rawBase.endsWith('/api') ? rawBase : `${rawBase.replace(/\/$/, '')}/api`;
+
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3001/api',
+  baseURL,
   headers: {
     'Content-Type': 'application/json',
   },

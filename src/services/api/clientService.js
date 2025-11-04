@@ -7,8 +7,12 @@ export const clientService = {
     return api.get('/client/dashboard');
   },
   getProjects: async () => {
-    // Implement get projects API call
+    // Legacy client-specific endpoint (if supported)
     return api.get('/client/projects');
+  },
+  getClientProjects: async () => {
+    // Standardized endpoint per backend spec
+    return api.get('/projects/client');
   },
   getMilestones: async () => {
     // Implement get milestones API call
@@ -23,8 +27,8 @@ export const clientService = {
     return api.get('/freelancers', { params: filters });
   },
   createProject: async (projectData) => {
-    // Implement create project API call
-    return api.post('/client/projects', projectData);
+    // Standardized create project API call
+    return api.post('/projects', projectData);
   },
   updateProject: async (projectId, projectData) => {
     // Implement update project API call
