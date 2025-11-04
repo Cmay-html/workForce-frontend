@@ -1,42 +1,52 @@
 
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [role, setRole] = useState(null);
 
   // Check for existing auth on mount
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    const userData = localStorage.getItem('userData');
-    const pendingUserData = localStorage.getItem('pendingUserData');
+    const checkAuth = () => {
+      const token = localStorage.getItem('authToken');
+      const userData = localStorage.getItem('userData');
+      const pendingUserData = localStorage.getItem('pendingUserData');
 
-    if (token && userData) {
-      try {
-        const parsedUser = JSON.parse(userData);
-        setUser(parsedUser);
-      } catch (error) {
-        console.error('Error parsing stored user data:', error);
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('userData');
+      if (token && userData) {
+        try {
+          const parsedUser = JSON.parse(userData);
+          setUser(parsedUser);
+          setIsAuthenticated(true);
+          setRole(parsedUser.role);
+        } catch (error) {
+          console.error('Error parsing stored user data:', error);
+          localStorage.removeItem('authToken');
+          localStorage.removeItem('userData');
+        }
+      } else if (pendingUserData) {
+        // Handle newly registered user
+        try {
+          const parsedUser = JSON.parse(pendingUserData);
+          setUser(parsedUser);
+          setIsAuthenticated(true);
+          setRole(parsedUser.role);
+          localStorage.setItem('userData', pendingUserData);
+          localStorage.setItem('authToken', 'temp_token_' + Date.now());
+          localStorage.removeItem('pendingUserData');
+        } catch (error) {
+          console.error('Error parsing pending user data:', error);
+          localStorage.removeItem('pendingUserData');
+        }
       }
-    } else if (pendingUserData) {
-      // Handle newly registered user
-      try {
-        const parsedUser = JSON.parse(pendingUserData);
-        setUser(parsedUser);
-        localStorage.setItem('userData', pendingUserData);
-        localStorage.setItem('authToken', 'temp_token_' + Date.now());
-        localStorage.removeItem('pendingUserData');
-      } catch (error) {
-        console.error('Error parsing pending user data:', error);
-        localStorage.removeItem('pendingUserData');
-      }
-    }
 
-    setLoading(false);
+      setLoading(false);
+    };
+
+    checkAuth();
   }, []);
 
   const login = async (email, password) => {
@@ -59,6 +69,8 @@ export const AuthProvider = ({ children }) => {
 
       const data = await response.json();
       setUser(data.user);
+      setIsAuthenticated(true);
+      setRole(data.user.role);
       localStorage.setItem('authToken', data.token);
       localStorage.setItem('userData', JSON.stringify(data.user));
 
@@ -126,6 +138,8 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('userProjects');
     localStorage.removeItem('proposals');
     setUser(null);
+    setIsAuthenticated(false);
+    setRole(null);
   };
 
   const verifyEmail = async (token, email) => {
@@ -148,6 +162,8 @@ export const AuthProvider = ({ children }) => {
 
       const data = await response.json();
       setUser(data.user);
+      setIsAuthenticated(true);
+      setRole(data.user.role);
       localStorage.setItem('authToken', data.token);
       localStorage.setItem('userData', JSON.stringify(data.user));
 
@@ -168,7 +184,7 @@ export const AuthProvider = ({ children }) => {
     registerFreelancer,
     verifyEmail,
     loading,
-    isAuthenticated: !!user,
+    isAuthenticated,
     isClient: user?.role === 'client',
     isFreelancer: user?.role === 'freelancer',
     isAdmin: user?.role === 'admin'
