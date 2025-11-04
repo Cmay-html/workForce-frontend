@@ -37,7 +37,8 @@ const AdminLogin = () => {
       console.log("Login successful:", response.data);
       
       // Store auth data manually for admin login
-      localStorage.setItem('authToken', response.data.access_token);
+  localStorage.setItem('token', response.data.access_token);
+  localStorage.setItem('authToken', response.data.access_token); // Also set authToken for AuthContext
       localStorage.setItem('userData', JSON.stringify(response.data.user));
       localStorage.setItem("lastAdminEmail", formData.email);
       localStorage.setItem("lastAdminPassword", formData.password);
