@@ -1,12 +1,9 @@
   // src/Pages/AdminLogin.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useAuth } from '../../contexts/AuthContext';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 const AdminLogin = () => {
-  const { login } = useAuth();
-  const navigate = useNavigate();
   const location = useLocation();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -38,10 +35,15 @@ const AdminLogin = () => {
         }
       );
       console.log("Login successful:", response.data);
-      login(response.data.token);
+      
+      // Store auth data manually for admin login
+      localStorage.setItem('authToken', response.data.access_token);
+      localStorage.setItem('userData', JSON.stringify(response.data.user));
       localStorage.setItem("lastAdminEmail", formData.email);
       localStorage.setItem("lastAdminPassword", formData.password);
-      navigate("/admin");
+      
+      // Force page reload to update auth context
+      window.location.href = "/admin";
     } catch (err) {
       console.error("Login error:", err.response || err);
       const errorMessage = err.response?.data?.message || err.response?.data?.error || "Login failed: Invalid credentials";
