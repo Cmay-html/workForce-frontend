@@ -81,13 +81,13 @@ const ProjectCard = ({ project }) => {
       <div className="flex gap-2">
         <button
           onClick={() => navigate(`/client/projects/${project.id}/chat`)}
-          className="flex-1 bg-primary-500 hover:bg-primary-600 text-white font-medium py-2 px-3 rounded-md text-sm transition-colors duration-200"
+          className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2.5 px-4 rounded-lg text-sm transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
         >
           View Details
         </button>
         <button
           onClick={() => navigate(`/client/projects/${project.id}/milestones/create`)}
-          className="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-3 rounded-md text-sm transition-colors duration-200"
+          className="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-medium py-2.5 px-4 rounded-lg text-sm transition-all duration-200 transform hover:scale-105 shadow-md hover:shadow-lg"
         >
           + Add Milestone
         </button>

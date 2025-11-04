@@ -49,7 +49,7 @@ const ClientDashboard = () => {
   if (loading || loadingProjects) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-400"></div>
       </div>
     );
   }
@@ -85,7 +85,7 @@ const ClientDashboard = () => {
       case 'completed':
         return 'bg-green-100 text-green-800';
       case 'in_progress':
-        return 'bg-blue-100 text-blue-800';
+        return 'bg-blue-400 text-blue-400';
       case 'pending':
         return 'bg-yellow-100 text-yellow-800';
       case 'open':
@@ -108,22 +108,22 @@ const ClientDashboard = () => {
         </div>
 
         {/* Welcome Header - Plain Blue */}
-        <div className="bg-blue-600 rounded-2xl shadow-xl p-8 text-white mb-8">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+        <div className="bg-blue-500 rounded-2xl shadow-xl p-4 sm:p-6 md:p-8 text-white mb-6 md:mb-8">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 sm:gap-6">
             <div className="flex-1">
-              <h1 className="text-3xl font-bold mb-2">{welcomeMessage}</h1>
-              <p className="text-blue-100 text-lg opacity-90">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">{welcomeMessage}</h1>
+              <p className="text-blue-100 text-sm sm:text-base md:text-lg opacity-90">
                 {welcomeSubtext}
               </p>
               {user.company && (
-                <p className="text-blue-200 text-sm mt-2">
+                <p className="text-blue-100 text-xs sm:text-sm mt-2">
                   {user.company} • {user.industry}
                 </p>
               )}
             </div>
             <button 
               onClick={handleCreateProject}
-              className="bg-white text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl border-2 border-transparent hover:border-blue-200"
+              className="w-full lg:w-auto bg-white text-blue-500 hover:bg-blue-50 px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl border-2 border-transparent hover:border-blue-200 text-sm sm:text-base"
             >
               + {isNewUser ? 'Create Your First Project' : 'New Project'}
             </button>
@@ -166,8 +166,8 @@ const ClientDashboard = () => {
         )}
 
         {/* Stats Cards - Improved */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white border border-gray-200 overflow-hidden rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 md:mb-8">
+          <div className="bg-white border border-gray-200 overflow-hidden rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg">
@@ -185,7 +185,7 @@ const ClientDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 overflow-hidden rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white border border-gray-200 overflow-hidden rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center shadow-lg">
@@ -203,7 +203,7 @@ const ClientDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 overflow-hidden rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white border border-gray-200 overflow-hidden rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="w-12 h-12 bg-orange-500 rounded-xl flex items-center justify-center shadow-lg">
@@ -221,7 +221,7 @@ const ClientDashboard = () => {
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 overflow-hidden rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div className="bg-white border border-gray-200 overflow-hidden rounded-xl p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center">
               <div className="flex-shrink-0">
                 <div className="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center shadow-lg">
