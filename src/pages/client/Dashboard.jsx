@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { Navigate } from 'react-router-dom';
-import { clientService } from '../../services/api/clientService';
+import { projectsService } from '../../services/api/projectsService';
 import ClientLayout from '../../components/layouts/ClientLayout';
 
 const ClientDashboard = () => {
@@ -14,28 +14,36 @@ const ClientDashboard = () => {
   const [filteredProjects, setFilteredProjects] = useState([]);
 
   useEffect(() => {
-    // Check if user is newly registered
-    const pendingUserData = localStorage.getItem('pendingUserData');
-    if (pendingUserData && !user) {
-      // This will trigger the AuthContext to process the pending user
-      window.location.reload();
-      return;
-    }
-
-    if (user) {
-      // Load user's projects or initialize empty state for new users
-      const userProjects = localStorage.getItem(`userProjects_${user.id}`) || '[]';
-      try {
-        const parsedProjects = JSON.parse(userProjects);
-        setProjects(parsedProjects);
-        setFilteredProjects(parsedProjects);
-      } catch (error) {
-        console.error('Error loading projects:', error);
-        setProjects([]);
-        setFilteredProjects([]);
+    const loadProjects = async () => {
+      // Check if user is newly registered
+      const pendingUserData = localStorage.getItem('pendingUserData');
+      if (pendingUserData && !user) {
+        // This will trigger the AuthContext to process the pending user
+        window.location.reload();
+        return;
       }
-    }
-    setLoadingProjects(false);
+
+      if (user) {
+        try {
+          setLoadingProjects(true);
+          const res = await projectsService.getClientProjects();
+          const list = res.data || [];
+          const normalized = Array.isArray(list) ? list : (list.items || []);
+          setProjects(normalized);
+          setFilteredProjects(normalized);
+        } catch (error) {
+          console.error('Error loading projects:', error);
+          setProjects([]);
+          setFilteredProjects([]);
+        } finally {
+          setLoadingProjects(false);
+        }
+      } else {
+        setLoadingProjects(false);
+      }
+    };
+
+    loadProjects();
   }, [user]);
 
   if (loading || loadingProjects) {

@@ -138,7 +138,7 @@ const ProjectEditForm = () => {
         "Please select required experience level"
       ),
     }),
-    onSubmit: async (values, { setSubmitting, setStatus }) => {
+    onSubmit: async (values) => {
       if (isCreateMode) {
         setFormValues(values);
         setShowConfirmDialog(true);
@@ -170,14 +170,17 @@ const ProjectEditForm = () => {
         response = await clientService.updateProject(projectId, values);
       }
 
-      if (response.ok) {
-        const result = await response.json();
+      const isSuccess = response && response.status >= 200 && response.status < 300;
+      const result = response?.data || {};
+
+      if (isSuccess) {
         formik.setStatus({ success: `Project ${isCreateMode ? 'created' : 'updated'} successfully!` });
         // Store the new project in localStorage to persist across page refreshes
-        if (isCreateMode && result.id) {
+        if (isCreateMode && (result.id || result.project?.id)) {
+          const newId = result.id || result.project.id;
           const existingProjects = JSON.parse(localStorage.getItem('userProjects') || '[]');
           const newProject = {
-            id: result.id,
+            id: newId,
             title: values.title,
             status: 'open',
             freelancer: null,
@@ -190,35 +193,35 @@ const ProjectEditForm = () => {
           localStorage.setItem('userProjects', JSON.stringify(existingProjects));
         }
         setTimeout(() => navigate(isCreateMode ? "/dashboard" : "/client/projects"), 1500);
-      } else {
-        // Fallback for when API is not available - simulate success
-        formik.setStatus({ success: `Project ${isCreateMode ? 'created' : 'updated'} successfully!` });
-        // Store the new project in localStorage for demo purposes
-        if (isCreateMode) {
-          const existingProjects = JSON.parse(localStorage.getItem('userProjects') || '[]');
-          const newProject = {
-            id: Date.now(), // Generate a simple ID
-            title: values.title,
-            status: 'open',
-            freelancer: null,
-            budget: parseInt(values.budget),
-            description: values.description,
-            deadline: values.deadline,
-            milestones: []
-          };
-          existingProjects.push(newProject);
-          localStorage.setItem('userProjects', JSON.stringify(existingProjects));
-        }
-        setTimeout(() => navigate(isCreateMode ? "/dashboard" : "/client/projects"), 1500);
+        return;
       }
-    } catch (error) {
-      // Fallback for when API fails - simulate success for demo purposes
+
+      // Fallback for when API is not available - simulate success
       formik.setStatus({ success: `Project ${isCreateMode ? 'created' : 'updated'} successfully!` });
-      // Store the new project in localStorage for demo purposes
       if (isCreateMode) {
         const existingProjects = JSON.parse(localStorage.getItem('userProjects') || '[]');
         const newProject = {
-          id: Date.now(), // Generate a simple ID
+          id: Date.now(),
+          title: values.title,
+          status: 'open',
+          freelancer: null,
+          budget: parseInt(values.budget),
+          description: values.description,
+          deadline: values.deadline,
+          milestones: []
+        };
+        existingProjects.push(newProject);
+        localStorage.setItem('userProjects', JSON.stringify(existingProjects));
+      }
+      setTimeout(() => navigate(isCreateMode ? "/dashboard" : "/client/projects"), 1500);
+    } catch (error) {
+      console.error('submitProject error:', error);
+      // Fallback for when API fails - simulate success for demo purposes
+      formik.setStatus({ success: `Project ${isCreateMode ? 'created' : 'updated'} successfully!` });
+      if (isCreateMode) {
+        const existingProjects = JSON.parse(localStorage.getItem('userProjects') || '[]');
+        const newProject = {
+          id: Date.now(),
           title: values.title,
           status: 'open',
           freelancer: null,
