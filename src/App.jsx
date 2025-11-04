@@ -46,6 +46,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import UserManagement from './pages/admin/UserManagement';
 import AdminLogin from './pages/admin/AdminLogin';
 import ChatWidget from './components/shared/ChatWidget';
+import Contact from './pages/Contact';
 
 // Protected Route component (requires authentication)
 const ProtectedRoute = ({ children }) => {
@@ -483,6 +484,9 @@ function App() {
 
             {/* Landing Page */}
             <Route path="/" element={<LandingPage />} />
+
+            {/* Contact Page */}
+            <Route path="/contact" element={<Contact />} />
 
             {/* Privacy Policy and Terms of Service */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
