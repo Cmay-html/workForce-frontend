@@ -11,13 +11,8 @@ export const useConversations = (projectId) => {
       try {
         setLoading(true);
         const response = await chatService.getConversations(projectId);
-
-        if (!response.ok) {
-          throw new Error('Failed to fetch conversations');
-        }
-
-        const data = await response.json();
-        setConversations(data);
+        const data = response.data || [];
+        setConversations(Array.isArray(data) ? data : data.items || []);
         setError(null);
       } catch (err) {
         setError(err.message);

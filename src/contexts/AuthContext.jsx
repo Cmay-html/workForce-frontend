@@ -1,5 +1,6 @@
 
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { authService } from '../services/api/authService';
 
 export const AuthContext = createContext();
 
@@ -42,30 +43,26 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       setLoading(true);
+      const res = await authService.login({ email, password });
+      // Tolerant parsing of token/user shapes
+      const data = res.data || {};
+      const token = data.token || data.access_token || data.accessToken;
+      const userData = data.user || data.data?.user || null;
 
-      // TODO: Replace with actual API call to backend
-      const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await fetch(`${apiUrl}/api/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Login failed');
+      if (!token || !userData) {
+        throw new Error('Invalid login response');
       }
 
-      const data = await response.json();
-      setUser(data.user);
-      localStorage.setItem('authToken', data.token);
-      localStorage.setItem('userData', JSON.stringify(data.user));
+      setUser(userData);
+      // Store under both keys for compatibility with existing code
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('token', token);
+      localStorage.setItem('userData', JSON.stringify(userData));
 
-      return { success: true, user: data.user };
-
+      return { success: true, user: userData };
     } catch (error) {
-      return { success: false, error: error.message };
+      const message = error.response?.data?.message || error.message || 'Login failed';
+      return { success: false, error: message };
     } finally {
       setLoading(false);
     }
@@ -74,22 +71,19 @@ export const AuthProvider = ({ children }) => {
   const registerClient = async (clientData) => {
     try {
       setLoading(true);
-
-      // TODO: Replace with actual API call to backend
-      const apiUrl = import.meta.env.VITE_API_URL;
-      
-      // Simulate successful registration
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
+      const payload = { ...clientData, role: 'client' };
+      const res = await authService.register(payload);
+      const data = res.data || {};
+      // Assume backend may require email verification
       return {
         success: true,
-        verificationRequired: false,
+        verificationRequired: !!data.verificationRequired,
         email: clientData.email,
-        message: "Client registration successful"
+        message: data.message || 'Client registration successful',
       };
-
     } catch (error) {
-      return { success: false, error: error.message };
+      const message = error.response?.data?.message || 'Registration failed. Please try again.';
+      return { success: false, error: message };
     } finally {
       setLoading(false);
     }
@@ -98,22 +92,18 @@ export const AuthProvider = ({ children }) => {
   const registerFreelancer = async (freelancerData) => {
     try {
       setLoading(true);
-
-      // TODO: Replace with actual API call to backend
-      const apiUrl = import.meta.env.VITE_API_URL;
-      
-      // Simulate successful registration
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
+      const payload = { ...freelancerData, role: 'freelancer' };
+      const res = await authService.register(payload);
+      const data = res.data || {};
       return {
         success: true,
-        verificationRequired: false,
+        verificationRequired: !!data.verificationRequired,
         email: freelancerData.email,
-        message: "Freelancer registration successful"
+        message: data.message || 'Freelancer registration successful',
       };
-
     } catch (error) {
-      return { success: false, error: error.message };
+      const message = error.response?.data?.message || 'Registration failed. Please try again.';
+      return { success: false, error: message };
     } finally {
       setLoading(false);
     }
@@ -131,30 +121,24 @@ export const AuthProvider = ({ children }) => {
   const verifyEmail = async (token, email) => {
     try {
       setLoading(true);
-
-      // TODO: Replace with actual API call to backend
-      const apiUrl = import.meta.env.VITE_API_URL;
-      const response = await fetch(`${apiUrl}/api/auth/verify-email`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ token, email }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Email verification failed');
+      // Some backends accept POST /auth/verify-email with token+email
+      const res = await authService.verifyEmail
+        ? authService.verifyEmail({ token, email })
+        : Promise.reject(new Error('Email verification not supported'));
+      const data = res.data || {};
+      const jwt = data.token || data.access_token;
+      const userData = data.user;
+      if (jwt && userData) {
+        setUser(userData);
+        localStorage.setItem('authToken', jwt);
+        localStorage.setItem('token', jwt);
+        localStorage.setItem('userData', JSON.stringify(userData));
+        return { success: true, user: userData };
       }
-
-      const data = await response.json();
-      setUser(data.user);
-      localStorage.setItem('authToken', data.token);
-      localStorage.setItem('userData', JSON.stringify(data.user));
-
-      return { success: true, user: data.user };
-
+      throw new Error('Invalid verification response');
     } catch (error) {
-      return { success: false, error: error.message };
+      const message = error.response?.data?.message || error.message || 'Email verification failed';
+      return { success: false, error: message };
     } finally {
       setLoading(false);
     }
