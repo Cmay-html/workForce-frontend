@@ -24,18 +24,28 @@ const AdminLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // Clear previous errors
+    
     try {
+      console.log("Sending admin login request with:", formData);
       const response = await axios.post(
         "https://workforce-backend-kfxw.onrender.com/api/auth/admin-login",
-        formData
+        formData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          }
+        }
       );
+      console.log("Login successful:", response.data);
       login(response.data.token);
       localStorage.setItem("lastAdminEmail", formData.email);
       localStorage.setItem("lastAdminPassword", formData.password);
       navigate("/admin");
     } catch (err) {
-      setError("Login failed: Invalid credentials");
-      console.error(err);
+      console.error("Login error:", err.response || err);
+      const errorMessage = err.response?.data?.message || err.response?.data?.error || "Login failed: Invalid credentials";
+      setError(errorMessage);
     }
   };
 
