@@ -26,7 +26,7 @@ const AdminLogin = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://workforce-backend-kfxw.onrender.com/api/auth/login",
+        "https://workforce-backend-kfxw.onrender.com/api/auth/admin-login",
         formData
       );
       login(response.data.token);
