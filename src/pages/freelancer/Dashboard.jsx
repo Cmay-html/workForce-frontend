@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import FreelancerLayout from "../../components/layouts/FreelancerLayout";
+import { projectsService } from "../../services/api/projectsService";
 
 const FreelancerDashboard = () => {
   const navigate = useNavigate();
@@ -106,81 +107,25 @@ const FreelancerDashboard = () => {
   ];
 
   useEffect(() => {
-    if (user) {
-      // Initialize with comprehensive mock data
-      const mockProjects = [
-        {
-          id: 1,
-          title: "E-commerce Website Development",
-          status: "active",
-          earnings: 2400,
-          client: "TechCorp Inc.",
-          progress: 75,
-          deadline: "2024-02-15",
-          description: "Building a modern e-commerce platform with React and Node.js. Features include user authentication, payment processing, and inventory management."
-        },
-        {
-          id: 2,
-          title: "Mobile App UI/UX Design",
-          status: "completed",
-          earnings: 1800,
-          client: "StartupXYZ",
-          progress: 100,
-          deadline: "2024-01-20",
-          description: "Designed a complete mobile app interface for a fitness tracking application with modern UI components and user-friendly navigation."
-        },
-        {
-          id: 3,
-          title: "WordPress Blog Setup",
-          status: "active",
-          earnings: 800,
-          client: "BlogCorp",
-          progress: 40,
-          deadline: "2024-02-28",
-          description: "Setting up a professional WordPress blog with custom theme, SEO optimization, and content management system."
+    const load = async () => {
+      if (user) {
+        try {
+          const res = await projectsService.getAllProjects();
+          const list = res.data || [];
+          const normalized = Array.isArray(list) ? list : (list.items || []);
+          setProjects(normalized);
+        } catch (e) {
+          console.error('Failed to load projects:', e);
+          setProjects([]);
         }
-      ];
 
-      const mockProposals = [
-        {
-          id: 1,
-          projectTitle: "Website Redesign",
-          status: "pending",
-          submittedDate: new Date().toISOString(),
-          budget: 3000
-        },
-        {
-          id: 2,
-          projectTitle: "Logo Design",
-          status: "pending",
-          submittedDate: new Date(Date.now() - 86400000).toISOString(),
-          budget: 500
-        }
-      ];
-
-      const mockActivity = [
-        {
-          id: 1,
-          type: "proposal_accepted",
-          project: "E-commerce Website",
-          client: "TechCorp Inc.",
-          timestamp: new Date(Date.now() - 3600000).toISOString()
-        },
-        {
-          id: 2,
-          type: "milestone_approved",
-          project: "Mobile App Design",
-          client: "StartupXYZ",
-          amount: 600,
-          timestamp: new Date(Date.now() - 7200000).toISOString()
-        }
-      ];
-
-      setProjects(mockProjects);
-      setProposals(mockProposals);
-      setRecentActivity(mockActivity);
-      setEarnings({ thisMonth: 2400, total: 8500 });
-    }
+        // Keep proposals and activity as placeholders for now
+        setProposals([]);
+        setRecentActivity([]);
+        setEarnings({ thisMonth: 0, total: 0 });
+      }
+    };
+    load();
   }, [user]);
 
   // Filter projects based on search query
@@ -274,7 +219,7 @@ const FreelancerDashboard = () => {
 
           {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
+            {stats.map((stat) => (
               <div
                 key={stat.label}
                 className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-6 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
@@ -301,7 +246,7 @@ const FreelancerDashboard = () => {
                 Quick Actions
               </h2>
               <div className="space-y-4">
-                {quickActions.map((action, index) => (
+                {quickActions.map((action) => (
                   <button
                     key={action.title}
                     onClick={() => navigate(action.href)}
@@ -387,7 +332,7 @@ const FreelancerDashboard = () => {
                     </button>
                   </div>
                 ) : (
-                  filteredProjects.map((project, index) => (
+                  filteredProjects.map((project) => (
                     <div
                       key={project.id}
                       className="bg-white rounded-2xl shadow-sm border border-gray-200/60 p-6 hover:shadow-lg transition-all duration-300"

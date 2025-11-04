@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { clientService } from "../../../services/api/clientService";
 
 const CreateProjectForm = () => {
   const navigate = useNavigate();
@@ -17,8 +18,18 @@ const CreateProjectForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Here you would typically make an API call to create the project
-      // For now, we'll simulate success
+      const payload = {
+        title: formData.title,
+        description: formData.description,
+        category: formData.category,
+        budget: Number(formData.budget),
+        deadline: formData.deadline,
+        skills: formData.skills,
+        requirements: formData.requirements,
+      };
+
+      await clientService.createProject(payload);
+
       // Reset form
       setFormData({
         title: "",
@@ -32,7 +43,8 @@ const CreateProjectForm = () => {
       // Navigate back to dashboard to see the new project
       navigate('/client/dashboard');
     } catch (error) {
-      // Handle error appropriately
+      console.error('Failed to create project:', error);
+      alert(error?.response?.data?.message || 'Failed to create project.');
     }
   };
 

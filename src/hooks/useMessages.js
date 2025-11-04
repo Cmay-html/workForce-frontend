@@ -14,21 +14,17 @@ export const useMessages = (conversationId) => {
     try {
       setLoading(true);
       const response = await chatService.getMessages(conversationId, beforeMessageId);
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch messages');
-      }
-
-      const data = await response.json();
+      const data = response.data || [];
 
       if (append) {
-        setMessages(prev => [...data, ...prev]);
+        setMessages(prev => [...(Array.isArray(data) ? data : data.items || []), ...prev]);
       } else {
-        setMessages(data);
+        setMessages(Array.isArray(data) ? data : data.items || []);
       }
 
-      // If we got fewer messages than requested, no more to load
-      setHasMore(data.length === 20);
+      // If we got fewer messages than requested, no more to load (assume server default 20)
+      const length = Array.isArray(data) ? data.length : (data.items || []).length;
+      setHasMore(length === 20);
       setError(null);
     } catch (err) {
       setError(err.message);
