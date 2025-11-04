@@ -39,7 +39,7 @@ const AdminDashboard = () => {
     try {
       //  Added params for pagination
       const response = await axios.get(
-        "http://localhost:5000/api/admin/users",
+        "https://workforce-backend-kfxw.onrender.com/api/admin/users",
         {
           headers: { Authorization: `Bearer ${token}` },
           params: { page: currentPage, per_page: perPage },
@@ -60,7 +60,7 @@ const AdminDashboard = () => {
     try {
       // Added params for pagination (optional but good practice)
       const response = await axios.get(
-        "http://localhost:5000/api/admin/disputes",
+        "https://workforce-backend-kfxw.onrender.com/api/admin/disputes",
         {
           headers: { Authorization: `Bearer ${token}` },
           params: { page: 1, per_page: 10 }, // Or use another pagination state for disputes
@@ -79,8 +79,8 @@ const AdminDashboard = () => {
     e.preventDefault();
     try {
       const url = selectedUser
-        ? `http://localhost:5000/api/admin/users/${selectedUser.id}`
-        : "http://localhost:5000/api/admin/users";
+        ? `https://workforce-backend-kfxw.onrender.com/api/admin/users/${selectedUser.id}`
+        : "https://workforce-backend-kfxw.onrender.com/api/admin/users";
       const method = selectedUser ? "put" : "post";
       const dataToSend = { ...formData };
       if (selectedUser && !dataToSend.password) {
@@ -107,7 +107,7 @@ const AdminDashboard = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/admin/users/${id}`, {
+        await axios.delete(`https://workforce-backend-kfxw.onrender.com/api/admin/users/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUsers(users.filter((user) => user.id !== id));
@@ -130,7 +130,7 @@ const AdminDashboard = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:5000/api/admin/disputes/${disputeId}/resolve`,
+        `https://workforce-backend-kfxw.onrender.com/api/admin/disputes/${disputeId}/resolve`,
         { resolution },
         { headers: { Authorization: `Bearer ${token}` } }
       );
