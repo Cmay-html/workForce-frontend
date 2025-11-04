@@ -122,40 +122,7 @@ const ClientDashboard = () => {
           </div>
         </div>
 
-        {/* New User Onboarding */}
-        {isNewUser && (
-          <div className="bg-orange-50 border border-orange-200 rounded-xl p-6 mb-8">
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0">
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-orange-900 mb-2">
-                  Getting Started Guide
-                </h3>
-                <p className="text-orange-800 mb-4">
-                  Welcome to your client dashboard! Here's how to get started:
-                </p>
-                <ul className="space-y-2 text-orange-800">
-                  <li className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-orange-600 rounded-full"></span>
-                    Create your first project to start finding freelancers
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-orange-600 rounded-full"></span>
-                    Browse our talented freelancer community
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-2 h-2 bg-orange-600 rounded-full"></span>
-                    Set up milestones to track project progress
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* New user onboarding removed (demo) */}
 
         {/* Stats Cards - Improved */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 md:mb-8">

@@ -440,17 +440,17 @@ function App() {
               }
             />
 
-            {/* Freelancer Dashboard - Alternative route */}
+            {/* Freelancer Dashboard */}
             <Route
               path="/freelancer/dashboard"
               element={
                 <FreelancerRoute>
-                  <FreelancerLayout />
+                  <FreelancerLayout>
+                    <FreelancerDashboard />
+                  </FreelancerLayout>
                 </FreelancerRoute>
               }
-            >
-              <Route index element={<FreelancerDashboard />} />
-            </Route>
+            />
 
             {/* Freelancer Profile Route */}
             <Route

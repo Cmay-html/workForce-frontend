@@ -110,22 +110,7 @@ const LoginPage = () => {
               </button>
             </form>
 
-            {/* Divider */}
-            <div style={styles.divider}>
-              <span style={styles.dividerText}>or continue with</span>
-            </div>
-
-            {/* Social Login */}
-            <div style={styles.socialButtons}>
-              <button style={styles.socialButton}>
-                <span style={styles.socialIcon}>G</span>
-                Google
-              </button>
-              <button style={styles.socialButton}>
-                <span style={styles.socialIcon}>G</span>
-                GitHub
-              </button>
-            </div>
+            {/* Social login removed (demo) */}
 
             {/* Sign up link */}
             <div style={styles.footer}>

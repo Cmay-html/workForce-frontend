@@ -1,0 +1,128 @@
+/* Common Layout Styles */
+.page-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+.page-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+  color: #6B7280;
+  font-size: 1rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stats-card {
+  background-color: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.content-section {
+  background-color: white;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background-color: white;
+  border-radius: 0.75rem;
+  border: 1px solid #E5E7EB;
+}
+
+.empty-state-icon {
+  width: 3rem;
+  height: 3rem;
+  color: #9CA3AF;
+  margin: 0 auto 1rem;
+}
+
+.empty-state-text {
+  color: #6B7280;
+  margin-bottom: 1.5rem;
+}
+
+.action-button {
+  background: linear-gradient(to right, #F97316, #EA580C);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 200ms;
+}
+
+.action-button:hover {
+  background: linear-gradient(to right, #EA580C, #C2410C);
+}
+
+/* Navigation Styles */
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  width: 100%;
+  text-align: left;
+  transition: all 200ms;
+}
+
+.nav-link:hover {
+  background-color: #F3F4F6;
+  color: #111827;
+}
+
+.nav-link.active {
+  background-color: #FFF7ED;
+  color: #EA580C;
+  border-right: 2px solid #EA580C;
+}
+
+.nav-link-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.nav-link-text {
+  flex: 1;
+}
+
+.nav-link-label {
+  font-weight: 500;
+}
+
+.nav-link-description {
+  font-size: 0.75rem;
+  color: #6B7280;
+  margin-top: 0.125rem;
+}
