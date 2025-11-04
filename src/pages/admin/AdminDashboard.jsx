@@ -143,13 +143,19 @@ const AdminDashboard = () => {
     }
   };
 
+  // Check authentication and redirect if needed
+  useEffect(() => {
+    if (!token) {
+      navigate("/admin-login");
+    }
+  }, [token, navigate]);
+
   const handleLogout = () => {
     logout();
-    navigate("/admin/login");
+    navigate("/admin-login");
   };
 
   if (!token) {
-    navigate("/admin/login");
     return null;
   }
 
